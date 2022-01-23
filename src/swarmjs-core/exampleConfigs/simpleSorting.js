@@ -50,7 +50,20 @@ const simConfig = {
     ],
     useGlobalPuckMaps: false
   },
-  objects: [],
+  objects: [
+    {
+      type: 'rectangle',
+      center: { x: 400, y: 100 },
+      width: 50,
+      height: 225
+    },
+    {
+      type: 'circle',
+      center: { x: 100, y: 150 },
+      radius: 50,
+      skipOrbit: true
+    }
+  ],
   positionsGenerator: PositionsGenerators.randomCollisionFree
 };
 

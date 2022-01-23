@@ -232,13 +232,31 @@ export const SceneRenderables = [
     }, // property of scene
     shape: 'rect',
     staticAttrs: {
-      x: { prop: 'left' },
-      y: { prop: 'top' },
       width: { prop: 'width' },
       height: { prop: 'height' }
     },
+    dynamicAttrs: {
+      x: { prop: 'center.x' },
+      y: { prop: 'center.y' }
+    },
     styles: {
       fill: '#000000'
+    },
+    drag: {
+      prop: 'center',
+      pause: true,
+      onStart: {
+        styles: {
+          stroke: 'lightgray'
+        },
+        log: [
+        ]
+      },
+      onEnd: {
+        styles: {
+          stroke: 'black'
+        }
+      }
     }
   },
   {
@@ -250,12 +268,30 @@ export const SceneRenderables = [
     }, // property of scene
     shape: 'circle',
     staticAttrs: {
-      cx: { prop: 'center.x' },
-      cy: { prop: 'center.y' },
       r: { prop: 'radius' }
+    },
+    dynamicAttrs: {
+      cx: { prop: 'center.x' },
+      cy: { prop: 'center.y' }
     },
     styles: {
       fill: '#000000'
+    },
+    drag: {
+      prop: 'center',
+      pause: true,
+      onStart: {
+        styles: {
+          stroke: 'lightgray'
+        },
+        log: [
+        ]
+      },
+      onEnd: {
+        styles: {
+          stroke: 'black'
+        }
+      }
     }
   }
 ];
