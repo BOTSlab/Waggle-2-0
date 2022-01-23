@@ -1,12 +1,12 @@
 import './stylesheets/styles.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './components/App';
-import { exampleConfigs } from './swarmjs-core';
-
-const { simConfig, benchmarkConfig } = exampleConfigs.voronoiSorting;
+import { BrowserRouter as Router } from 'react-router-dom';
+import App from './components/app/App';
 
 ReactDOM.render(
-  <App config={simConfig} benchSettings={benchmarkConfig}/>,
+  <Router>
+    <App />
+  </Router>,
   document.getElementById('root')
 );
