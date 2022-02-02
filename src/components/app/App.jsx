@@ -1,5 +1,5 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import './App.css';
 
 import Navigation from '../../features/Navigation';
@@ -8,6 +8,11 @@ import About from '../../features/About/About';
 import Tutorial from '../../features/Tutorial';
 import SimulationDescription from '../../features/SimulationDescription/SimulationDescription';
 import { exampleConfigs } from '../../swarmjs-core';
+
+
+import SignInOutContainer from '../Login/SignInOutContainer';
+import { AuthProvider } from '../Contexts/AuthContext';
+
 
 export default function App() {
   const { simConfig, benchmarkConfig } = exampleConfigs.simpleSorting;
@@ -25,7 +30,25 @@ export default function App() {
         <Route path="/simulations/sorting" element={<Simulation config={simConfig} benchSettings={benchmarkConfig} />} />
         <Route path="/simulations/fireflies" element={<Simulation config={simConfig} benchSettings={benchmarkConfig} />} />
         <Route path="/simulations/pheromones" element={<Simulation config={simConfig} benchSettings={benchmarkConfig} />} />
+        <Route path="/simulations/pheromones" element={<Simulation config={simConfig} benchSettings={benchmarkConfig} />} />
+        <Route path="/signInSignout" element={<SignInOut/>} />
+        
       </Routes>
     </div>
+  );
+}
+
+
+
+export const SignInOut = () => {
+  return (
+    
+        <AuthProvider>
+        <div className="App">
+          <SignInOutContainer/>
+        </div>
+      </AuthProvider>
+   
+  
   );
 }

@@ -1,0 +1,8 @@
+{
+  "projects": {
+    "default": "waggle-2-0-production",
+    "dev": "waggle-2-0",
+    "prod": "waggle-2-0-production"
+  },
+  "targets": {}
+}

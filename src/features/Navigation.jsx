@@ -11,19 +11,22 @@ export default function Navigation() {
     setCurrentPage(e.key);
   };
   return (
-    <div>
       <Menu onClick={handleClick} selectedKeys={[currentPage]} mode="horizontal">
         <Menu.Item key='home'>
           <Link to="/">
             <span>Home</span>
           </Link>
         </Menu.Item>
+        <Menu.Item key='signInSignUp'>
+            <Link to="/signInSignOut">
+              <span>Sign In / Sign Up</span>
+            </Link>
+        </Menu.Item>
         <Menu.Item key='tutorial'>
           <Link to="/tutorial">
             <span>Tutorial</span>
           </Link>
         </Menu.Item>
-        <Link to="/simulations">
           <SubMenu key='simulations' title='Simulations'>
             <Menu.Item key='preclustering'>
               <Link to="/simulations/preclustering">
@@ -51,8 +54,6 @@ export default function Navigation() {
               </Link>
             </Menu.Item>
           </SubMenu>
-        </Link>
       </Menu>
-    </div>
   );
 }
