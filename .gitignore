@@ -3,3 +3,4 @@ src/server
 dist/
 .env.development
 .env.production
+.firebase
