@@ -17,7 +17,9 @@ export default class Scene {
     staticObjectsDefinitions,
     algorithm,
     positionsGenerator,
-    gMaps
+    gMaps,
+    // eslint-disable-next-line no-unused-vars
+    code
   ) {
     this.numOfRobots = robotsConfig.count;
     this.robotRadius = robotsConfig.radius;
@@ -119,7 +121,7 @@ export default class Scene {
     // Simulation Speed
     this.timeDelta = 16.666;
 
-    this.paused = false;
+    this.paused = true;
 
     this.togglePause = () => {
       this.paused = !this.paused;
@@ -134,7 +136,7 @@ export default class Scene {
     };
 
     this.setSpeed = (scale) => {
-      if (!scale || typeof scale !== 'number' || scale <= 0) {
+      if (typeof scale !== 'number' || scale < 0) {
         return;
       }
       this.robots.forEach((r) => { r.velocityScale = scale; });

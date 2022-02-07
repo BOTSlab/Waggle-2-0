@@ -12,7 +12,7 @@ const SpeedSlider = ({ speed, setSpeed }) => (
       </Grid>
       <Grid item xs>
         <Slider
-          min={0.1}
+          min={0}
           max={50}
           step={0.1}
           value={speed}

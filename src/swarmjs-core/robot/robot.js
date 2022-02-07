@@ -80,7 +80,7 @@ export default class Robot {
     this.body.frictionStatic = 0;
     this.body.restitution = 0;
     World.add(this.world, this.body);
-    Body.setAngularVelocity(this.body, 1);
+    Body.setAngularVelocity(this.body, 0);
     this.engine.velocityIterations = 10;
     this.engine.positionIterations = 10;
 
@@ -98,14 +98,18 @@ export default class Robot {
       this.actuate = getController(this, controllers.actuators);
     }
 
-    // Goal Planning
-    this.updateGoal = getController(this, controllers.goal);
+    if (controllers.blockly) {
+      this.blockly = getController(this, controllers.blockly);
+    } else {
+      // Goal Planning
+      this.updateGoal = getController(this, controllers.goal);
 
-    // Motion Planning
-    this.updateWaypoint = getController(this, controllers.waypoint);
+      // Motion Planning
+      this.updateWaypoint = getController(this, controllers.waypoint);
 
-    // Velocities calculation
-    this.updateVelocity = getController(this, controllers.velocity);
+      // Velocities calculation
+      this.updateVelocity = getController(this, controllers.velocity);
+    }
 
     this.sense = (sensorName, params) => this.sensorManager.sense(sensorName, params);
 
@@ -129,18 +133,22 @@ export default class Robot {
     // Update sensors
     this.sensorManager.update();
 
-    // Update goal
-    const newGoalRaw = this.updateGoal(this.goal, this.sensors, this.actuators);
-    const newGoal = this.limitGoal(newGoalRaw);
-    this.goal = newGoal;
+    if (!this.blockly) {
+      // Update goal
+      const newGoalRaw = this.updateGoal(this.goal, this.sensors, this.actuators);
+      const newGoal = this.limitGoal(newGoalRaw);
+      this.goal = newGoal;
 
-    // Update waypoint, according to new goal
-    const newWaypoint = this.updateWaypoint(this.goal, this.sensors, this.actuators);
-    this.setWaypoint(newWaypoint);
+      // Update waypoint, according to new goal
+      const newWaypoint = this.updateWaypoint(this.goal, this.sensors, this.actuators);
+      this.setWaypoint(newWaypoint);
 
-    // Update velocities, according to new waypoint
-    const velocities = this.updateVelocity(newWaypoint, this.sensors, this.actuators);
-    this.setVelocities(velocities);
+      // Update velocities, according to new waypoint
+      const velocities = this.updateVelocity(newWaypoint, this.sensors, this.actuators);
+      this.setVelocities(velocities);
+    } else {
+      this.blockly(this.sensors, this.actuators);
+    }
 
     // Actuate
     if (this.actuate && typeof this.actuate === 'function') {
@@ -398,199 +406,6 @@ const bodyRenderables = [
   }
 ];
 
-const waypointRenderables = [
-  {
-    type: 'Waypoint',
-    svgClass: 'robot-waypoint',
-    dataPoints: { sceneProp: 'robots' },
-    shape: 'circle',
-    staticAttrs: {
-      r: {
-        prop: 'radius',
-        modifier: (val) => val / 1.5
-      },
-      id: { prop: 'id' }
-    },
-    dynamicAttrs: {
-      cx: { prop: 'waypoint.x' },
-      cy: { prop: 'waypoint.y' }
-    },
-    styles: {
-      fill: { special: 'schemaColor' },
-      stroke: { special: 'schemaColor' },
-      'stroke-dasharray': '1,1',
-      'stroke-width': 1,
-      'stroke-opacity': 1,
-      'fill-opacity': 0.4
-    }
-  },
-  {
-    type: 'Waypoint',
-    svgClass: 'robot-waypoint-line',
-    desc: 'Line segments between robots and waypoints',
-    dataPoints: { sceneProp: 'robots' },
-    shape: 'path',
-    staticAttrs: {
-      id: { prop: 'id' }
-    },
-    dynamicAttrs: {
-      points: [
-        { prop: 'sensors.position' },
-        { prop: 'waypoint' }
-      ]
-    },
-    styles: {
-      fill: 'none',
-      stroke: { special: 'schemaColor' },
-      'stroke-dasharray': '1,10',
-      'stroke-width': 1,
-      'stroke-opacity': 1,
-      'fill-opacity': 1
-    }
-  },
-  {
-    type: 'Waypoint',
-    svgClass: 'waypoint-goal-line',
-    desc: 'Line segments between waypoints and goals',
-    dataPoints: { sceneProp: 'robots' },
-    shape: 'path',
-    staticAttrs: {
-      id: { prop: 'id' }
-    },
-    dynamicAttrs: {
-      points: [
-        { prop: 'waypoint' },
-        { prop: 'goal' }
-      ]
-    },
-    styles: {
-      fill: 'none',
-      stroke: { special: 'schemaColor' },
-      'stroke-dasharray': '1,10',
-      'stroke-width': 1,
-      'stroke-opacity': 1,
-      'fill-opacity': 1
-    }
-  }
-];
-
-const goalRenderables = [
-  {
-    type: 'Goal',
-    svgClass: 'robot-goal',
-    dataPoints: { sceneProp: 'robots' },
-    shape: 'circle',
-    staticAttrs: {
-      r: {
-        prop: 'radius',
-        modifier: (val) => val / 2
-      },
-      id: { prop: 'id' }
-    },
-    dynamicAttrs: {
-      cx: { prop: 'goal.x' },
-      cy: { prop: 'goal.y' }
-    },
-    styles: {
-      fill: { special: 'schemaColor' },
-      stroke: 'white',
-      'stroke-dasharray': '0.5,0.5',
-      'stroke-width': 1,
-      'stroke-opacity': 1,
-      'fill-opacity': 1
-    },
-    drag: {
-      prop: 'goal',
-      pause: true,
-      onStart: {
-        styles: {
-          stroke: 'black'
-        },
-        log: [
-          { prop: 'sensors' }
-        ]
-      },
-      onEnd: {
-        styles: {
-          stroke: 'lightgray'
-        }
-      }
-    }
-  },
-  {
-    type: 'Goal',
-    svgClass: 'robot-goal-line',
-    desc: 'Line segments between robots and goals',
-    dataPoints: { sceneProp: 'robots' },
-    shape: 'path',
-    staticAttrs: {
-      id: { prop: 'id' }
-    },
-    dynamicAttrs: {
-      points: [
-        { prop: 'sensors.position' },
-        { prop: 'goal' }
-      ]
-    },
-    styles: {
-      fill: 'none',
-      stroke: { special: 'schemaColor' },
-      'stroke-dasharray': '10,10',
-      'stroke-width': 1,
-      'stroke-opacity': 1,
-      'fill-opacity': 1
-    }
-  }
-];
-
-const vornoiRenderables = [
-  {
-    type: 'VC',
-    svgClass: 'voronoi-diagram-bg',
-    desc: 'Vodonoi Diagram Background',
-    shape: 'path',
-    dynamicAttrs: {
-      d: { sceneProp: 'voronoiMesh' }
-    },
-    styles: {
-      stroke: '#777',
-      'stroke-width': 2,
-      'stroke-opacity': 1
-    }
-  },
-  {
-    type: 'VC',
-    svgClass: 'voronoi-diagram',
-    desc: 'Vodonoi Diagram',
-    shape: 'path',
-    dynamicAttrs: {
-      d: { sceneProp: 'voronoiMesh' }
-    },
-    styles: {
-      stroke: '#000',
-      'stroke-width': 1,
-      'stroke-opacity': 1
-    }
-  },
-  {
-    type: 'BVC',
-    svgClass: 'buffered-voronoi-diagram',
-    desc: 'Buffered Vodonoi Diagram',
-    shape: 'path',
-    dataPoints: { sceneProp: 'robots' },
-    dynamicAttrs: {
-      points: { prop: 'sensors.BVC' }
-    },
-    styles: {
-      fill: 'none',
-      stroke: { special: 'schemaColor' },
-      'stroke-dasharray': '10,10',
-      'stroke-width': 1,
-      'stroke-opacity': 1
-    }
-  }
-];
-
 const sensorsRenderables = [
   {
     type: 'Sensor',
@@ -681,8 +496,5 @@ const sensorsRenderables = [
 
 export const RobotRenderables = [
   ...sensorsRenderables,
-  ...bodyRenderables,
-  ...waypointRenderables,
-  ...goalRenderables,
-  ...vornoiRenderables
+  ...bodyRenderables
 ];

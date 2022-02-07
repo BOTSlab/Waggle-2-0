@@ -13,17 +13,10 @@ const simConfig = {
     speed: 15
   },
   robots: {
-    count: 10,
+    count: 2,
     radius: 10,
     controllers: {
-      actuators: Controllers.actuators.simpleSortingActuatorController,
-      goal: Controllers.goal.simpleSortingGoalController,
-      waypoint: Controllers.waypoint.dummyWaypointController,
-      // velocity: Controllers.velocity.omniDirVelocityController
-      velocity: {
-        controller: Controllers.velocity.diffVelocityController,
-        params: { angularVelocityScale: 0.001 }
-      }
+      blockly: Controllers.blockly.sortingController
     },
     sensors: Object.values(AvailableSensors),
     actuators: Object.values(AvailableActuators),
