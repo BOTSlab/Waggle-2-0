@@ -47,7 +47,7 @@ export default class Robot {
     };
     this.id = id;
     this.radius = radius;
-    this.velocity = { x: 0, y: 0 };
+    this.linearVel = { x: 0, y: 0 };
     this.velocityScale = 1;
     this.goal = goal;
     this.waypoint = { x: position.x, y: position.y };
@@ -125,6 +125,11 @@ export default class Robot {
     this.sensorManager.update();
   }
 
+  updateVelocityScale(velocityScale) {
+    this.velocityScale = velocityScale;
+    this.setLinearVelocity(this.linearVel);
+  }
+
   setWaypoint(waypoint) {
     this.waypoint = { x: waypoint.x, y: waypoint.y };
   }
@@ -162,11 +167,13 @@ export default class Robot {
   }
 
   setLinearVelocity(linearVel) {
-    Body.setVelocity(this.body, { x: linearVel.x, y: linearVel.y });
+    this.linearVel = linearVel;
+    Body.setVelocity(this.body,
+      { x: (linearVel.x * this.velocityScale), y: (linearVel.y * this.velocityScale) });
   }
 
   setAngularVelocity(angularVel) {
-    Body.setAngularVelocity(this.body, angularVel);
+    Body.setAngularVelocity(this.body, (angularVel / 100));
   }
 
   reached(point) {

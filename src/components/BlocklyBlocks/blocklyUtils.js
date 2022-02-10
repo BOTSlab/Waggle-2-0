@@ -1,17 +1,14 @@
-export const setSpeedsCode = (numberLinearSpeed, numberAngularSpeed) => {
-  let linearSpeed = numberLinearSpeed;
-  let angularSpeed = numberAngularSpeed;
+export const setSpeedsCode = (inputSpeed) => {
+  let speed = inputSpeed || 0;
 
-  if (Number.isNaN(numberLinearSpeed)) {
-    linearSpeed = 0;
+  if (Number.isNaN(inputSpeed)) {
+    speed = 0;
+  } else if (inputSpeed > 10) {
+    speed = 10;
+  } else if (inputSpeed < -10) {
+    speed = -10;
   }
-  if (Number.isNaN(numberAngularSpeed)) {
-    angularSpeed = 0;
-  }
-
-  const code = `linearSpeed = ${linearSpeed};\n angularSpeed = ${angularSpeed};\n`;
-
-  return code;
+  return speed;
 };
 
 export const setRobotNumber = (robotNumber) => robotNumber;

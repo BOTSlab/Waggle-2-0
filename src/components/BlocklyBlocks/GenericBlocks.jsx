@@ -6,7 +6,7 @@ import { setSpeedsCode } from './blocklyUtils';
 Blockly.Blocks.robot_left_obstacle = {
   init() {
     this.appendDummyInput()
-      .appendField('Obstacle (wall/robot) on left?');
+      .appendField('Obstacle (wall/obstacle) on left?');
     this.setInputsInline(false);
     this.setOutput(true, 'Boolean');
     this.setColour(0);
@@ -23,7 +23,7 @@ Blockly.JavaScript.robot_left_obstacle = () => {
 Blockly.Blocks.robot_right_obstacle = {
   init() {
     this.appendDummyInput()
-      .appendField('Obstacle (wall/robot) on right?');
+      .appendField('Obstacle (wall/obstacle) on right?');
     this.setOutput(true, null);
     this.setColour(0);
     this.setTooltip('True if the right obstacle sensor detects a wall or another robot.');
@@ -36,29 +36,86 @@ Blockly.JavaScript.robot_right_obstacle = () => {
   return [code, Blockly.JavaScript.ORDER_NONE];
 };
 
-// ACTIONS GENERIC BLOCKS
-
-Blockly.Blocks.robot_set_speed = {
+Blockly.Blocks.robot_forward_obstacle = {
   init() {
     this.appendDummyInput()
-      .appendField('Set speeds:')
-      .appendField('forward ')
-      .appendField(new Blockly.FieldNumber(0, -10, 10), 'linearSpeed')
-      .appendField('angular')
+      .appendField('Obstacle (wall/obstacle) forward?');
+    this.setInputsInline(false);
+    this.setOutput(true, 'Boolean');
+    this.setColour(0);
+    this.setTooltip('True if the forward obstacle sensor detects a wall or another robot.');
+    this.setHelpUrl('');
+  }
+};
+
+Blockly.JavaScript.robot_forward_obstacle = () => {
+  const code = "sensors.walls.includes('forward')";
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
+Blockly.Blocks.robot_backward_obstacle = {
+  init() {
+    this.appendDummyInput()
+      .appendField('Obstacle (wall/obstacle) on behind?');
+    this.setOutput(true, null);
+    this.setColour(0);
+    this.setTooltip('True if the behind obstacle sensor detects a wall or another robot.');
+    this.setHelpUrl('');
+  }
+};
+
+Blockly.JavaScript.robot_backward_obstacle = () => {
+  const code = "sensors.walls.includes('backward')";
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
+// ACTIONS GENERIC BLOCKS
+
+Blockly.Blocks.robot_linear_speed = {
+  init() {
+    this.appendDummyInput()
+      .appendField('Set linear speeds:')
+      .appendField('x:')
+      .appendField(new Blockly.FieldNumber(0, -10, 10), 'linearSpeedX')
+      .appendField(' y:')
+      .appendField(new Blockly.FieldNumber(0, -10, 10), 'linearSpeedY');
+    this.setInputsInline(true);
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(105);
+    this.setTooltip('Speed: 10 (full speed ahead), -10 (full reverse)');
+    this.setHelpUrl('');
+  }
+};
+
+Blockly.JavaScript.robot_linear_speed = (block) => {
+  const numberLinearSpeedX = parseFloat(block.getFieldValue('linearSpeedX'));
+  const numberLinearSpeedY = parseFloat(block.getFieldValue('linearSpeedY'));
+  const linearX = setSpeedsCode(numberLinearSpeedX);
+  const linearY = setSpeedsCode(numberLinearSpeedY);
+
+  return `robot.setLinearVelocity({ x: ${linearX}, y: ${linearY} });\n`;
+};
+
+Blockly.Blocks.robot_angular_speed = {
+  init() {
+    this.appendDummyInput()
+      .appendField('Set angular speed: ')
       .appendField(new Blockly.FieldNumber(0, -10, 10), 'angularSpeed');
     this.setInputsInline(true);
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(105);
-    this.setTooltip('forward speed: 10 (full speed ahead), -10 (full reverse).  angular speed: 10 (max right turn), -10 (max left turn).');
+    this.setTooltip('Angular speed: 10 (max clockwise), -10 (max counterclockwise)');
     this.setHelpUrl('');
   }
 };
 
-Blockly.JavaScript.robot_set_speed = (block) => {
-  const numberLinearSpeed = parseFloat(block.getFieldValue('linearSpeed'));
+Blockly.JavaScript.robot_angular_speed = (block) => {
   const numberAngularSpeed = parseFloat(block.getFieldValue('angularSpeed'));
-  return setSpeedsCode(numberLinearSpeed, numberAngularSpeed);
+  const angularSpeed = setSpeedsCode(numberAngularSpeed);
+
+  return `robot.setAngularVelocity(${angularSpeed});\n`;
 };
 
 Blockly.Blocks.robot_hold_speed = {
@@ -134,7 +191,7 @@ Blockly.Blocks.robot_execute = {
   }
 };
 
-Blockly.JavaScript.robot_execute = () => 'execute = true';
+Blockly.JavaScript.robot_execute = () => 'execute';
 
 // MEMORY GENERIC BLOCKS
 

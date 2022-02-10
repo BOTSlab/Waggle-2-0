@@ -13,7 +13,7 @@ const SpeedSlider = ({ speed, setSpeed }) => (
       <Grid item xs>
         <Slider
           min={0}
-          max={50}
+          max={10}
           step={0.1}
           value={speed}
           valueLabelDisplay='auto'

@@ -26,7 +26,7 @@ import {
 const Simulation = ({ config, benchSettings, code }) => {
   const [uiEnabled, setUiEnabled] = React.useState(false);
   const [time, setTime] = React.useState(0);
-  const [speed, setSpeed] = React.useState(1);
+  const [speed, setSpeed] = React.useState(0);
   const [paused, setPaused] = React.useState(false);
   const [benchmarkData, setBenchmarkData] = React.useState({});
   const svgRef = React.useRef(null);
@@ -40,7 +40,7 @@ const Simulation = ({ config, benchSettings, code }) => {
   const reset = (newConfig = config) => {
     resetRenderer();
     resetSimulation(newConfig);
-    onSpeedChange(newConfig.env.speed);
+    onSpeedChange(1);
     setPaused(false);
   };
 

@@ -139,7 +139,7 @@ export default class Scene {
       if (typeof scale !== 'number' || scale < 0) {
         return;
       }
-      this.robots.forEach((r) => { r.velocityScale = scale; });
+      this.robots.forEach((r) => { r.updateVelocityScale(scale); });
     };
 
     this.togglePause.bind(this);
@@ -147,7 +147,7 @@ export default class Scene {
     this.unpause.bind(this);
     this.setSpeed.bind(this);
 
-    this.setSpeed(envConfig.speed);
+    this.setSpeed(1);
   }
 
   update() {

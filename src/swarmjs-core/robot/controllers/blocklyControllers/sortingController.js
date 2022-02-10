@@ -1,11 +1,13 @@
+/* eslint-disable no-unused-vars */
 export default function sortingController(robot) {
-  // eslint-disable-next-line no-unused-vars
   return (sensors, actuators) => {
-    if (robot.scene.code) {
+    const curGoalArea = sensors.puckGoalAreaSensor;
+    const closestPuck = sensors.closestPuckToGrapper;
+    const grappedPuck = actuators.grapper.getState();
+
+    if (robot.scene.code && robot.scene.code.includes('execute')) {
       // eslint-disable-next-line no-eval
-      const blocklyCode = eval(robot.scene.code);
-      console.log(blocklyCode);
-      // TO DO: Create Sorting configuration controller
+      eval(robot.scene.code.replace('execute', ''));
     }
   };
 }

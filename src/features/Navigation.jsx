@@ -11,48 +11,44 @@ export default function Navigation() {
     setCurrentPage(e.key);
   };
   return (
-    <div>
-      <Menu onClick={handleClick} selectedKeys={[currentPage]} mode="horizontal">
-        <Menu.Item key='home'>
-          <Link to="/">
-            <span>Home</span>
-          </Link>
-        </Menu.Item>
-        <Menu.Item key='tutorial'>
-          <Link to="/tutorial">
-            <span>Tutorial</span>
-          </Link>
-        </Menu.Item>
-        <Link to="/simulations">
-          <SubMenu key='simulations' title='Simulations'>
-            <Menu.Item key='preclustering'>
-              <Link to="/simulations/preclustering">
-                <span>Pre-clustering</span>
-              </Link>
-            </Menu.Item>
-            <Menu.Item key='clustering'>
-              <Link to="/simulations/clustering">
-                <span>Clustering</span>
-              </Link>
-            </Menu.Item>
-            <Menu.Item key='sorting'>
-              <Link to="/simulations/sorting">
-                <span>Sorting</span>
-              </Link>
-            </Menu.Item>
-            <Menu.Item key='fireflies'>
-              <Link to="/simulations/fireflies">
-                <span>Fireflies</span>
-              </Link>
-            </Menu.Item>
-            <Menu.Item key='pheromones'>
-              <Link to="/simulations/pheromones">
-                <span>Pheromones</span>
-              </Link>
-            </Menu.Item>
-          </SubMenu>
+    <Menu onClick={handleClick} selectedKeys={[currentPage]} mode="horizontal">
+      <Menu.Item key='home'>
+        <Link to="/">
+          <span>Home</span>
         </Link>
-      </Menu>
-    </div>
+      </Menu.Item>
+      <Menu.Item key='tutorial'>
+        <Link to="/tutorial">
+          <span>Tutorial</span>
+        </Link>
+      </Menu.Item>
+      <SubMenu key='simulations' title='Simulations'>
+        <Menu.Item key='preclustering'>
+          <Link to="/simulations/preclustering">
+            <span>Pre-clustering</span>
+          </Link>
+        </Menu.Item>
+        <Menu.Item key='clustering'>
+          <Link to="/simulations/clustering">
+            <span>Clustering</span>
+          </Link>
+        </Menu.Item>
+        <Menu.Item key='sorting'>
+          <Link to="/simulations/sorting">
+            <span>Sorting</span>
+          </Link>
+        </Menu.Item>
+        <Menu.Item key='fireflies'>
+          <Link to="/simulations/fireflies">
+            <span>Fireflies</span>
+          </Link>
+        </Menu.Item>
+        <Menu.Item key='pheromones'>
+          <Link to="/simulations/pheromones">
+            <span>Pheromones</span>
+          </Link>
+        </Menu.Item>
+      </SubMenu>
+    </Menu>
   );
 }

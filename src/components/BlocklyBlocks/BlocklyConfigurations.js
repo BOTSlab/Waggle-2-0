@@ -8,6 +8,10 @@ export const preclusteringConfig = {
       contents: [
         {
           kind: 'block',
+          type: 'robot_forward_obstacle'
+        },
+        {
+          kind: 'block',
           type: 'robot_left_obstacle'
         },
         {
@@ -16,11 +20,15 @@ export const preclusteringConfig = {
         },
         {
           kind: 'block',
+          type: 'robot_backward_obstacle'
+        },
+        {
+          kind: 'block',
           type: 'robot_puck_held'
         },
         {
           kind: 'block',
-          type: 'robot_inner_puck_count'
+          type: 'robot_closest_puck'
         },
         {
           kind: 'block',
@@ -35,7 +43,11 @@ export const preclusteringConfig = {
       contents: [
         {
           kind: 'block',
-          type: 'robot_set_speed'
+          type: 'robot_linear_speed'
+        },
+        {
+          kind: 'block',
+          type: 'robot_angular_speed'
         },
         {
           kind: 'block',
@@ -177,6 +189,10 @@ export const clusteringConfig = {
       contents: [
         {
           kind: 'block',
+          type: 'robot_forward_obstacle'
+        },
+        {
+          kind: 'block',
           type: 'robot_left_obstacle'
         },
         {
@@ -185,11 +201,15 @@ export const clusteringConfig = {
         },
         {
           kind: 'block',
+          type: 'robot_backward_obstacle'
+        },
+        {
+          kind: 'block',
           type: 'robot_puck_held'
         },
         {
           kind: 'block',
-          type: 'robot_inner_puck_count'
+          type: 'robot_closest_puck'
         },
         {
           kind: 'block',
@@ -204,7 +224,11 @@ export const clusteringConfig = {
       contents: [
         {
           kind: 'block',
-          type: 'robot_set_speed'
+          type: 'robot_linear_speed'
+        },
+        {
+          kind: 'block',
+          type: 'robot_angular_speed'
         },
         {
           kind: 'block',
@@ -346,6 +370,10 @@ export const sortingConfig = {
       contents: [
         {
           kind: 'block',
+          type: 'robot_forward_obstacle'
+        },
+        {
+          kind: 'block',
           type: 'robot_left_obstacle'
         },
         {
@@ -354,11 +382,15 @@ export const sortingConfig = {
         },
         {
           kind: 'block',
+          type: 'robot_backward_obstacle'
+        },
+        {
+          kind: 'block',
           type: 'robot_puck_held'
         },
         {
           kind: 'block',
-          type: 'robot_inner_puck_count'
+          type: 'robot_closest_puck'
         },
         {
           kind: 'block',
@@ -373,7 +405,11 @@ export const sortingConfig = {
       contents: [
         {
           kind: 'block',
-          type: 'robot_set_speed'
+          type: 'robot_linear_speed'
+        },
+        {
+          kind: 'block',
+          type: 'robot_angular_speed'
         },
         {
           kind: 'block',
@@ -515,11 +551,19 @@ export const firefliesConfig = {
       contents: [
         {
           kind: 'block',
+          type: 'robot_forward_obstacle'
+        },
+        {
+          kind: 'block',
           type: 'robot_left_obstacle'
         },
         {
           kind: 'block',
           type: 'robot_right_obstacle'
+        },
+        {
+          kind: 'block',
+          type: 'robot_backward_obstacle'
         },
         {
           kind: 'block',
@@ -534,7 +578,11 @@ export const firefliesConfig = {
       contents: [
         {
           kind: 'block',
-          type: 'robot_set_speed'
+          type: 'robot_linear_speed'
+        },
+        {
+          kind: 'block',
+          type: 'robot_angular_speed'
         },
         {
           kind: 'block',
@@ -676,11 +724,19 @@ export const pheromonesConfig = {
       contents: [
         {
           kind: 'block',
+          type: 'robot_forward_obstacle'
+        },
+        {
+          kind: 'block',
           type: 'robot_left_obstacle'
         },
         {
           kind: 'block',
           type: 'robot_right_obstacle'
+        },
+        {
+          kind: 'block',
+          type: 'robot_backward_obstacle'
         },
         {
           kind: 'block',
@@ -715,7 +771,11 @@ export const pheromonesConfig = {
       contents: [
         {
           kind: 'block',
-          type: 'robot_set_speed'
+          type: 'robot_linear_speed'
+        },
+        {
+          kind: 'block',
+          type: 'robot_angular_speed'
         },
         {
           kind: 'block',
