@@ -7,7 +7,7 @@ const { SubMenu } = Menu;
 
 export default function Navigation() {
   const [currentPage, setCurrentPage] = useState('home');
-  const handleClick = (e) => {
+  const handleClick = (e: any) => {
     setCurrentPage(e.key);
   };
   return (

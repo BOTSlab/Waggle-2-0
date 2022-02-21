@@ -1,4 +1,4 @@
-export const setSpeedsCode = (inputSpeed) => {
+export const setSpeedsCode = (inputSpeed: any) => {
   let speed = inputSpeed || 0;
 
   if (Number.isNaN(inputSpeed)) {
@@ -11,4 +11,4 @@ export const setSpeedsCode = (inputSpeed) => {
   return speed;
 };
 
-export const setRobotNumber = (robotNumber) => robotNumber;
+export const setRobotNumber = (robotNumber: number) => robotNumber;

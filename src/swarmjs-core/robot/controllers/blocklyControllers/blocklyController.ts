@@ -1,6 +1,7 @@
 /* eslint-disable no-unused-vars */
-export default function sortingController(robot) {
-  return (sensors, actuators) => {
+// TODO: When TypeScript fully integrated, identify robot, sensor and actuator types
+export default function blocklyController(robot: any) {
+  return (sensors: any, actuators: any) => {
     const curGoalArea = sensors.puckGoalAreaSensor;
     const closestPuck = sensors.closestPuckToGrapper;
     const grappedPuck = actuators.grapper.getState();

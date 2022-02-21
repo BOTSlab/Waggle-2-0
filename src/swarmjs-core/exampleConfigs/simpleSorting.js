@@ -16,7 +16,7 @@ const simConfig = {
     count: 2,
     radius: 10,
     controllers: {
-      blockly: Controllers.blockly.sortingController
+      blockly: Controllers.blockly.blocklyController
     },
     sensors: Object.values(AvailableSensors),
     actuators: Object.values(AvailableActuators),
