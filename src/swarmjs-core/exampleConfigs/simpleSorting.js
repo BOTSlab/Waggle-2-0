@@ -7,13 +7,14 @@ import {
 } from '..';
 
 const simConfig = {
+  type: 'sorting',
   env: {
     width: 800,
     height: 500,
     speed: 15
   },
   robots: {
-    count: 2,
+    count: 5,
     radius: 10,
     controllers: {
       blockly: Controllers.blockly.blocklyController

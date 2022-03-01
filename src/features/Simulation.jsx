@@ -12,7 +12,8 @@ import {
   resetSimulation,
   togglePauseSimulation,
   setSimulationSpeed,
-  updateCode
+  updateCode,
+  unpauseSimulation
 } from '../swarmjs-core';
 
 import {
@@ -23,13 +24,14 @@ import {
   getRenderingElements
 } from '../swarmjs-core/rendering/renderer';
 
-const Simulation = ({ config, benchSettings, code }) => {
+const Simulation = ({ simConfig, benchSettings, blocklyCode, JSCode, isBlocklyWorkspace }) => {
   const [uiEnabled, setUiEnabled] = React.useState(false);
   const [time, setTime] = React.useState(0);
   const [speed, setSpeed] = React.useState(0);
-  const [paused, setPaused] = React.useState(false);
+  const [paused, setPaused] = React.useState(true);
   const [benchmarkData, setBenchmarkData] = React.useState({});
   const svgRef = React.useRef(null);
+  const config = simConfig;
 
   const onSpeedChange = (newSpeed) => {
     const speedNumber = parseFloat(newSpeed);
@@ -57,19 +59,28 @@ const Simulation = ({ config, benchSettings, code }) => {
     setPaused(!paused);
   };
 
+  const onUnpause = () => {
+    setPaused(false);
+    unpauseSimulation();
+  };
+
   React.useEffect(() => {
     // Initialize the simulation when the component mounts
-    initializeSimulation(config, onUpdate, code);
+    initializeSimulation(config, onUpdate, blocklyCode, JSCode, true);
   }, []);
 
   React.useEffect(() => {
-    updateCode(code);
-  }, [code]);
+    updateCode(blocklyCode, JSCode, isBlocklyWorkspace);
+    if (blocklyCode.includes('execute') || JSCode.includes('execute')) {
+      onUnpause();
+    }
+  }, [blocklyCode, JSCode, isBlocklyWorkspace]);
 
   const initialized = simulationIsInitialized();
 
   const optionsElem = initialized ? (
     <Options
+      config={config}
       time={time}
       speed={speed}
       paused={paused}
@@ -127,9 +138,11 @@ const Simulation = ({ config, benchSettings, code }) => {
 };
 
 Simulation.propTypes = {
-  config: PropTypes.object.isRequired,
+  simConfig: PropTypes.object.isRequired,
   benchSettings: PropTypes.object.isRequired,
-  code: PropTypes.string.isRequired
+  blocklyCode: PropTypes.string.isRequired,
+  JSCode: PropTypes.string.isRequired,
+  isBlocklyWorkspace: PropTypes.bool.isRequired
 };
 
 export default Simulation;

@@ -118,29 +118,6 @@ Blockly.JavaScript.robot_angular_speed = (block) => {
   return `robot.setAngularVelocity(${angularSpeed});\n`;
 };
 
-Blockly.Blocks.robot_hold_speed = {
-  init() {
-    this.appendDummyInput()
-      .appendField('Hold speed for')
-      .appendField(new Blockly.FieldNumber(0, 0), 'holdTime')
-      .appendField('milliseconds');
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setColour(105);
-    this.setTooltip("Maintain the robot's speed for the specified time interval.  As other robot commands, the speed will only be held once the Execute command is reached.");
-    this.setHelpUrl('');
-  }
-};
-
-Blockly.JavaScript.robot_hold_speed = (block) => {
-  let numberHoldTime = parseInt(block.getFieldValue('holdTime'), 10);
-
-  if (Number.isNaN(numberHoldTime)) {
-    numberHoldTime = 0;
-  }
-  return `holdTime = ${numberHoldTime};\n`;
-};
-
 Blockly.Blocks.robot_set_text = {
   init() {
     this.appendDummyInput()
@@ -156,7 +133,7 @@ Blockly.Blocks.robot_set_text = {
 
 Blockly.JavaScript.robot_set_text = (block) => {
   const textText = block.getFieldValue('text');
-  const code = `textMessage = "${textText}";\n`;
+  const code = `robot.updateText("${textText}");\n`;
   return code;
 };
 
@@ -175,7 +152,7 @@ Blockly.Blocks.robot_set_text_variable = {
 
 Blockly.JavaScript.robot_set_text_variable = (block) => {
   const dropdownVariableName = block.getFieldValue('variableName');
-  const code = `textMessage = ${dropdownVariableName};\n`;
+  const code = `robot.updateText('${dropdownVariableName}');\n`;
   return code;
 };
 

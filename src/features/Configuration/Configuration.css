@@ -1,9 +1,44 @@
 .simulation-area {
   display: flex;
+  flex-direction: column;
 }
 
-.blockly {
+.code-area {
+  display: flex;
+  justify-content: center;
+}
+
+.code {
   height: 500px;
   width: 650px;
-  margin-top: 50px;
+}
+
+.load-button {
+  margin-bottom: 10px;
+  margin-right: 20px;
+}
+
+.execute-button {
+  margin-bottom: 10px;
+  margin-left: 20px;
+}
+
+.save-as-button {
+  height: 32px;
+  width: 100px;
+}
+
+.javascript-button {
+  height: 32px;
+  width: 160px;
+  margin-left: 20px;
+}
+
+.file-name-input {
+  height: 32px;
+  width: 150px;
+}
+
+.simulation-buttons {
+  display: flex;
 }

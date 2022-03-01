@@ -1,184 +1,3 @@
-export const preclusteringConfig = {
-  kind: 'categoryToolbox',
-  contents: [
-    {
-      kind: 'category',
-      name: 'Sensors',
-      color: '#5C81A6',
-      contents: [
-        {
-          kind: 'block',
-          type: 'robot_forward_obstacle'
-        },
-        {
-          kind: 'block',
-          type: 'robot_left_obstacle'
-        },
-        {
-          kind: 'block',
-          type: 'robot_right_obstacle'
-        },
-        {
-          kind: 'block',
-          type: 'robot_backward_obstacle'
-        },
-        {
-          kind: 'block',
-          type: 'robot_puck_held'
-        },
-        {
-          kind: 'block',
-          type: 'robot_closest_puck'
-        },
-        {
-          kind: 'block',
-          type: 'robot_within_goal_zone'
-        }
-      ]
-    },
-    {
-      kind: 'category',
-      name: 'Actions',
-      color: '#5C81A6',
-      contents: [
-        {
-          kind: 'block',
-          type: 'robot_linear_speed'
-        },
-        {
-          kind: 'block',
-          type: 'robot_angular_speed'
-        },
-        {
-          kind: 'block',
-          type: 'robot_hold_speed'
-        },
-        {
-          kind: 'block',
-          type: 'robot_set_text'
-        },
-        {
-          kind: 'block',
-          type: 'robot_set_text_variable'
-        },
-        {
-          kind: 'block',
-          type: 'robot_activate_gripper'
-        },
-        {
-          kind: 'block',
-          type: 'robot_deactivate_gripper'
-        },
-        {
-          kind: 'block',
-          type: 'robot_execute'
-        }
-      ]
-    },
-    {
-      kind: 'category',
-      name: 'Memory',
-      color: '#5C81A6',
-      contents: [
-        {
-          kind: 'block',
-          type: 'robot_get_variable'
-        },
-        {
-          kind: 'block',
-          type: 'robot_set_variable'
-        },
-        {
-          kind: 'block',
-          type: 'robot_change_variable'
-        }
-      ]
-    },
-    {
-      kind: 'category',
-      name: 'Logic',
-      color: '#5C81A6',
-      contents: [
-        {
-          kind: 'block',
-          type: 'controls_if'
-        },
-        {
-          kind: 'block',
-          type: 'logic_compare'
-        },
-        {
-          kind: 'block',
-          type: 'logic_operation'
-        },
-        {
-          kind: 'block',
-          type: 'logic_negate'
-        },
-        {
-          kind: 'block',
-          type: 'logic_boolean'
-        },
-        {
-          kind: 'block',
-          type: 'logic_ternary'
-        }
-      ]
-    },
-    {
-      kind: 'category',
-      name: 'Math',
-      color: '#5C81A6',
-      contents: [
-        {
-          kind: 'block',
-          type: 'math_number'
-        },
-        {
-          kind: 'block',
-          type: 'math_single'
-        },
-        {
-          kind: 'block',
-          type: 'math_number'
-        },
-        {
-          kind: 'block',
-          type: 'math_trig'
-        },
-        {
-          kind: 'block',
-          type: 'math_constant'
-        },
-        {
-          kind: 'block',
-          type: 'math_number_property'
-        },
-        {
-          kind: 'block',
-          type: 'math_arithmetic'
-        },
-        {
-          kind: 'block',
-          type: 'math_modulo'
-        },
-        {
-          kind: 'block',
-          type: 'math_constrain'
-        },
-        {
-          kind: 'block',
-          type: 'math_random_int'
-        },
-        {
-          kind: 'block',
-          type: 'math_random_float'
-        }
-      ]
-    }
-  ]
-};
-
 export const clusteringConfig = {
   kind: 'categoryToolbox',
   contents: [
@@ -232,10 +51,6 @@ export const clusteringConfig = {
         },
         {
           kind: 'block',
-          type: 'robot_hold_speed'
-        },
-        {
-          kind: 'block',
           type: 'robot_set_text'
         },
         {
@@ -283,6 +98,10 @@ export const clusteringConfig = {
         {
           kind: 'block',
           type: 'controls_if'
+        },
+        {
+          kind: 'block',
+          type: 'controls_whileUntil'
         },
         {
           kind: 'block',
@@ -386,15 +205,15 @@ export const sortingConfig = {
         },
         {
           kind: 'block',
-          type: 'robot_puck_held'
+          type: 'robot_puck_held_sorting'
         },
         {
           kind: 'block',
-          type: 'robot_closest_puck'
+          type: 'robot_closest_puck_sorting'
         },
         {
           kind: 'block',
-          type: 'robot_within_goal_zone'
+          type: 'robot_within_goal_zone_sorting'
         }
       ]
     },
@@ -410,10 +229,6 @@ export const sortingConfig = {
         {
           kind: 'block',
           type: 'robot_angular_speed'
-        },
-        {
-          kind: 'block',
-          type: 'robot_hold_speed'
         },
         {
           kind: 'block',
@@ -464,6 +279,10 @@ export const sortingConfig = {
         {
           kind: 'block',
           type: 'controls_if'
+        },
+        {
+          kind: 'block',
+          type: 'controls_whileUntil'
         },
         {
           kind: 'block',
@@ -586,10 +405,6 @@ export const firefliesConfig = {
         },
         {
           kind: 'block',
-          type: 'robot_hold_speed'
-        },
-        {
-          kind: 'block',
           type: 'robot_set_text'
         },
         {
@@ -637,6 +452,10 @@ export const firefliesConfig = {
         {
           kind: 'block',
           type: 'controls_if'
+        },
+        {
+          kind: 'block',
+          type: 'controls_whileUntil'
         },
         {
           kind: 'block',
@@ -779,10 +598,6 @@ export const pheromonesConfig = {
         },
         {
           kind: 'block',
-          type: 'robot_hold_speed'
-        },
-        {
-          kind: 'block',
           type: 'robot_set_text'
         },
         {
@@ -826,6 +641,10 @@ export const pheromonesConfig = {
         {
           kind: 'block',
           type: 'controls_if'
+        },
+        {
+          kind: 'block',
+          type: 'controls_whileUntil'
         },
         {
           kind: 'block',

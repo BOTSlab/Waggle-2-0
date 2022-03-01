@@ -18,6 +18,7 @@ class PuckGoalAreaSensor extends Sensor {
         curGoalArea = group.color;
       }
     });
+    // this.robot.setAngularVelocity(0);
     this.value = curGoalArea;
   }
 }
