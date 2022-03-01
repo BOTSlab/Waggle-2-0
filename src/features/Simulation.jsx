@@ -11,7 +11,8 @@ import {
   simulationIsInitialized,
   resetSimulation,
   togglePauseSimulation,
-  setSimulationSpeed
+  setSimulationSpeed,
+  updateCode
 } from '../swarmjs-core';
 
 import {
@@ -22,10 +23,10 @@ import {
   getRenderingElements
 } from '../swarmjs-core/rendering/renderer';
 
-const Simulation = ({ config, benchSettings }) => {
+const Simulation = ({ config, benchSettings, code }) => {
   const [uiEnabled, setUiEnabled] = React.useState(false);
   const [time, setTime] = React.useState(0);
-  const [speed, setSpeed] = React.useState(1);
+  const [speed, setSpeed] = React.useState(0);
   const [paused, setPaused] = React.useState(false);
   const [benchmarkData, setBenchmarkData] = React.useState({});
   const svgRef = React.useRef(null);
@@ -39,12 +40,14 @@ const Simulation = ({ config, benchSettings }) => {
   const reset = (newConfig = config) => {
     resetRenderer();
     resetSimulation(newConfig);
-    onSpeedChange(newConfig.env.speed);
+    onSpeedChange(1);
     setPaused(false);
   };
 
   const onUpdate = (newTime, scene, benchData) => {
-    setTime(newTime);
+    if (!scene.paused) {
+      setTime(newTime);
+    }
     renderScene(svgRef.current, scene);
     setBenchmarkData(benchData);
   };
@@ -56,8 +59,12 @@ const Simulation = ({ config, benchSettings }) => {
 
   React.useEffect(() => {
     // Initialize the simulation when the component mounts
-    initializeSimulation(config, onUpdate);
+    initializeSimulation(config, onUpdate, code);
   }, []);
+
+  React.useEffect(() => {
+    updateCode(code);
+  }, [code]);
 
   const initialized = simulationIsInitialized();
 
@@ -121,7 +128,8 @@ const Simulation = ({ config, benchSettings }) => {
 
 Simulation.propTypes = {
   config: PropTypes.object.isRequired,
-  benchSettings: PropTypes.object.isRequired
+  benchSettings: PropTypes.object.isRequired,
+  code: PropTypes.string.isRequired
 };
 
 export default Simulation;

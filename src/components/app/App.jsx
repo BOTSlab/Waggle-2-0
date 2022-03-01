@@ -1,12 +1,13 @@
 import React from 'react';
 import { Routes, Route } from 'react-router-dom';
 import './App.css';
+import * as blocklyConfig from '../BlocklyBlocks/index';
 
 import Navigation from '../../features/Navigation';
-import Simulation from '../../features/Simulation';
 import About from '../../features/About/About';
 import Tutorial from '../../features/Tutorial';
 import SimulationDescription from '../../features/SimulationDescription/SimulationDescription';
+import Configuration from '../../features/Configuration/Configuration';
 import { exampleConfigs } from '../../swarmjs-core';
 
 export default function App() {
@@ -20,11 +21,11 @@ export default function App() {
         <Route path="/" element={<About />} />
         <Route path="/tutorial" element={<Tutorial />} />
         <Route path="/simulations" element={<SimulationDescription />} />
-        <Route path="/simulations/preclustering" element={<Simulation config={simConfig} benchSettings={benchmarkConfig} />} />
-        <Route path="/simulations/clustering" element={<Simulation config={simConfig} benchSettings={benchmarkConfig} />} />
-        <Route path="/simulations/sorting" element={<Simulation config={simConfig} benchSettings={benchmarkConfig} />} />
-        <Route path="/simulations/fireflies" element={<Simulation config={simConfig} benchSettings={benchmarkConfig} />} />
-        <Route path="/simulations/pheromones" element={<Simulation config={simConfig} benchSettings={benchmarkConfig} />} />
+        <Route path="/simulations/preclustering" element={<Configuration simConfig={simConfig} benchSettings={benchmarkConfig} blocklyConfig={blocklyConfig.preclusteringConfig} />} />
+        <Route path="/simulations/clustering" element={<Configuration simConfig={simConfig} benchSettings={benchmarkConfig} blocklyConfig={blocklyConfig.clusteringConfig} />} />
+        <Route path="/simulations/sorting" element={<Configuration simConfig={simConfig} benchSettings={benchmarkConfig} blocklyConfig={blocklyConfig.sortingConfig} />} />
+        <Route path="/simulations/fireflies" element={<Configuration simConfig={simConfig} benchSettings={benchmarkConfig} blocklyConfig={blocklyConfig.firefliesConfig} />} />
+        <Route path="/simulations/pheromones" element={<Configuration simConfig={simConfig} benchSettings={benchmarkConfig} blocklyConfig={blocklyConfig.pheromonesConfig} />} />
       </Routes>
     </div>
   );

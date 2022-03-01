@@ -18,15 +18,15 @@ module.exports = {
         use: ['style-loader', 'css-loader']
       },
       {
-        test: /\.(js|jsx)$/,
+        test: /\.(js|jsx|ts|tsx)$/,
         resolve: {
-          extensions: ['.js', '.jsx']
+          extensions: ['.js', '.jsx', '.ts', '.tsx']
         },
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env', '@babel/preset-react']
+            presets: ['@babel/preset-env', '@babel/preset-react', '@babel/preset-typescript']
           }
         }
       }
@@ -36,7 +36,7 @@ module.exports = {
     historyApiFallback: true
   },
   resolve: {
-    extensions: ['.js', '.jsx']
+    extensions: ['.ts', '.tsx', '.js', '.jsx']
   },
   plugins: [
     new HtmlWebpackPlugin({
