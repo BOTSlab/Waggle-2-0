@@ -22,7 +22,8 @@ const createSimulation = (config, updateCallback, code) => {
     config.algorithm,
     config.positionsGenerator,
     gMaps,
-    code
+    code,
+    config.colour
   );
 
   const renderScene = () => {
@@ -55,7 +56,8 @@ export const resetSimulation = (config) => {
     config.objects,
     config.algorithm,
     config.positionsGenerator,
-    gMaps
+    gMaps,
+    config.colour
   );
 };
 
@@ -77,6 +79,9 @@ export const isBenchmarking = () => benchmarkingActive();
 export const togglePauseSimulation = () => scene.togglePause();
 
 export const setSimulationSpeed = (speed) => scene.setSpeed(speed);
+
+//export const setColour = () => scene.setColour();
+
 
 export { AvailableActuators } from './robot/actuators/actuatorsManager';
 export { AvailableSensors } from './robot/sensors/sensorManager';

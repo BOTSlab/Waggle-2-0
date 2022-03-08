@@ -25,7 +25,7 @@ const renderables = [
   { module: 'Robot', rendList: RobotRenderables }
 ];
 
-const uniqueRenderingElements = ['All', ...new Set(renderables
+const uniqueRenderingElements = ['Toggle Colour','All', ...new Set(renderables
   .map((renderable) => renderable.rendList.map(
     (def) => getUniqueELementType(renderable.module, def.type)
   ))
@@ -78,7 +78,7 @@ export function renderScene(curSvgEl, curScene) {
     initialize(svg, scene);
   }
 
-  if (!activeElements.includes('All')) {
+  if (!activeElements.includes('Toggle Colour','All')) {
     return;
   }
 

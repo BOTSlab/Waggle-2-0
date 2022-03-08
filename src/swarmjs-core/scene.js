@@ -9,6 +9,8 @@ import generateStaticObject from './staticObjects/staticObjectFactory';
 import { mapSceneToArr, getPucksGoalMap } from './distanceTransform/globalPlanning';
 import { getEnvBoundaryObjects } from './utils/matter';
 
+import { colours } from './rendering/colours';
+
 export default class Scene {
   constructor(
     envConfig,
@@ -19,12 +21,16 @@ export default class Scene {
     positionsGenerator,
     gMaps,
     // eslint-disable-next-line no-unused-vars
-    code
+    code,
+    colour,
+    //colours
   ) {
     this.numOfRobots = robotsConfig.count;
     this.robotRadius = robotsConfig.radius;
     this.useVoronoi = robotsConfig.useVoronoiDiagram;
     this.pucksGroups = pucksConfigs.groups;
+    this.colour = colour;
+    
     this.numOfPucks = this.pucksGroups.reduce((total, puckGroup) => total + puckGroup.count, 0);
 
     this.width = parseInt(envConfig.width, 10);
@@ -141,11 +147,26 @@ export default class Scene {
       }
       this.robots.forEach((r) => { r.updateVelocityScale(scale); });
     };
+    
+    
+    // this.setColour = () => {
+      
+      
+    //   this.colour = true;
+        
+    //   }
+      
+      
+        // console.log(colours);
+        // colour = colours.colours.palette;
+      
+    
 
     this.togglePause.bind(this);
     this.pause.bind(this);
     this.unpause.bind(this);
     this.setSpeed.bind(this);
+    //this.setColour.bind(this);
 
     this.setSpeed(1);
   }

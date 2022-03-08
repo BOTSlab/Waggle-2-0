@@ -6,6 +6,8 @@ import TabContainer from '../components/Containers/TabContainer';
 import Options from '../components/Options/index';
 import Benchmark from '../components/Benchmark';
 
+import { colours } from '../swarmjs-core/rendering/colours';
+
 import {
   initializeSimulation,
   simulationIsInitialized,
@@ -29,6 +31,10 @@ const Simulation = ({ config, benchSettings, code }) => {
   const [speed, setSpeed] = React.useState(0);
   const [paused, setPaused] = React.useState(false);
   const [benchmarkData, setBenchmarkData] = React.useState({});
+  const [toggleColour, setToggleColour] = React.useState(false);
+  const [colour, setColour] = React.useState(['red', 'blue']);
+  
+  
   const svgRef = React.useRef(null);
 
   const onSpeedChange = (newSpeed) => {
@@ -56,6 +62,11 @@ const Simulation = ({ config, benchSettings, code }) => {
     togglePauseSimulation();
     setPaused(!paused);
   };
+  
+  const onToggleColour = () => {
+    setToggleColour(!toggleColour);
+    setColour(colours.colours.palette);
+  };
 
   React.useEffect(() => {
     // Initialize the simulation when the component mounts
@@ -78,6 +89,8 @@ const Simulation = ({ config, benchSettings, code }) => {
       reset={reset}
       renderingElements = {getRenderingElements()}
       setElementEnabled={setElementEnabled}
+      toggleColour={onToggleColour}
+      colour={colour}
     />
   ) : <></>;
 

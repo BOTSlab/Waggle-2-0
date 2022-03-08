@@ -14,7 +14,8 @@ const Options = ({
   reset,
   renderingElements,
   setElementEnabled,
-  time
+  time,
+  colour
 }) => (
   <>
     {/* <SimActions reset={reset} paused={paused} togglePause={togglePause} /> */}
@@ -35,7 +36,8 @@ Options.propTypes = {
   reset: propTypes.func.isRequired,
   renderingElements: propTypes.array.isRequired,
   setElementEnabled: propTypes.func.isRequired,
-  time: propTypes.number
+  time: propTypes.number,
+  colour: propTypes.string
 };
 
 export default Options;

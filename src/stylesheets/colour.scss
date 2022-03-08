@@ -1,0 +1,34 @@
+// Accessible Palettes from:
+// https://davidmathlogic.com/colorblind/#%23000000-%23E69F00-%2356B4E9-%23009E73-%23F0E442-%230072B2-%23D55E00-%23CC79A7
+
+
+$colours:(
+	// palette:(
+		yellow: #FFC20A,
+		blue: #0C7BDC,
+	// ),
+	// palette0:(
+	// 	1: #E66100,
+	// 	2: #5D3A9B,
+	// ),
+	// palette-2:(
+	// 	1: #1AFF1A,
+	// 	2: #4b0092,
+	// ),
+	// palette-3:(
+	// 	1: #FEFE62,
+	// 	2: #D35FB7,
+	// ),
+	// palette-4:(
+	// 	1: #005AB5,
+	// 	2: #DC3220,
+	// ),
+	// palette-5:(
+	// 	1: #1a85ff,
+	// 	2: #D41159,
+	// ),
+);
+
+:export {
+	colours: $colours,
+}

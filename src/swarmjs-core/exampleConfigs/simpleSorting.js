@@ -3,8 +3,12 @@ import {
   AvailableSensors,
   PositionsGenerators,
   PerformanceTrakers,
-  Controllers
+  Controllers,
+  //setColour,
+  colour
 } from '..';
+
+console.log(setColour)
 
 const simConfig = {
   env: {
@@ -30,7 +34,10 @@ const simConfig = {
         radius: 7,
         goal: { x: 150, y: 250 },
         goalRadius: 7 * 12,
-        color: 'red'
+        // this is where tbe puck colour is defined
+        color: colour[0]
+        
+        
       },
       {
         id: 1,
