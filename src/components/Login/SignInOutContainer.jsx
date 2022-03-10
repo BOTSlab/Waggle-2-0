@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Login from './Login'
 import Account from './NewAccount'
+import {paperStyleContainer} from './loginStyles'
 
 
 const TabPanel = (props) => {
@@ -28,7 +29,6 @@ const TabPanel = (props) => {
 	);
 }
 
-
 const SignInOutContainer = () => {
 	
 	const [value,setValue]=useState(0)
@@ -36,10 +36,10 @@ const SignInOutContainer = () => {
 		setValue(newValue);
 	};
 
-	const paperStyle = {width:340,margin:"20px auto"};
+
 	
 		return (
-			<Paper elevation={20} style={paperStyle}>
+			<Paper elevation={20} style={paperStyleContainer}>
 			<Tabs
 				value={value}
 				indicatorColor="primary"

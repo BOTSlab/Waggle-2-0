@@ -7,13 +7,13 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 
 import { useAuth } from '../Contexts/AuthContext';
+import { useNavigate } from 'react-router-dom'
+
+import { paperStyleLogin, headerStyle, avatarStyleLogin, marginTop } from './loginStyles'
 
 const NewAccount = () => {
 	
-	const paperStyle = { padding: 20, width: 300,height:'60vh', margin: "0 auto" }
-	const headerStyle = { margin: 0 }
-	const avatarStyle = { backgroundColor: '#1bbd7e' }
-	const marginTop = { marginTop: 5 }
+	
 	
 	const emailRef = useRef();
 	const passwordRef = useRef();
@@ -21,30 +21,30 @@ const NewAccount = () => {
 	const { signup } = useAuth();
 	const [error, setError] = useState('');
 	const [loading, setLoading] = useState(false);
+	const history = useNavigate();
 	
 	
-	const handleSubmit = (event) => {
-		event.preventDefault();
-		console.log('PASWORDS',passwordConfirmRef.current.value, passwordRef.current.value);
-		
+	async function handleSubmit(event){
+		event.preventDefault();		
 		if(passwordRef.current.value !== passwordConfirmRef.current.value) {
 			return setError('Passwords do not match');
 		}
 		
 		try {
 			setError('')
-			setLoading(true);
-			signup(emailRef.current.value, passwordRef.current.value);
-		} catch {
-			setError('failed to create an account');
+		//	setLoading(true);
+			await signup(emailRef.current.value, passwordRef.current.value);
+			history('/');
+		} catch(error) {
+			setError(error.message);
 		}
 	}
 	
 	return (
 		<Grid>
-			<Paper style={paperStyle}>
+			<Paper style={paperStyleLogin}>
 				<Grid align='center'>
-					<Avatar style={avatarStyle}>
+					<Avatar style={avatarStyleLogin}>
 						<AddCircleOutlineOutlinedIcon />
 					</Avatar>
 					<h2 style={headerStyle}>Sign Up</h2>
