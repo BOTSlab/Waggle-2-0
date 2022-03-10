@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import * as d3 from 'd3';
-import { Engine, World } from 'matter-js';
+import { Engine, World, Bodies, Matter } from 'matter-js';
 import { Delaunay } from 'd3-delaunay';
 
 import Robot from './robot/robot';
@@ -8,6 +8,7 @@ import Puck from './puck';
 import generateStaticObject from './staticObjects/staticObjectFactory';
 import { mapSceneToArr, getPucksGoalMap } from './distanceTransform/globalPlanning';
 import { getEnvBoundaryObjects } from './utils/matter';
+import RenderingSettings from '../components/Options/RenderingSettings';
 
 export default class Scene {
   constructor(
@@ -17,8 +18,13 @@ export default class Scene {
     staticObjectsDefinitions,
     algorithm,
     positionsGenerator,
-    gMaps
+    gMaps,
+    addCircle,
+    addRect
   ) {
+    
+    this.newCircle = addCircle;
+    this.newRect = addRect;
     this.numOfRobots = robotsConfig.count;
     this.robotRadius = robotsConfig.radius;
     this.useVoronoi = robotsConfig.useVoronoiDiagram;
@@ -139,13 +145,17 @@ export default class Scene {
       }
       this.robots.forEach((r) => { r.velocityScale = scale; });
     };
+    
+   
 
     this.togglePause.bind(this);
     this.pause.bind(this);
     this.unpause.bind(this);
     this.setSpeed.bind(this);
 
+
     this.setSpeed(envConfig.speed);
+
   }
 
   update() {
@@ -176,6 +186,22 @@ export default class Scene {
   getCurGoalsPos() {
     return this.robots.map((r) => r.goal);
   }
+  
+  getCurObstaclePos() {
+    return this.staticObjects.map((r) => r.position);
+  }
+  
+  get position() {
+    return {
+      x: this.body.center.x,
+      y: this.body.center.y
+    };
+  }
+
+  set position(val) {
+    Body.set(this.body, 'center', { x: val?.x || null, y: val?.y || null });
+  }
+
 
   initializeRobotsRange(
     numOfRobots, radius, controllers, sensors, actuators, envWidth, envHeight, algorithm
@@ -220,6 +246,11 @@ export default class Scene {
 
     return pucks;
   }
+  
+  
+  
+  
+
 }
 
 export const SceneRenderables = [
@@ -232,13 +263,15 @@ export const SceneRenderables = [
     }, // property of scene
     shape: 'rect',
     staticAttrs: {
+      x: { prop: 'left' },
+      y: { prop: 'top' },
       width: { prop: 'width' },
       height: { prop: 'height' }
     },
-    dynamicAttrs: {
-      x: { prop: 'center.x' },
-      y: { prop: 'center.y' }
-    },
+    // dynamicAttrs: {
+    //   x: { prop: 'center.x' },
+    //   y: { prop: 'center.y' }
+    // },
     styles: {
       fill: '#000000'
     },
@@ -293,5 +326,5 @@ export const SceneRenderables = [
         }
       }
     }
-  }
+  },
 ];

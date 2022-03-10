@@ -6,6 +6,9 @@ import TabContainer from './Containers/TabContainer';
 import Options from './Options/index';
 import Benchmark from './Benchmark';
 
+import ObstaclePool from '../swarmjs-core/obstaclePool/ObstaclePool'
+
+
 import {
   initializeSimulation,
   simulationIsInitialized,
@@ -63,6 +66,7 @@ const App = ({ config, benchSettings }) => {
 
   const optionsElem = initialized ? (
     <Options
+      config={config}
       time={time}
       speed={speed}
       paused={paused}
@@ -106,6 +110,8 @@ const App = ({ config, benchSettings }) => {
         simConfig={config}
         benchSettings={benchSettings}
         />
+        
+  
       <div style={{ width: '100%', textAlign: 'center' }}>
         <svg
           ref={svgRef}
@@ -114,6 +120,7 @@ const App = ({ config, benchSettings }) => {
           style={{ border: '#bfbebe solid 3px' }}
         />
       </div>
+      
       {ui}
     </div>
   );

@@ -56,42 +56,42 @@ const simConfig = {
     useGlobalPuckMaps: true
   },
   objects: [
-    {
-      type: 'rectangle',
-      center: { x: 400, y: 100 },
-      width: 50,
-      height: 225
-    },
-    {
-      type: 'rectangle',
-      center: { x: 550, y: 225 },
-      width: 350,
-      height: 50
-    },
-    {
-      type: 'rectangle',
-      center: { x: 750, y: 100 },
-      width: 350,
-      height: 50
-    },
+    // {
+    //   type: 'rectangle',
+    //   center: { x: 400, y: 100 },
+    //   width: 50,
+    //   height: 225
+    // },
+    // {
+    //   type: 'rectangle',
+    //   center: { x: 550, y: 225 },
+    //   width: 350,
+    //   height: 50
+    // },
+    // {
+    //   type: 'rectangle',
+    //   center: { x: 750, y: 100 },
+    //   width: 350,
+    //   height: 50
+    // },
     {
       type: 'circle',
       center: { x: 100, y: 150 },
       radius: 50,
       skipOrbit: true
     },
-    {
-      type: 'rectangle',
-      center: { x: 350, y: 425 },
-      width: 50,
-      height: 150
-    },
-    {
-      type: 'rectangle',
-      center: { x: 250, y: 375 },
-      width: 250,
-      height: 50
-    }
+    // {
+    //   type: 'rectangle',
+    //   center: { x: 350, y: 425 },
+    //   width: 50,
+    //   height: 150
+    // },
+    // {
+    //   type: 'rectangle',
+    //   center: { x: 250, y: 375 },
+    //   width: 250,
+    //   height: 50
+    // }
   ],
   positionsGenerator: PositionsGenerators.randomCollisionFree
 };
