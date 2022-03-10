@@ -56,6 +56,7 @@ export default class Robot {
     this.scene = scene;
     this.engine = this.scene.engine;
     this.world = this.scene.world;
+    this.text = '';
 
     // Create Matter.js body and attach it to world
     const compoundBody = Body.create({
@@ -159,6 +160,10 @@ export default class Robot {
     if (this.actuate && typeof this.actuate === 'function') {
       this.actuate(this.sensors, this.actuators);
     }
+  }
+
+  setText(newText) {
+    this.text = newText;
   }
 
   setVelocities({ linearVel, angularVel }) {
@@ -411,6 +416,28 @@ const bodyRenderables = [
       'fill-opacity': 1
     }
   }
+  // {
+  //   type: 'Body',
+  //   svgClass: 'robot-text',
+  //   desc: 'Text above robot',
+  //   dataPoints: { sceneProp: 'robots' },
+  //   shape: 'rectangle',
+  //   staticAttrs: {
+  //     id: { prop: 'id' }
+  //   },
+  //   dynamicAttrs: {
+  //     points: [
+  //       { prop: 'sensors.position.x' },
+  //       { prop: 'sensors.position.y' }
+  //     ]
+  //   },
+  //   styles: {
+  //     fill: 'none',
+  //     stroke: 'black',
+  //     'stroke-width': 3,
+  //     'stroke-opacity': 1,
+  //     'fill-opacity': 1
+  //   }
 ];
 
 const sensorsRenderables = [

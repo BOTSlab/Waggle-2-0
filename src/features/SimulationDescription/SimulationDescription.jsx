@@ -9,9 +9,6 @@ export default function SimulationDescription() {
       <span>Waggle has a number of different levels focussing on
         different problems studied in Swarm Robotics.</span>
       <span>Try out the different simulations below to learn more!</span>
-      <Link to="preclustering">
-        <span>Pre-clustering</span>
-      </Link>
       <Link to="clustering">
         <span>Clustering</span>
       </Link>

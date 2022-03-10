@@ -36,6 +36,7 @@ class GrapperActuator extends Actuator {
     });
     this.constraints.push({ constraint, puck });
     World.add(this.scene.world, constraint);
+    this.robot.setAngularVelocity(0);
 
     // Set the puck as held
     puck.held = true;

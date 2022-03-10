@@ -23,11 +23,6 @@ export default function Navigation() {
         </Link>
       </Menu.Item>
       <SubMenu key='simulations' title='Simulations'>
-        <Menu.Item key='preclustering'>
-          <Link to="/simulations/preclustering">
-            <span>Pre-clustering</span>
-          </Link>
-        </Menu.Item>
         <Menu.Item key='clustering'>
           <Link to="/simulations/clustering">
             <span>Clustering</span>

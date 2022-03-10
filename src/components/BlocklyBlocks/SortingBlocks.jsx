@@ -1,11 +1,10 @@
 import Blockly from 'blockly';
 
-// These blocks are used for the Pre-clustering, Clustering and
 // Sorting configurations
 
 // SENSORS SORTING BLOCKS
 
-Blockly.Blocks.robot_within_goal_zone = {
+Blockly.Blocks.robot_within_goal_zone_sorting = {
   init() {
     this.appendDummyInput()
       .appendField('Within')
@@ -18,13 +17,13 @@ Blockly.Blocks.robot_within_goal_zone = {
   }
 };
 
-Blockly.JavaScript.robot_within_goal_zone = (block) => {
+Blockly.JavaScript.robot_within_goal_zone_sorting = (block) => {
   const dropdownPuckColor = block.getFieldValue('puckColour');
   const code = `sensors.puckGoalAreaSensor === '${dropdownPuckColor}'`;
   return [code, Blockly.JavaScript.ORDER_NONE];
 };
 
-Blockly.Blocks.robot_closest_puck = {
+Blockly.Blocks.robot_closest_puck_sorting = {
   init() {
     this.appendDummyInput()
       .appendField(new Blockly.FieldDropdown([['Red', 'red'], ['Blue', 'blue']]), 'puckColour')
@@ -36,13 +35,13 @@ Blockly.Blocks.robot_closest_puck = {
   }
 };
 
-Blockly.JavaScript.robot_closest_puck = (block) => {
+Blockly.JavaScript.robot_closest_puck_sorting = (block) => {
   const dropdownPuckColor = block.getFieldValue('puckColour');
   const code = `closestPuck && closestPuck.color === '${dropdownPuckColor}'`;
   return [code, Blockly.JavaScript.ORDER_NONE];
 };
 
-Blockly.Blocks.robot_puck_held = {
+Blockly.Blocks.robot_puck_held_sorting = {
   init() {
     this.appendDummyInput()
       .appendField(new Blockly.FieldDropdown([['Red', 'red'], ['Blue', 'blue']]), 'puckColour')
@@ -54,13 +53,13 @@ Blockly.Blocks.robot_puck_held = {
   }
 };
 
-Blockly.JavaScript.robot_puck_held = (block) => {
+Blockly.JavaScript.robot_puck_held_sorting = (block) => {
   const dropdownPuckColor = block.getFieldValue('puckColour');
   const code = `grappedPuck && grappedPuck.color === '${dropdownPuckColor}'`;
   return [code, Blockly.JavaScript.ORDER_NONE];
 };
 
-// ACTIONS SORTING BLOCKS
+// ACTIONS SORTING AND CLUSTERING BLOCKS
 
 Blockly.Blocks.robot_activate_gripper = {
   init() {
