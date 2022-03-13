@@ -5,10 +5,10 @@ import { InputNumber } from 'antd';
 
 import SpeedSlider from './SpeedSlider';
 import RenderingSettings from './RenderingSettings';
+import './index.css';
 
 import { Box, Grid, Button } from '@mui/material';
 
-import './index.css';
 
 export default function Options({
   config,
@@ -105,7 +105,7 @@ export default function Options({
           <span style={{ padding: 10 }}>Number of robots: </span>
           <InputNumber min={0} max={50} defaultValue={5} onChange={updateNumRobots} />
         </div>
-        <div className="config-input" style={{ display: 'flex' }}>
+        <div className="config-input" style={redPuckStyle}>
           <span style={{ padding: 10 }}>Number of red pucks: </span>
           <InputNumber min={0} max={50} defaultValue={20} onChange={updateNumRedPucks} />
         </div>

@@ -1,8 +1,8 @@
 .config-modifier {
-	display: flex;
-	padding-bottom: 20px;
-  }
-  
-  .config-input {
-	align-items: center;
-  } 
+  display: flex;
+  padding-bottom: 20px;
+}
+
+.config-input {
+  align-items: center;
+}

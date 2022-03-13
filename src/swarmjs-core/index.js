@@ -13,7 +13,7 @@ const gMaps = [];
 
 let scene;
 
-const createSimulation = (config, updateCallback) => {
+const createSimulation = (config, updateCallback, blocklyCode, JSCode, isBlocklyWorkspace) => {
   scene = new Scene(
     config.env,
     config.robots,
@@ -21,17 +21,18 @@ const createSimulation = (config, updateCallback) => {
     config.objects,
     config.algorithm,
     config.positionsGenerator,
-    gMaps
+    gMaps,
+    blocklyCode,
+    JSCode,
+    isBlocklyWorkspace
   );
 
   const renderScene = () => {
-    if (!scene.paused) {
-      scene.update();
-      updateBench(scene, scene.timeInstance);
-      if (updateCallback && typeof updateCallback === 'function') {
-        const benchData = getBenchData();
-        updateCallback(scene.timeInstance, scene, benchData);
-      }
+    scene.update();
+    updateBench(scene, scene.timeInstance);
+    if (updateCallback && typeof updateCallback === 'function') {
+      const benchData = getBenchData();
+      updateCallback(scene.timeInstance, scene, benchData);
     }
     requestAnimationFrame(renderScene);
   };
@@ -40,12 +41,14 @@ const createSimulation = (config, updateCallback) => {
 
 export const simulationIsInitialized = () => scene !== undefined;
 
-export const initializeSimulation = (config, updateCallback) => {
+export const initializeSimulation = (
+  config, updateCallback, blocklyCode, JSCode, isBlocklyWorkspace
+) => {
   if (scene) {
     return;
   }
   console.log('Creating Sim With Config: ', config);
-  createSimulation(config, updateCallback);
+  createSimulation(config, updateCallback, blocklyCode, JSCode, isBlocklyWorkspace);
 };
 
 export const resetSimulation = (config) => {
@@ -65,6 +68,12 @@ export const startBenchmark = (simConfig, benchConfig, resetSimCB) => {
   startBench(simConfig, benchConfig, resetSimFunc);
 };
 
+export const updateCode = (blocklyCode, JSCode, isBlocklyWorkspace) => {
+  scene.blocklyCode = blocklyCode;
+  scene.JSCode = JSCode;
+  scene.isBlocklyWorkspace = isBlocklyWorkspace;
+};
+
 export const stopBenchmark = () => stopBench();
 
 export const getBenchmarkData = () => getBenchData();
@@ -72,6 +81,8 @@ export const getBenchmarkData = () => getBenchData();
 export const isBenchmarking = () => benchmarkingActive();
 
 export const togglePauseSimulation = () => scene.togglePause();
+
+export const unpauseSimulation = () => scene.unpause();
 
 export const setSimulationSpeed = (speed) => scene.setSpeed(speed);
 
