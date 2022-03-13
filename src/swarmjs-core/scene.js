@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-param-reassign */
 import * as d3 from 'd3';
-import { Engine, World } from 'matter-js';
+import { Engine, World, Bodies, Matter } from 'matter-js';
 import { Delaunay } from 'd3-delaunay';
 
 import Robot from './robot/robot';
@@ -9,6 +9,7 @@ import Puck from './puck';
 import generateStaticObject from './staticObjects/staticObjectFactory';
 import { mapSceneToArr, getPucksGoalMap } from './distanceTransform/globalPlanning';
 import { getEnvBoundaryObjects } from './utils/matter';
+import RenderingSettings from '../components/Options/RenderingSettings';
 
 export default class Scene {
   constructor(
@@ -23,6 +24,8 @@ export default class Scene {
     JSCode,
     isBlocklyWorkspace
   ) {
+    
+    
     this.numOfRobots = robotsConfig.count;
     this.robotRadius = robotsConfig.radius;
     this.useVoronoi = robotsConfig.useVoronoiDiagram;
@@ -152,6 +155,8 @@ export default class Scene {
       }
       this.robots.forEach((r) => { r.updateVelocityScale(scale); });
     };
+    
+   
 
     this.togglePause.bind(this);
     this.pause.bind(this);
@@ -189,6 +194,22 @@ export default class Scene {
   getCurGoalsPos() {
     return this.robots.map((r) => r.goal);
   }
+  
+  getCurObstaclePos() {
+    return this.staticObjects.map((r) => r.position);
+  }
+  
+  get position() {
+    return {
+      x: this.body.center.x,
+      y: this.body.center.y
+    };
+  }
+
+  set position(val) {
+    Body.set(this.body, 'center', { x: val?.x || null, y: val?.y || null });
+  }
+
 
   initializeRobotsRange(
     numOfRobots, radius, controllers, sensors, actuators, envWidth, envHeight, algorithm
@@ -233,6 +254,11 @@ export default class Scene {
 
     return pucks;
   }
+  
+  
+  
+  
+
 }
 
 export const SceneRenderables = [
@@ -250,8 +276,28 @@ export const SceneRenderables = [
       width: { prop: 'width' },
       height: { prop: 'height' }
     },
+    // dynamicAttrs: {
+    //   x: { prop: 'center.x' },
+    //   y: { prop: 'center.y' }
+    // },
     styles: {
       fill: '#000000'
+    },
+    drag: {
+      prop: 'center',
+      pause: true,
+      onStart: {
+        styles: {
+          stroke: 'lightgray'
+        },
+        log: [
+        ]
+      },
+      onEnd: {
+        styles: {
+          stroke: 'black'
+        }
+      }
     }
   },
   {
@@ -263,12 +309,30 @@ export const SceneRenderables = [
     }, // property of scene
     shape: 'circle',
     staticAttrs: {
-      cx: { prop: 'center.x' },
-      cy: { prop: 'center.y' },
       r: { prop: 'radius' }
+    },
+    dynamicAttrs: {
+      cx: { prop: 'center.x' },
+      cy: { prop: 'center.y' }
     },
     styles: {
       fill: '#000000'
+    },
+    drag: {
+      prop: 'center',
+      pause: true,
+      onStart: {
+        styles: {
+          stroke: 'lightgray'
+        },
+        log: [
+        ]
+      },
+      onEnd: {
+        styles: {
+          stroke: 'black'
+        }
+      }
     }
-  }
+  },
 ];
