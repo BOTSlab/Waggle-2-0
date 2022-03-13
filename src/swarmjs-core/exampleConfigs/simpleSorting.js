@@ -7,23 +7,17 @@ import {
 } from '..';
 
 const simConfig = {
+  type: 'sorting',
   env: {
     width: 800,
     height: 500,
     speed: 15
   },
   robots: {
-    count: 10,
+    count: 5,
     radius: 10,
     controllers: {
-      actuators: Controllers.actuators.simpleSortingActuatorController,
-      goal: Controllers.goal.simpleSortingGoalController,
-      waypoint: Controllers.waypoint.dummyWaypointController,
-      // velocity: Controllers.velocity.omniDirVelocityController
-      velocity: {
-        controller: Controllers.velocity.diffVelocityController,
-        params: { angularVelocityScale: 0.001 }
-      }
+      blockly: Controllers.blockly.blocklyController
     },
     sensors: Object.values(AvailableSensors),
     actuators: Object.values(AvailableActuators),

@@ -11,7 +11,9 @@ import {
   simulationIsInitialized,
   resetSimulation,
   togglePauseSimulation,
-  setSimulationSpeed
+  setSimulationSpeed,
+  updateCode,
+  unpauseSimulation
 } from '../swarmjs-core';
 
 import {
@@ -22,13 +24,14 @@ import {
   getRenderingElements
 } from '../swarmjs-core/rendering/renderer';
 
-const Simulation = ({ config, benchSettings }) => {
+const Simulation = ({ simConfig, benchSettings, blocklyCode, JSCode, isBlocklyWorkspace }) => {
   const [uiEnabled, setUiEnabled] = React.useState(false);
   const [time, setTime] = React.useState(0);
-  const [speed, setSpeed] = React.useState(1);
-  const [paused, setPaused] = React.useState(false);
+  const [speed, setSpeed] = React.useState(0);
+  const [paused, setPaused] = React.useState(true);
   const [benchmarkData, setBenchmarkData] = React.useState({});
   const svgRef = React.useRef(null);
+  const config = simConfig;
 
   const onSpeedChange = (newSpeed) => {
     const speedNumber = parseFloat(newSpeed);
@@ -39,12 +42,14 @@ const Simulation = ({ config, benchSettings }) => {
   const reset = (newConfig = config) => {
     resetRenderer();
     resetSimulation(newConfig);
-    onSpeedChange(newConfig.env.speed);
+    onSpeedChange(1);
     setPaused(false);
   };
 
   const onUpdate = (newTime, scene, benchData) => {
-    setTime(newTime);
+    if (!scene.paused) {
+      setTime(newTime);
+    }
     renderScene(svgRef.current, scene);
     setBenchmarkData(benchData);
   };
@@ -54,15 +59,28 @@ const Simulation = ({ config, benchSettings }) => {
     setPaused(!paused);
   };
 
+  const onUnpause = () => {
+    setPaused(false);
+    unpauseSimulation();
+  };
+
   React.useEffect(() => {
     // Initialize the simulation when the component mounts
-    initializeSimulation(config, onUpdate);
+    initializeSimulation(config, onUpdate, blocklyCode, JSCode, true);
   }, []);
+
+  React.useEffect(() => {
+    updateCode(blocklyCode, JSCode, isBlocklyWorkspace);
+    if (blocklyCode.includes('execute') || JSCode.includes('execute')) {
+      onUnpause();
+    }
+  }, [blocklyCode, JSCode, isBlocklyWorkspace]);
 
   const initialized = simulationIsInitialized();
 
   const optionsElem = initialized ? (
     <Options
+      config={config}
       time={time}
       speed={speed}
       paused={paused}
@@ -120,8 +138,11 @@ const Simulation = ({ config, benchSettings }) => {
 };
 
 Simulation.propTypes = {
-  config: PropTypes.object.isRequired,
-  benchSettings: PropTypes.object.isRequired
+  simConfig: PropTypes.object.isRequired,
+  benchSettings: PropTypes.object.isRequired,
+  blocklyCode: PropTypes.string.isRequired,
+  JSCode: PropTypes.string.isRequired,
+  isBlocklyWorkspace: PropTypes.bool.isRequired
 };
 
 export default Simulation;

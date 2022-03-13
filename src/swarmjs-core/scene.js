@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-param-reassign */
 import * as d3 from 'd3';
 import { Engine, World } from 'matter-js';
@@ -17,7 +18,10 @@ export default class Scene {
     staticObjectsDefinitions,
     algorithm,
     positionsGenerator,
-    gMaps
+    gMaps,
+    blocklyCode,
+    JSCode,
+    isBlocklyWorkspace
   ) {
     this.numOfRobots = robotsConfig.count;
     this.robotRadius = robotsConfig.radius;
@@ -69,6 +73,7 @@ export default class Scene {
 
     this.puckMaps = [];
     this.mapArray = [];
+    console.log(this.isBlocklyWorkspace);
     // Generate Binary Scene Map
     if (pucksConfigs.useGlobalPuckMaps) {
       if (gMaps.mapArray) {
@@ -119,10 +124,18 @@ export default class Scene {
     // Simulation Speed
     this.timeDelta = 16.666;
 
-    this.paused = false;
+    this.paused = true;
 
     this.togglePause = () => {
       this.paused = !this.paused;
+      if (this.paused) {
+        this.blocklyCode = this.blocklyCode.replace('execute', '');
+        this.JSCode = this.JSCode.replace('execute', '');
+      } else if (isBlocklyWorkspace) {
+        this.blocklyCode += 'execute';
+      } else {
+        this.JSCode += 'execute';
+      }
     };
 
     this.pause = () => {
@@ -134,10 +147,10 @@ export default class Scene {
     };
 
     this.setSpeed = (scale) => {
-      if (!scale || typeof scale !== 'number' || scale <= 0) {
+      if (typeof scale !== 'number' || scale < 0) {
         return;
       }
-      this.robots.forEach((r) => { r.velocityScale = scale; });
+      this.robots.forEach((r) => { r.updateVelocityScale(scale); });
     };
 
     this.togglePause.bind(this);
@@ -145,7 +158,7 @@ export default class Scene {
     this.unpause.bind(this);
     this.setSpeed.bind(this);
 
-    this.setSpeed(envConfig.speed);
+    this.setSpeed(1);
   }
 
   update() {
