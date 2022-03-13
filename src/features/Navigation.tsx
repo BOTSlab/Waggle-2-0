@@ -17,6 +17,11 @@ export default function Navigation() {
           <span>Home</span>
         </Link>
       </Menu.Item>
+      <Menu.Item key='signInSignUp'>
+            <Link to="/signInSignOut">
+              <span>Sign In / Sign Up</span>
+            </Link>
+        </Menu.Item>
       <Menu.Item key='tutorial'>
         <Link to="/tutorial">
           <span>Tutorial</span>
