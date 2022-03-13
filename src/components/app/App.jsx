@@ -18,6 +18,7 @@ import { AuthProvider } from '../Contexts/AuthContext';
 export default function App() {
   const { simConfig, benchmarkConfig } = exampleConfigs.simpleSorting;
   const { clusteringConfig, clusteringBenchmarkConfig } = exampleConfigs.clustering;
+  const { firefliesConfig, firefliesBenchmarkConfig } = exampleConfigs.fireflies;
 
   return (
     <div>
@@ -31,7 +32,7 @@ export default function App() {
         
         <Route path="/simulations/clustering" element={<Configuration simConfig={clusteringConfig} benchSettings={clusteringBenchmarkConfig} blocklyConfig={blocklyConfig.clusteringConfig} />} />
         <Route path="/simulations/sorting" element={<Configuration simConfig={simConfig} benchSettings={benchmarkConfig} blocklyConfig={blocklyConfig.sortingConfig} />} />
-        <Route path="/simulations/fireflies" element={<Configuration simConfig={simConfig} benchSettings={benchmarkConfig} blocklyConfig={blocklyConfig.firefliesConfig} />} />
+        <Route path="/simulations/fireflies" element={<Configuration simConfig={firefliesConfig} benchSettings={firefliesBenchmarkConfig} blocklyConfig={blocklyConfig.firefliesConfig} />} />
         <Route path="/simulations/pheromones" element={<Configuration simConfig={simConfig} benchSettings={benchmarkConfig} blocklyConfig={blocklyConfig.pheromonesConfig} />} />
       </Routes>
     </div>

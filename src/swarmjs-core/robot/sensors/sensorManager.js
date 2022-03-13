@@ -21,6 +21,7 @@ import PucksNearGrapperSensor from './clustering/pucksNearGrapperSensor';
 import ClosestPuckToGrapperSensor from './clustering/closestPuckToGrapperSensor';
 import WallSensor from './env/wallSensor';
 import PuckGoalAreaSensor from './state/puckGoalAreaSensor';
+import RobotFlash from './fireflies/robotFlash';
 
 const toposort = require('toposort');
 
@@ -47,7 +48,8 @@ const availableSensorDefitions = [
   ReachedGoalSensor,
   ReachedWaypointSensor,
   PucksNearGrapperSensor,
-  ClosestPuckToGrapperSensor
+  ClosestPuckToGrapperSensor,
+  RobotFlash
 ];
 
 // Sensors are stored in this object allowing other modules to easily reference them

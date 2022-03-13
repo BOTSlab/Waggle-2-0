@@ -15,6 +15,7 @@ let scene;
 
 const createSimulation = (config, updateCallback, blocklyCode, JSCode, isBlocklyWorkspace) => {
   scene = new Scene(
+    config.type,
     config.env,
     config.robots,
     config.pucks,
@@ -53,6 +54,7 @@ export const initializeSimulation = (
 
 export const resetSimulation = (config) => {
   scene = new Scene(
+    config.type,
     config.env,
     config.robots,
     config.pucks,

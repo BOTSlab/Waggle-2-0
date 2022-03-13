@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-param-reassign */
 import * as d3 from 'd3';
-import { Engine, World, Bodies, Matter } from 'matter-js';
+import { Engine, World, Body, Matter } from 'matter-js';
 import { Delaunay } from 'd3-delaunay';
 
 import Robot from './robot/robot';
@@ -13,6 +13,7 @@ import RenderingSettings from '../components/Options/RenderingSettings';
 
 export default class Scene {
   constructor(
+    configType,
     envConfig,
     robotsConfig,
     pucksConfigs,
@@ -24,10 +25,11 @@ export default class Scene {
     JSCode,
     isBlocklyWorkspace
   ) {
-    
-    
+    this.configType = configType;
     this.numOfRobots = robotsConfig.count;
     this.robotRadius = robotsConfig.radius;
+    this.robotColor = robotsConfig.color;
+    this.robotFlashColor = robotsConfig.flashColor;
     this.useVoronoi = robotsConfig.useVoronoiDiagram;
     this.pucksGroups = pucksConfigs.groups;
     this.numOfPucks = this.pucksGroups.reduce((total, puckGroup) => total + puckGroup.count, 0);
@@ -155,9 +157,6 @@ export default class Scene {
       }
       this.robots.forEach((r) => { r.updateVelocityScale(scale); });
     };
-    
-   
-
     this.togglePause.bind(this);
     this.pause.bind(this);
     this.unpause.bind(this);
@@ -194,11 +193,11 @@ export default class Scene {
   getCurGoalsPos() {
     return this.robots.map((r) => r.goal);
   }
-  
+
   getCurObstaclePos() {
     return this.staticObjects.map((r) => r.position);
   }
-  
+
   get position() {
     return {
       x: this.body.center.x,
@@ -210,12 +209,15 @@ export default class Scene {
     Body.set(this.body, 'center', { x: val?.x || null, y: val?.y || null });
   }
 
-
   initializeRobotsRange(
     numOfRobots, radius, controllers, sensors, actuators, envWidth, envHeight, algorithm
   ) {
     return d3.range(numOfRobots)
-      .map((i) => new Robot(i,
+      .map((i) => new Robot(
+        this.configType,
+        this.robotColor,
+        this.robotFlashColor,
+        i,
         this.getPos(),
         this.getPos(),
         controllers,
@@ -225,7 +227,8 @@ export default class Scene {
         envWidth,
         envHeight,
         this,
-        algorithm));
+        algorithm
+      ));
   }
 
   initializePucksRange(pucksGroups, envWidth, envHeight, maps) {
@@ -254,11 +257,6 @@ export default class Scene {
 
     return pucks;
   }
-  
-  
-  
-  
-
 }
 
 export const SceneRenderables = [
@@ -334,5 +332,5 @@ export const SceneRenderables = [
         }
       }
     }
-  },
+  }
 ];

@@ -6,3 +6,13 @@
 .config-input {
   align-items: center;
 }
+
+.color-picker {
+  margin-top: 20px;
+  margin-bottom: 40px;
+  margin-right: 80px;
+}
+
+.config {
+  flex-direction: column;
+}

@@ -28,6 +28,9 @@ const getController = (robot, controllerDef) => {
 
 export default class Robot {
   constructor(
+    configType,
+    color,
+    flashColor,
     id,
     position,
     goal,
@@ -46,6 +49,9 @@ export default class Robot {
       Advanced: 2
     };
     this.id = id;
+    this.configType = configType;
+    this.color = color;
+    this.flashColor = flashColor;
     this.radius = radius;
     this.linearVel = { x: 0, y: 0 };
     this.velocityScale = 1;
@@ -57,6 +63,8 @@ export default class Robot {
     this.engine = this.scene.engine;
     this.world = this.scene.world;
     this.text = '';
+    this.flashing = this.color;
+    this.variable = 0;
 
     // Create Matter.js body and attach it to world
     const compoundBody = Body.create({
@@ -164,6 +172,14 @@ export default class Robot {
 
   setText(newText) {
     this.text = newText;
+  }
+
+  activateFlash() {
+    this.flashing = this.flashColor;
+  }
+
+  deactivateFlash() {
+    this.flashing = this.color;
   }
 
   setVelocities({ linearVel, angularVel }) {
@@ -365,6 +381,9 @@ const bodyRenderables = [
       id: { prop: 'id' }
     },
     dynamicAttrs: {
+      fill: {
+        prop: 'sensors.flashing'
+      },
       cx: { prop: 'sensors.position.x' },
       cy: { prop: 'sensors.position.y' }
     },

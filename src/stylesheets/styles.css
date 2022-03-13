@@ -60,13 +60,13 @@
 #quick-actions {
     width: fit-content;
     height: 50px;
-    text-align: center;
     display: flex;
+    align-items: center;
     margin: auto;
 }
 
 #quick-actions .quick-actions-icon {
-    height: 50px;
-    line-height: 50px;
+    height: 15px;
+    line-height: 15px;
     margin: 0px 10px 0px 10px;
 }

@@ -44,6 +44,7 @@ const Simulation = ({ simConfig, benchSettings, blocklyCode, JSCode, isBlocklyWo
     resetSimulation(newConfig);
     onSpeedChange(1);
     setPaused(false);
+    setTime(0);
   };
 
   const onUpdate = (newTime, scene, benchData) => {
@@ -87,7 +88,7 @@ const Simulation = ({ simConfig, benchSettings, blocklyCode, JSCode, isBlocklyWo
       togglePause={onTogglePause}
       setSpeed={onSpeedChange}
       reset={reset}
-      renderingElements = {getRenderingElements()}
+      renderingElements = {getRenderingElements(simConfig.type)}
       setElementEnabled={setElementEnabled}
     />
   ) : <></>;
@@ -107,6 +108,15 @@ const Simulation = ({ simConfig, benchSettings, blocklyCode, JSCode, isBlocklyWo
     { label: 'Benchmarking', content: benchElem }
   ];
 
+  const simulationDescription = () => {
+    if (config.type === 'sorting') {
+      return 'Make the robots sort each respective puck color into their goal!';
+    } if (config.type === 'clustering') {
+      return 'Make the robots cluster the pucks into the goal!';
+    }
+    return 'Syncronize the robots to flash at the same time!';
+  };
+
   const ui = uiEnabled ? (
     <TabContainer tabContents={tabContents} />
   ) : <></>;
@@ -114,6 +124,7 @@ const Simulation = ({ simConfig, benchSettings, blocklyCode, JSCode, isBlocklyWo
   return (
     <div style={{ width: '100%' }}>
       <QuickActions
+        simulationDescription={simulationDescription}
         toggleElementEnabled={toggleElementEnabled}
         setUiEnabled={setUiEnabled}
         uiEnabled={uiEnabled}
@@ -123,6 +134,7 @@ const Simulation = ({ simConfig, benchSettings, blocklyCode, JSCode, isBlocklyWo
         benchmarkData={benchmarkData}
         simConfig={config}
         benchSettings={benchSettings}
+        paused={paused}
         />
       <div style={{ width: '100%', textAlign: 'center' }}>
         <svg

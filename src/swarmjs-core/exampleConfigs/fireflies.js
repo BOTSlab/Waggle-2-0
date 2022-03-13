@@ -6,15 +6,16 @@ import {
   Controllers
 } from '..';
 
-const clusteringConfig = {
-  type: 'clustering',
+const firefliesConfig = {
+  type: 'fireflies',
   env: {
     width: 800,
     height: 500,
     speed: 15
   },
   robots: {
-    color: '#FFC53A',
+    color: '#0C7BDC',
+    flashColor: 'yellow',
     count: 5,
     radius: 10,
     controllers: {
@@ -28,10 +29,10 @@ const clusteringConfig = {
     groups: [
       {
         id: 0,
-        count: 20,
+        count: 0,
         radius: 7,
         goal: { x: 350, y: 250 },
-        goalRadius: 7 * 12,
+        goalRadius: 0,
         color: 'red'
       }
     ],
@@ -53,7 +54,7 @@ const clusteringConfig = {
 //        across multiple runs using the performance metrics provided by the trackers.
 //        - name: a unique name that will be used to reference this config in the graphs legends
 //        - simConfig: all the changes from main config that will be applied to this simulation
-const clusteringBenchmarkConfig = {
+const firefliesBenchmarkConfig = {
   simConfigs: [
     {
       name: '5 Robots',
@@ -63,14 +64,6 @@ const clusteringBenchmarkConfig = {
         },
         robots: {
           count: 5
-        }
-      }
-    },
-    {
-      name: '20 Robots',
-      simConfig: {
-        env: {
-          speed: 50
         }
       }
     }
@@ -85,6 +78,6 @@ const clusteringBenchmarkConfig = {
 };
 
 export default {
-  clusteringConfig,
-  clusteringBenchmarkConfig
+  firefliesConfig,
+  firefliesBenchmarkConfig
 };

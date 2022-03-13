@@ -14,6 +14,7 @@ const simConfig = {
     speed: 15
   },
   robots: {
+    color: '#FFC53A',
     count: 5,
     radius: 10,
     controllers: {
