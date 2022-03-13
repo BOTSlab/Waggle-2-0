@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDrawPolygon, faSync, faCog, faPause, faClock, faStopwatch } from '@fortawesome/free-solid-svg-icons';
+import { faInfoCircle, faDrawPolygon, faSync, faCog, faPause, faPlay, faClock, faStopwatch } from '@fortawesome/free-solid-svg-icons';
+import { Popover } from 'antd';
 import { countValidDataSets } from '../../swarmjs-core/benchmarking/graphRenderingUtils';
 
 import {
@@ -11,6 +12,7 @@ import {
 } from '../../swarmjs-core';
 
 const QuickActions = ({
+  simulationDescription,
   toggleElementEnabled,
   setUiEnabled,
   uiEnabled,
@@ -19,7 +21,8 @@ const QuickActions = ({
   time,
   benchmarkData,
   simConfig,
-  benchSettings
+  benchSettings,
+  paused
 }) => {
   const benchRuns = !benchmarkData.history
     ? 0
@@ -27,6 +30,14 @@ const QuickActions = ({
 
   return (
     <div id='quick-actions'>
+      <Popover content={simulationDescription} placement="bottom">
+        <FontAwesomeIcon
+          icon={faInfoCircle}
+          className="quick-actions-icon"
+          title="Simulation Information"
+          onClick={() => toggleElementEnabled('All')}
+        />
+      </Popover>
       <FontAwesomeIcon
         icon={faDrawPolygon}
         className="quick-actions-icon"
@@ -46,7 +57,7 @@ const QuickActions = ({
         onClick={() => reset()}
       />
       <FontAwesomeIcon
-        icon={faPause}
+        icon={paused ? faPlay : faPause}
         className="quick-actions-icon"
         title="Pause / Resume"
         onClick={() => onTogglePause()}
@@ -86,6 +97,7 @@ const QuickActions = ({
 };
 
 QuickActions.propTypes = {
+  simulationDescription: PropTypes.string.isRequired,
   toggleElementEnabled: PropTypes.func.isRequired,
   setUiEnabled: PropTypes.func.isRequired,
   uiEnabled: PropTypes.bool.isRequired,
@@ -94,7 +106,8 @@ QuickActions.propTypes = {
   time: PropTypes.number.isRequired,
   benchmarkData: PropTypes.object.isRequired,
   simConfig: PropTypes.object.isRequired,
-  benchSettings: PropTypes.object.isRequired
+  benchSettings: PropTypes.object.isRequired,
+  paused: PropTypes.bool.isRequired
 };
 
 export default QuickActions;

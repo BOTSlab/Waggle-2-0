@@ -155,7 +155,6 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
               <Button className="execute-button" onClick={executeCode}>Execute</Button>
             </div>
             <div className="code">
-            <div className="simulation-area">
               <Form
                 name="javascript-text"
                 fields={initialJSWorkspace}
@@ -167,20 +166,6 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
                   <TextArea rows={20} spellCheck={false} />
                 </Form.Item>
               </Form>
-            </div>
-            <div className="simulation-area">
-              <Form
-                name="javascript-text"
-                fields={initialJSWorkspace}
-                onFieldsChange={(_, allFields) => {
-                  setJSCode(allFields[0].value);
-                }}
-              >
-                <Form.Item name="javascript">
-                  <TextArea rows={20} spellCheck={false} />
-                </Form.Item>
-              </Form>
-            </div>
             </div>
           </TabPane>
         </Tabs>

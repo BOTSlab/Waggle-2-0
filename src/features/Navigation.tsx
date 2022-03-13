@@ -9,6 +9,7 @@ export default function Navigation() {
   const [currentPage, setCurrentPage] = useState('home');
   const handleClick = (e: any) => {
     setCurrentPage(e.key);
+    window.location.reload();
   };
   return (
     <Menu onClick={handleClick} selectedKeys={[currentPage]} mode="horizontal">

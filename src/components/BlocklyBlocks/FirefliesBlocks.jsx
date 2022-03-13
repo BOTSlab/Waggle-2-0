@@ -32,7 +32,7 @@ Blockly.Blocks.robot_activate_flash = {
   }
 };
 
-Blockly.JavaScript.robot_activate_flash = () => 'flashOn = true;\n';
+Blockly.JavaScript.robot_activate_flash = () => 'robot.activateFlash()\n';
 
 Blockly.Blocks.robot_deactivate_flash = {
   init() {
@@ -46,4 +46,4 @@ Blockly.Blocks.robot_deactivate_flash = {
   }
 };
 
-Blockly.JavaScript.robot_deactivate_flash = () => 'flashOn = false;\n';
+Blockly.JavaScript.robot_deactivate_flash = () => 'robot.deactivateFlash();\n';

@@ -32,11 +32,19 @@ const uniqueRenderingElements = ['All', ...new Set(renderables
   .reduce((acc, curr) => acc.concat(curr), []))
 ];
 
-let activeElements = [...uniqueRenderingElements];
+const firefliesElements = ['All', 'Scene Obstacles', 'Robot Body'];
+let activeElements = [];
 
 const renderedElems = [];
 
-export const getRenderingElements = () => [...uniqueRenderingElements];
+export const getRenderingElements = (configType) => {
+  if (configType === 'fireflies') {
+    activeElements = [...firefliesElements];
+    return firefliesElements;
+  }
+  activeElements = [...uniqueRenderingElements];
+  return [...uniqueRenderingElements];
+};
 
 export const setElementEnabled = (element, state) => {
   const otherActiveElements = activeElements.filter((e) => e !== element);

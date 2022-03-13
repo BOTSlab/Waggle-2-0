@@ -1,7 +1,8 @@
 /* eslint-disable no-param-reassign */
-import React from 'react';
+import React, { useState } from 'react';
 import propTypes from 'prop-types';
 import { InputNumber } from 'antd';
+import { SketchPicker } from 'react-color';
 
 import SpeedSlider from './SpeedSlider';
 import RenderingSettings from './RenderingSettings';
@@ -23,14 +24,45 @@ export default function Options({
 }) {
   const updateNumRobots = (value) => {
     config.robots.count = value;
+    reset();
   };
 
   const updateNumRedPucks = (value) => {
     config.pucks.groups[0].count = value;
+    reset();
   };
 
   const updateNumBluePucks = (value) => {
     config.pucks.groups[1].count = value;
+    reset();
+  };
+
+  const [puckOneColor, setPuckOneColor] = useState('red');
+  const updatePuckOneColor = (value) => {
+    config.pucks.groups[0].color = `${value.hex}`;
+    setPuckOneColor(value);
+    reset();
+  };
+
+  const [puckTwoColor, setPuckTwoColor] = useState('blue');
+  const updatePuckTwoColor = (value) => {
+    config.pucks.groups[1].color = `${value.hex}`;
+    setPuckTwoColor(value);
+    reset();
+  };
+
+  const [robotColor, setRobotColor] = useState(config.robots.color);
+  const updateRobotColor = (value) => {
+    config.robots.color = `${value.hex}`;
+    setRobotColor(value);
+    reset();
+  };
+
+  const [robotFlashColor, setRobotFlashColor] = useState('yellow');
+  const updateRobotFlashColor = (value) => {
+    config.robots.flashColor = `${value.hex}`;
+    setRobotFlashColor(value);
+    reset();
   };
   var rectx = 50;
   var recty = 25;
@@ -82,6 +114,10 @@ export default function Options({
   const bluePuckStyle = {
     display: config.type === 'sorting' ? 'flex' : 'none'
   };
+
+  const firefliesStyle = {
+    display: config.type === 'fireflies' ? 'flex' : 'none'
+  };
   return (
     <div>
       
@@ -106,11 +142,11 @@ export default function Options({
           <InputNumber min={0} max={50} defaultValue={5} onChange={updateNumRobots} />
         </div>
         <div className="config-input" style={redPuckStyle}>
-          <span style={{ padding: 10 }}>Number of red pucks: </span>
+          <span style={{ padding: 10 }}>Number of group 1 pucks: </span>
           <InputNumber min={0} max={50} defaultValue={20} onChange={updateNumRedPucks} />
         </div>
         <div className="config-input" style={bluePuckStyle}>
-          <span style={{ padding: 10 }}>Number of blue pucks: </span>
+          <span style={{ padding: 10 }}>Number of group 2 pucks: </span>
           <InputNumber min={0} max={50} defaultValue={20} onChange={updateNumBluePucks} />
         </div>
         <div className="config-input" style={{ display: 'flex' }}>
@@ -119,6 +155,40 @@ export default function Options({
         </div>
         
         
+      </div>
+      <div className="config-modifier">
+      <div className="config">
+          <span>Robot color: </span>
+          <SketchPicker
+            className="color-picker"
+            color={robotColor}
+            onChangeComplete={updateRobotColor}
+          />
+        </div>
+        <div className="config" style={firefliesStyle}>
+          <span>Fireflies flash color: </span>
+          <SketchPicker
+            className="color-picker"
+            color={robotFlashColor}
+            onChangeComplete={updateRobotFlashColor}
+          />
+        </div>
+        <div className="config" style={redPuckStyle}>
+          <span>Puck Group 1 Color: </span>
+          <SketchPicker
+            className="color-picker"
+            color={puckOneColor}
+            onChangeComplete={updatePuckOneColor}
+          />
+        </div>
+        <div className="config" style={bluePuckStyle}>
+          <span>Puck Group 2 Color: </span>
+          <SketchPicker
+            className="color-picker"
+            color={puckTwoColor}
+            onChangeComplete={updatePuckTwoColor}
+          />
+        </div>
       </div>
       <SpeedSlider speed={speed} setSpeed={setSpeed} />
       <RenderingSettings
