@@ -83,10 +83,6 @@ export const clusteringConfig = {
         {
           kind: 'block',
           type: 'robot_set_variable'
-        },
-        {
-          kind: 'block',
-          type: 'robot_change_variable'
         }
       ]
     },
@@ -264,10 +260,6 @@ export const sortingConfig = {
         {
           kind: 'block',
           type: 'robot_set_variable'
-        },
-        {
-          kind: 'block',
-          type: 'robot_change_variable'
         }
       ]
     },
@@ -386,7 +378,7 @@ export const firefliesConfig = {
         },
         {
           kind: 'block',
-          type: 'robot_flash_count'
+          type: 'nearby_robots'
         }
       ]
     },
@@ -421,6 +413,14 @@ export const firefliesConfig = {
         },
         {
           kind: 'block',
+          type: 'robot_add_to_timer'
+        },
+        {
+          kind: 'block',
+          type: 'robot_add_variable_to_timer'
+        },
+        {
+          kind: 'block',
           type: 'robot_execute'
         }
       ]
@@ -440,7 +440,11 @@ export const firefliesConfig = {
         },
         {
           kind: 'block',
-          type: 'robot_change_variable'
+          type: 'robot_timer_incremented'
+        },
+        {
+          kind: 'block',
+          type: 'seconds_since_nearby_last_flash'
         }
       ]
     },
@@ -626,10 +630,6 @@ export const pheromonesConfig = {
         {
           kind: 'block',
           type: 'robot_set_variable'
-        },
-        {
-          kind: 'block',
-          type: 'robot_change_variable'
         }
       ]
     },

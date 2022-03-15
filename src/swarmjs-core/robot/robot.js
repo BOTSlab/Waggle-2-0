@@ -1,5 +1,5 @@
 import { Body, World, Bodies } from 'matter-js';
-
+import moment from 'moment';
 import { getDistance } from '../utils/geometry';
 
 import SensorManager from './sensors/sensorManager';
@@ -40,7 +40,8 @@ export default class Robot {
     radius,
     envWidth,
     envHeight,
-    scene
+    scene,
+    creationTime
   ) {
     // Configs
     this.DeadLockRecovery = {
@@ -65,6 +66,9 @@ export default class Robot {
     this.text = '';
     this.flashing = this.color;
     this.variable = 0;
+    this.creationTime = creationTime;
+    this.lastFlash = creationTime;
+    this.nearbyRobots = null;
 
     // Create Matter.js body and attach it to world
     const compoundBody = Body.create({
@@ -125,6 +129,18 @@ export default class Robot {
     this.sense.bind(this);
   }
 
+  // Boolean for if number of inputted seconds has passed (based on robot creation time)
+  timerIncrementedBySeconds(seconds) {
+    if ((moment().diff(this.creationTime, 'seconds') % seconds) === 0) {
+      return true;
+    }
+    return false;
+  }
+
+  addSecondsToTimer(seconds) {
+    this.creationTime.add(seconds, 'seconds');
+  }
+
   get sensors() {
     return this.sensorManager.values;
   }
@@ -174,8 +190,13 @@ export default class Robot {
     this.text = newText;
   }
 
+  setVariable(value) {
+    this.variable = value;
+  }
+
   activateFlash() {
     this.flashing = this.flashColor;
+    this.lastFlash = moment();
   }
 
   deactivateFlash() {
@@ -253,6 +274,29 @@ export default class Robot {
     });
 
     return { minDistance: minDist };
+  }
+
+  getNearbyRobots(robots) {
+    const nearbyRobots = [];
+    let nearestDistance = 60;
+    robots.forEach((r) => {
+      const distance = getDistance(this.sensors.position, r.sensors.position);
+      if (distance < 60) {
+        nearbyRobots.push(r);
+      }
+      if (distance < nearestDistance) {
+        this.closestRobot = r;
+        nearestDistance = distance;
+      }
+    });
+    return nearbyRobots;
+  }
+
+  getSecondsSinceNeighborLastFlash() {
+    if (this.closestRobot) {
+      return moment().diff(this.closestRobot.lastFlash, 'seconds');
+    }
+    return 0;
   }
 }
 

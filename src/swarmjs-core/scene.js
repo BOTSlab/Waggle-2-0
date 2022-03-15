@@ -2,6 +2,7 @@
 /* eslint-disable no-param-reassign */
 import * as d3 from 'd3';
 import { Engine, World, Body, Matter } from 'matter-js';
+import moment from 'moment';
 import { Delaunay } from 'd3-delaunay';
 
 import Robot from './robot/robot';
@@ -213,7 +214,7 @@ export default class Scene {
     numOfRobots, radius, controllers, sensors, actuators, envWidth, envHeight, algorithm
   ) {
     return d3.range(numOfRobots)
-      .map((i) => new Robot(
+      .map((i, index) => new Robot(
         this.configType,
         this.robotColor,
         this.robotFlashColor,
@@ -227,7 +228,7 @@ export default class Scene {
         envWidth,
         envHeight,
         this,
-        algorithm
+        moment().subtract((2 * index), 'seconds')
       ));
   }
 

@@ -86,6 +86,8 @@ export const togglePauseSimulation = () => scene.togglePause();
 
 export const unpauseSimulation = () => scene.unpause();
 
+export const pauseSimulation = () => scene.pause();
+
 export const setSimulationSpeed = (speed) => scene.setSpeed(speed);
 
 export { AvailableActuators } from './robot/actuators/actuatorsManager';

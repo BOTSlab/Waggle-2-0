@@ -175,61 +175,31 @@ Blockly.JavaScript.robot_execute = () => 'execute';
 Blockly.Blocks.robot_set_variable = {
   init() {
     this.appendDummyInput()
-      .appendField('Set variable')
-      .appendField(new Blockly.FieldDropdown([['variableA', 'variableA'], ['variableB', 'variableB'], ['variableC', 'variableC']]), 'variableName')
-      .appendField('to')
+      .appendField('Set variable to')
       .appendField(new Blockly.FieldNumber(0), 'newValue');
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(300);
-    this.setTooltip('Sets one of three variables to a given value.');
+    this.setTooltip('Sets variable to a given value.');
     this.setHelpUrl('');
   }
 };
 
 Blockly.JavaScript.robot_set_variable = (block) => {
-  const dropdownVariableName = block.getFieldValue('variableName');
   const numberNewValue = block.getFieldValue('newValue');
-  const code = `${dropdownVariableName} = ${numberNewValue};\n`;
-  return code;
-};
-
-Blockly.Blocks.robot_change_variable = {
-  init() {
-    this.appendDummyInput()
-      .appendField('Change variable')
-      .appendField(new Blockly.FieldDropdown([['variableA', 'variableA'], ['variableB', 'variableB'], ['variableC', 'variableC']]), 'variableName')
-      .appendField('by')
-      .appendField(new Blockly.FieldNumber(0), 'deltaValue');
-    this.setPreviousStatement(true, null);
-    this.setNextStatement(true, null);
-    this.setColour(300);
-    this.setTooltip('Change one of three variables by adding the given value to it (subtract if the value is negative).');
-    this.setHelpUrl('');
-  }
-};
-
-Blockly.JavaScript.robot_change_variable = (block) => {
-  const dropdownVariableName = block.getFieldValue('variableName');
-  const numberDeltaValue = block.getFieldValue('deltaValue');
-  const code = `${dropdownVariableName} = ${dropdownVariableName} + ${numberDeltaValue};\n`;
+  const code = `robot.setVariable(${numberNewValue});\n`;
   return code;
 };
 
 Blockly.Blocks.robot_get_variable = {
   init() {
     this.appendDummyInput()
-      .appendField('Get ')
-      .appendField(new Blockly.FieldDropdown([['variableA', 'variableA'], ['variableB', 'variableB'], ['variableC', 'variableC']]), 'variableName');
+      .appendField('Get variable');
     this.setOutput(true, 'Number');
     this.setColour(300);
-    this.setTooltip('Gets the value of the given variable.');
+    this.setTooltip('Gets the value of the robots variable.');
     this.setHelpUrl('');
   }
 };
 
-Blockly.JavaScript.robot_get_variable = (block) => {
-  const dropdownVariableName = block.getFieldValue('variableName');
-  const code = `${dropdownVariableName}`;
-  return [code, Blockly.JavaScript.ORDER_NONE];
-};
+Blockly.JavaScript.robot_get_variable = () => 'robot.variable';
