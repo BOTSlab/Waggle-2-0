@@ -23,7 +23,7 @@ const firefliesConfig = {
     },
     sensors: Object.values(AvailableSensors),
     actuators: Object.values(AvailableActuators),
-    useVoronoiDiagram: false
+    useVoronoiDiagram: true
   },
   pucks: {
     groups: [

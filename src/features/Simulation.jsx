@@ -13,7 +13,8 @@ import {
   togglePauseSimulation,
   setSimulationSpeed,
   updateCode,
-  unpauseSimulation
+  unpauseSimulation,
+  pauseSimulation
 } from '../swarmjs-core';
 
 import {
@@ -60,11 +61,6 @@ const Simulation = ({ simConfig, benchSettings, blocklyCode, JSCode, isBlocklyWo
     setPaused(!paused);
   };
 
-  const onUnpause = () => {
-    setPaused(false);
-    unpauseSimulation();
-  };
-
   React.useEffect(() => {
     // Initialize the simulation when the component mounts
     initializeSimulation(config, onUpdate, blocklyCode, JSCode, true);
@@ -73,7 +69,12 @@ const Simulation = ({ simConfig, benchSettings, blocklyCode, JSCode, isBlocklyWo
   React.useEffect(() => {
     updateCode(blocklyCode, JSCode, isBlocklyWorkspace);
     if (blocklyCode.includes('execute') || JSCode.includes('execute')) {
-      onUnpause();
+      setPaused(false);
+      unpauseSimulation();
+    } else {
+      pauseSimulation();
+      setPaused(true);
+      setTime(0);
     }
   }, [blocklyCode, JSCode, isBlocklyWorkspace]);
 

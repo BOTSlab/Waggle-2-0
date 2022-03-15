@@ -45,7 +45,11 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
   });
 
   const downloadXmlFile = () => {
-    const file = new Blob([xml], {
+    const startIndex = xml.indexOf('<block type="robot_execute"');
+    const endIndex = (xml.indexOf('</block>', startIndex)) + 8;
+    const executeString = xml.slice(startIndex, endIndex);
+    const updatedXml = xml.replace(executeString, '');
+    const file = new Blob([updatedXml], {
       type: 'text/plain'
     });
     saveAs(file, xmlFileName);
@@ -93,13 +97,15 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
 
   return (
     <div className="simulation-area">
-      <Simulation
-        simConfig={simConfig}
-        benchSettings={benchSettings}
-        blocklyCode={blocklyCode}
-        JSCode={JSCode}
-        isBlocklyWorkspace={blockly}
-      />
+      <div className="simulation">
+        <Simulation
+          simConfig={simConfig}
+          benchSettings={benchSettings}
+          blocklyCode={blocklyCode}
+          JSCode={JSCode}
+          isBlocklyWorkspace={blockly}
+        />
+      </div>
       <div className="code-area">
         <Tabs defaultActiveKey="1" onChange={updateWorkspaceType}>
           <TabPane tab="Blockly" key="1">
