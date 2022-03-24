@@ -6,20 +6,24 @@ import { Link } from 'react-router-dom';
 const { SubMenu } = Menu;
 
 export default function Navigation() {
-  const [currentPage, setCurrentPage] = useState('home');
+  let pages = [window.location.href.split('/').slice(3).join('/')];
+  if (pages[0].includes('/')) {
+    pages = pages[0].split('/');
+  }
+  const [currentPage, setCurrentPage] = useState(pages);
   const handleClick = (e: any) => {
     setCurrentPage(e.key);
     window.location.reload();
   };
   return (
-    <Menu onClick={handleClick} selectedKeys={[currentPage]} mode="horizontal">
-      <Menu.Item key='home'>
+    <Menu onClick={handleClick} selectedKeys={currentPage} mode="horizontal">
+      <Menu.Item key=''>
         <Link to="/">
           <span>Home</span>
         </Link>
       </Menu.Item>
       <Menu.Item key='signInSignUp'>
-            <Link to="/signInSignOut">
+            <Link to="/signInSignUp">
               <span>Sign In / Sign Up</span>
             </Link>
         </Menu.Item>

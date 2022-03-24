@@ -209,9 +209,15 @@ export default class Robot {
   }
 
   setLinearVelocity(linearVel) {
-    this.linearVel = linearVel;
+    const x = linearVel.x;
+    const y = linearVel.y;
+    const newX = x*Math.cos(this.body.angle) - y*Math.sin(this.body.angle);
+    const newY = y*Math.cos(this.body.angle) + x*Math.sin(this.body.angle);
+
+    const newLinearVel = { x: newX, y: newY };
+    this.linearVel = newLinearVel;
     Body.setVelocity(this.body,
-      { x: (linearVel.x * this.velocityScale), y: (linearVel.y * this.velocityScale) });
+      { x: (newLinearVel.x * this.velocityScale), y: (newLinearVel.y * this.velocityScale) });
   }
 
   setAngularVelocity(angularVel) {

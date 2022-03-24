@@ -14,6 +14,8 @@ class GrapperActuator extends Actuator {
     if (!this.robot.sensors.closestPuckToGrapper) {
       console.log(`Failed to activate grapper, no puck found! robot: ${this.robot.id}`);
       return;
+    } else if (this.state !== null) {
+      return;
     }
 
     // Set closest puck to the robot
@@ -49,6 +51,9 @@ class GrapperActuator extends Actuator {
       // eslint-disable-next-line no-param-reassign
       constraint.puck.held = false;
       World.remove(this.scene.world, constraint.constraint);
+      const group = (constraint.puck.id + 1) * -1;
+      constraint.puck.body.collisionFilter.group = group;
+      this.robot.body.collisionFilter.group = group;
     });
     this.constraints = [];
 

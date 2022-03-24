@@ -38,7 +38,7 @@ let activeElements = [];
 const renderedElems = [];
 
 export const getRenderingElements = (configType) => {
-  if (configType === 'fireflies') {
+  if (configType === 'fireflies' || configType === 'tutorial') {
     activeElements = [...firefliesElements];
     return firefliesElements;
   }
@@ -69,7 +69,8 @@ export function initialize(svg, scene) {
   initialized = true;
 }
 
-export function renderScene(curSvgEl, curScene) {
+export function renderScene(curSvgEl, curScene, time) {
+  curScene.time = time;
   const svgEl = curSvgEl || lastSvgEl;
   const scene = curScene || lastScene;
 

@@ -52,7 +52,7 @@ const Simulation = ({ simConfig, benchSettings, blocklyCode, JSCode, isBlocklyWo
     if (!scene.paused) {
       setTime(newTime);
     }
-    renderScene(svgRef.current, scene);
+    renderScene(svgRef.current, scene, newTime);
     setBenchmarkData(benchData);
   };
 

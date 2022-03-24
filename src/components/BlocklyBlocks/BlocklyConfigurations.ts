@@ -51,14 +51,6 @@ export const clusteringConfig = {
         },
         {
           kind: 'block',
-          type: 'robot_set_text'
-        },
-        {
-          kind: 'block',
-          type: 'robot_set_text_variable'
-        },
-        {
-          kind: 'block',
           type: 'robot_activate_gripper'
         },
         {
@@ -73,31 +65,12 @@ export const clusteringConfig = {
     },
     {
       kind: 'category',
-      name: 'Memory',
-      color: '#5C81A6',
-      contents: [
-        {
-          kind: 'block',
-          type: 'robot_get_variable'
-        },
-        {
-          kind: 'block',
-          type: 'robot_set_variable'
-        }
-      ]
-    },
-    {
-      kind: 'category',
       name: 'Logic',
       color: '#5C81A6',
       contents: [
         {
           kind: 'block',
           type: 'controls_if'
-        },
-        {
-          kind: 'block',
-          type: 'controls_whileUntil'
         },
         {
           kind: 'block',
@@ -228,14 +201,6 @@ export const sortingConfig = {
         },
         {
           kind: 'block',
-          type: 'robot_set_text'
-        },
-        {
-          kind: 'block',
-          type: 'robot_set_text_variable'
-        },
-        {
-          kind: 'block',
           type: 'robot_activate_gripper'
         },
         {
@@ -250,31 +215,12 @@ export const sortingConfig = {
     },
     {
       kind: 'category',
-      name: 'Memory',
-      color: '#5C81A6',
-      contents: [
-        {
-          kind: 'block',
-          type: 'robot_get_variable'
-        },
-        {
-          kind: 'block',
-          type: 'robot_set_variable'
-        }
-      ]
-    },
-    {
-      kind: 'category',
       name: 'Logic',
       color: '#5C81A6',
       contents: [
         {
           kind: 'block',
           type: 'controls_if'
-        },
-        {
-          kind: 'block',
-          type: 'controls_whileUntil'
         },
         {
           kind: 'block',
@@ -456,10 +402,6 @@ export const firefliesConfig = {
         {
           kind: 'block',
           type: 'controls_if'
-        },
-        {
-          kind: 'block',
-          type: 'controls_whileUntil'
         },
         {
           kind: 'block',

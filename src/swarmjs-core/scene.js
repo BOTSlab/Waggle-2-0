@@ -34,6 +34,7 @@ export default class Scene {
     this.useVoronoi = robotsConfig.useVoronoiDiagram;
     this.pucksGroups = pucksConfigs.groups;
     this.numOfPucks = this.pucksGroups.reduce((total, puckGroup) => total + puckGroup.count, 0);
+    this.time = 0;
 
     this.width = parseInt(envConfig.width, 10);
     this.height = parseInt(envConfig.height, 10);
@@ -228,7 +229,7 @@ export default class Scene {
         envWidth,
         envHeight,
         this,
-        moment().subtract((2 * index), 'seconds')
+        moment().subtract(index, 'seconds')
       ));
   }
 
