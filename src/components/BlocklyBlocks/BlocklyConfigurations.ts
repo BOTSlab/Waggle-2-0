@@ -29,10 +29,6 @@ export const clusteringConfig = {
         {
           kind: 'block',
           type: 'robot_closest_puck'
-        },
-        {
-          kind: 'block',
-          type: 'robot_within_goal_zone'
         }
       ]
     },
@@ -106,10 +102,6 @@ export const clusteringConfig = {
         {
           kind: 'block',
           type: 'math_single'
-        },
-        {
-          kind: 'block',
-          type: 'math_number'
         },
         {
           kind: 'block',
@@ -179,10 +171,6 @@ export const sortingConfig = {
         {
           kind: 'block',
           type: 'robot_closest_puck_sorting'
-        },
-        {
-          kind: 'block',
-          type: 'robot_within_goal_zone_sorting'
         }
       ]
     },
@@ -256,10 +244,6 @@ export const sortingConfig = {
         {
           kind: 'block',
           type: 'math_single'
-        },
-        {
-          kind: 'block',
-          type: 'math_number'
         },
         {
           kind: 'block',
@@ -359,6 +343,10 @@ export const firefliesConfig = {
         },
         {
           kind: 'block',
+          type: 'robot_set_timer'
+        },
+        {
+          kind: 'block',
           type: 'robot_add_to_timer'
         },
         {
@@ -391,6 +379,10 @@ export const firefliesConfig = {
         {
           kind: 'block',
           type: 'seconds_since_nearby_last_flash'
+        },
+        {
+          kind: 'block',
+          type: 'seconds_since_last_flash'
         }
       ]
     },
@@ -437,10 +429,6 @@ export const firefliesConfig = {
         {
           kind: 'block',
           type: 'math_single'
-        },
-        {
-          kind: 'block',
-          type: 'math_number'
         },
         {
           kind: 'block',
@@ -622,10 +610,6 @@ export const pheromonesConfig = {
         {
           kind: 'block',
           type: 'math_single'
-        },
-        {
-          kind: 'block',
-          type: 'math_number'
         },
         {
           kind: 'block',

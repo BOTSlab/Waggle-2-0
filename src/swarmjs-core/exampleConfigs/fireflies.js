@@ -16,7 +16,7 @@ const firefliesConfig = {
   robots: {
     color: '#0C7BDC',
     flashColor: 'yellow',
-    count: 5,
+    count: 10,
     radius: 10,
     controllers: {
       blockly: Controllers.blockly.blocklyController

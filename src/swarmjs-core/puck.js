@@ -2,7 +2,9 @@ import { World, Bodies, Body } from 'matter-js';
 import { getDistance } from './utils/geometry';
 
 export default class Puck {
-  constructor(id, position, radius, goal, goalRadius, envWidth, envHeight, scene, color, map) {
+  constructor(
+    id, position, radius, goal, goalRadius, envWidth, envHeight, scene, color, map, group
+  ) {
     this.id = id;
     this.prevPosition = position;
     this.velocityScale = 1;
@@ -17,6 +19,7 @@ export default class Puck {
     this.engine = this.scene.engine;
     this.world = this.scene.world;
     this.map = map;
+    this.group = group;
 
     // Create Matter.js body and attach it to world
     this.body = Bodies.circle(position.x, position.y, this.radius);

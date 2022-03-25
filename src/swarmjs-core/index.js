@@ -13,7 +13,9 @@ const gMaps = [];
 
 let scene;
 
-const createSimulation = (config, updateCallback, blocklyCode, JSCode, isBlocklyWorkspace) => {
+const createSimulation = (
+  config, updateCallback, blocklyCode, JSCode, isBlocklyWorkspace
+) => {
   scene = new Scene(
     config.type,
     config.env,
@@ -82,7 +84,9 @@ export const getBenchmarkData = () => getBenchData();
 
 export const isBenchmarking = () => benchmarkingActive();
 
-export const togglePauseSimulation = () => scene.togglePause();
+export const togglePauseSimulation = () => {
+  scene.togglePause();
+};
 
 export const unpauseSimulation = () => scene.unpause();
 
