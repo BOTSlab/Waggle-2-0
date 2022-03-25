@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom';
 import { Alert } from '@mui/material'
 import { paperStyle, avatarStyle, btnstyle } from './loginStyles'
 
+
+
 const Login = ({ handleChange }) => {
 	const emailRef = useRef();
 	const passwordRef = useRef();
@@ -19,15 +21,15 @@ const Login = ({ handleChange }) => {
 	const history = useNavigate();
 	
 	
-	const handleSubmit = (event) => {
-		event.preventDefault();		
+	async function handleSubmit(event){
+		event.preventDefault();
 			try {
-			setError('')
-			setLoading(true);
-			login(emailRef.current.value, passwordRef.current.value);
-			history('/');
-		} catch {
-			setError('failed to log in');
+				setError('')
+				setLoading(true);
+				await login(emailRef.current.value, passwordRef.current.value);
+				history('/');
+		} catch(error){
+			setError(error.message);
 		}
 		setLoading(false);
 	}

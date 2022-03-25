@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Menu, Modal } from 'antd';
 import 'antd/dist/antd.css';
 import { Link } from 'react-router-dom';
+import Profile from '../components/Profile/Profile';
 
 const { SubMenu } = Menu;
 
@@ -60,6 +61,9 @@ export default function Navigation() {
             <span>Pheromones</span>
           </Menu.Item>
         </SubMenu>
+        <Menu.Item key='profilepage'>
+          <Profile/>
+        </Menu.Item>
       </Menu>
       <Modal visible={showErrorMessage} okText="Continue" onOk={onOk} onCancel={() => setShowErrorMessage(false)}>
         <p>Leaving this page will delete your code! Do you wish to continue?</p>

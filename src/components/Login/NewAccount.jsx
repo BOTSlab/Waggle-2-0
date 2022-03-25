@@ -14,7 +14,7 @@ import { paperStyleLogin, headerStyle, avatarStyleLogin, marginTop } from './log
 const NewAccount = () => {
 	
 	
-	
+	//const nameRef = useRef();
 	const emailRef = useRef();
 	const passwordRef = useRef();
 	const passwordConfirmRef = useRef();
@@ -25,11 +25,10 @@ const NewAccount = () => {
 	
 	
 	async function handleSubmit(event){
-		event.preventDefault();		
+		event.preventDefault();
 		if(passwordRef.current.value !== passwordConfirmRef.current.value) {
 			return setError('Passwords do not match');
 		}
-		
 		try {
 			setError('')
 		//	setLoading(true);
