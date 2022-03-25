@@ -14,7 +14,7 @@ const { TextArea } = Input;
 
 export default function Configuration({ simConfig, benchSettings, blocklyConfig }) {
   const [xml, setXml] = useState('');
-  const initialJSCode = 'const curGoalArea = sensors.puckGoalAreaSensor;\nconst closestPuck = sensors.closestPuckToGrapper;\nconst grappedPuck = actuators.grapper.getState();\n';
+  const initialJSCode = 'const closestPuck = sensors.closestPuckToGrapper;\nconst grappedPuck = actuators.grapper.getState();\n';
   const [blocklyCode, setBlocklyCode] = useState('');
   const [JSCode, setJSCode] = useState(initialJSCode);
 
@@ -43,6 +43,22 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
     initialXml: xml,
     onWorkspaceChange: workspaceDidChange
   });
+
+  const clearBlockly = () => {
+    Blockly.mainWorkspace.clear();
+    setXml('');
+  };
+
+  const clearJavaScript = () => {
+    setInitialJSWorkspace([
+      {
+        name: ['javascript'],
+        value: initialJSCode
+      }
+    ]);
+    setJSCode(initialJSCode);
+    form.resetFields();
+  };
 
   const downloadXmlFile = () => {
     const startIndex = xml.indexOf('<block type="robot_execute"');
@@ -92,8 +108,21 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
       const newXml = Blockly.Xml.workspaceToDom(workspace);
       const xmlText = Blockly.Xml.domToText(newXml);
       setXml(xmlText);
+      if (xml !== '') {
+        window.Blockly.code = true;
+      } else {
+        window.Blockly.code = false;
+      }
     }
   }, [blocklyCode]);
+
+  useEffect(() => {
+    if (JSCode === initialJSCode) {
+      window.Blockly.code = false;
+    } else {
+      window.Blockly.code = true;
+    }
+  }, [JSCode]);
 
   return (
     <div className="simulation-area">
@@ -110,6 +139,7 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
         <Tabs defaultActiveKey="1" onChange={updateWorkspaceType}>
           <TabPane tab="Blockly" key="1">
             <div className="simulation-buttons">
+              <Button className="load-button" onClick={clearBlockly}>Clear</Button>
               <Upload
                 accept=".xml"
                 showUploadList={false}
@@ -133,6 +163,7 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
           </TabPane>
           <TabPane tab="JavaScript" key="2">
             <div className="simulation-buttons">
+            <Button className="load-button" onClick={clearJavaScript}>Clear</Button>
             <Upload
                 accept=".js"
                 showUploadList={false}

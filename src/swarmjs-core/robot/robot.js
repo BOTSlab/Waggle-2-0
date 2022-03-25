@@ -1,5 +1,4 @@
 import { Body, World, Bodies } from 'matter-js';
-import moment from 'moment';
 import { getDistance } from '../utils/geometry';
 
 import SensorManager from './sensors/sensorManager';
@@ -131,14 +130,18 @@ export default class Robot {
 
   // Boolean for if number of inputted seconds has passed (based on robot creation time)
   timerIncrementedBySeconds(seconds) {
-    if ((moment().diff(this.creationTime, 'seconds') % seconds) === 0) {
+    if (this.scene.timeInstance % (this.creationTime + (seconds * 1000)) <= 1000) {
       return true;
     }
     return false;
   }
 
-  addSecondsToTimer(seconds) {
-    this.creationTime.add(seconds, 'seconds');
+  addSecondsToTimer(milliseconds) {
+    this.creationTime += milliseconds;
+  }
+
+  setTimerTo(milliseconds) {
+    this.creationTime = milliseconds;
   }
 
   get sensors() {
@@ -195,8 +198,8 @@ export default class Robot {
   }
 
   activateFlash() {
+    this.lastFlash = this.scene.timeInstance;
     this.flashing = this.flashColor;
-    this.lastFlash = moment();
   }
 
   deactivateFlash() {
@@ -209,9 +212,15 @@ export default class Robot {
   }
 
   setLinearVelocity(linearVel) {
-    this.linearVel = linearVel;
+    const x = linearVel.x;
+    const y = linearVel.y;
+    const newX = x * Math.cos(this.body.angle) - y * Math.sin(this.body.angle);
+    const newY = y * Math.cos(this.body.angle) + x * Math.sin(this.body.angle);
+
+    const newLinearVel = { x: newX, y: newY };
+    this.linearVel = newLinearVel;
     Body.setVelocity(this.body,
-      { x: (linearVel.x * this.velocityScale), y: (linearVel.y * this.velocityScale) });
+      { x: (newLinearVel.x * this.velocityScale), y: (newLinearVel.y * this.velocityScale) });
   }
 
   setAngularVelocity(angularVel) {
@@ -294,9 +303,9 @@ export default class Robot {
 
   getSecondsSinceNeighborLastFlash() {
     if (this.closestRobot) {
-      return moment().diff(this.closestRobot.lastFlash, 'seconds');
+      return this.scene.timeInstance - this.closestRobot.lastFlash;
     }
-    return 0;
+    return 1000;
   }
 }
 

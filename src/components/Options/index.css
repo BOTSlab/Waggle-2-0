@@ -16,3 +16,7 @@
 .config {
   flex-direction: column;
 }
+
+.warning-message {
+  color: red;
+}

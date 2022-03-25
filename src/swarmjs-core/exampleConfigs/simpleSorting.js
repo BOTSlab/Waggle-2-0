@@ -31,7 +31,8 @@ const simConfig = {
         count: 20,
         radius: 7,
         goal: { x: 150, y: 250 },
-        goalRadius: 7 * 12,
+        goalRadius: 0,
+        group: 'A',
         color: 'red'
       },
       {
@@ -39,7 +40,8 @@ const simConfig = {
         count: 20,
         radius: 7,
         goal: { x: 650, y: 375 },
-        goalRadius: 7 * 12,
+        goalRadius: 0,
+        group: 'B',
         color: 'blue'
       }
     ],

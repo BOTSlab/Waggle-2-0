@@ -4,31 +4,13 @@ import Blockly from 'blockly';
 
 // SENSORS SORTING BLOCKS
 
-Blockly.Blocks.robot_within_goal_zone_sorting = {
-  init() {
-    this.appendDummyInput()
-      .appendField('Within')
-      .appendField(new Blockly.FieldDropdown([['red', 'red'], ['blue', 'blue']]), 'puckColour')
-      .appendField('goal zone?');
-    this.setOutput(true, 'Boolean');
-    this.setColour(0);
-    this.setTooltip('True if the robot lies within the goal zone.');
-    this.setHelpUrl('');
-  }
-};
-
-Blockly.JavaScript.robot_within_goal_zone_sorting = (block) => {
-  const dropdownPuckColor = block.getFieldValue('puckColour');
-  const code = `sensors.puckGoalAreaSensor === '${dropdownPuckColor}'`;
-  return [code, Blockly.JavaScript.ORDER_NONE];
-};
-
 Blockly.Blocks.robot_closest_puck_sorting = {
   init() {
     this.appendDummyInput()
-      .appendField(new Blockly.FieldDropdown([['Red', 'red'], ['Blue', 'blue']]), 'puckColour')
-      .appendField('puck near gripper');
-    this.setOutput(true, 'Boolean');
+      .appendField('Number of')
+      .appendField(new Blockly.FieldDropdown([['Red', 'A'], ['Blue', 'B']]), 'puckColour')
+      .appendField('puck(s) near gripper');
+    this.setOutput('Number');
     this.setColour(0);
     this.setTooltip('True if selected colored puck is closest to the robots gripper');
     this.setHelpUrl('');
@@ -37,14 +19,14 @@ Blockly.Blocks.robot_closest_puck_sorting = {
 
 Blockly.JavaScript.robot_closest_puck_sorting = (block) => {
   const dropdownPuckColor = block.getFieldValue('puckColour');
-  const code = `closestPuck && closestPuck.color === '${dropdownPuckColor}'`;
+  const code = `sensors.pucksNearGrapper.filter((puck) => puck.group === '${dropdownPuckColor}').length`;
   return [code, Blockly.JavaScript.ORDER_NONE];
 };
 
 Blockly.Blocks.robot_puck_held_sorting = {
   init() {
     this.appendDummyInput()
-      .appendField(new Blockly.FieldDropdown([['Red', 'red'], ['Blue', 'blue']]), 'puckColour')
+      .appendField(new Blockly.FieldDropdown([['Red', 'A'], ['Blue', 'B']]), 'puckColour')
       .appendField('puck held?');
     this.setOutput(true, 'Boolean');
     this.setColour(0);
@@ -55,7 +37,7 @@ Blockly.Blocks.robot_puck_held_sorting = {
 
 Blockly.JavaScript.robot_puck_held_sorting = (block) => {
   const dropdownPuckColor = block.getFieldValue('puckColour');
-  const code = `grappedPuck && grappedPuck.color === '${dropdownPuckColor}'`;
+  const code = `grappedPuck && grappedPuck.group === '${dropdownPuckColor}'`;
   return [code, Blockly.JavaScript.ORDER_NONE];
 };
 

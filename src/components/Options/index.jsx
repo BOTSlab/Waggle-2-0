@@ -1,13 +1,11 @@
 /* eslint-disable no-param-reassign */
-import React, { useState } from 'react';
+import React from 'react';
 import propTypes from 'prop-types';
 import { InputNumber } from 'antd';
-import { SketchPicker } from 'react-color';
 
-import SpeedSlider from './SpeedSlider';
-import RenderingSettings from './RenderingSettings';
-import './index.css';
 import { Box, Grid, Button } from '@mui/material';
+import SpeedSlider from './SpeedSlider';
+import './index.css';
 
 export default function Options({
   config,
@@ -35,33 +33,6 @@ export default function Options({
     reset();
   };
 
-  const [puckOneColor, setPuckOneColor] = useState('red');
-  const updatePuckOneColor = (value) => {
-    config.pucks.groups[0].color = `${value.hex}`;
-    setPuckOneColor(value);
-    reset();
-  };
-
-  const [puckTwoColor, setPuckTwoColor] = useState('blue');
-  const updatePuckTwoColor = (value) => {
-    config.pucks.groups[1].color = `${value.hex}`;
-    setPuckTwoColor(value);
-    reset();
-  };
-
-  const [robotColor, setRobotColor] = useState(config.robots.color);
-  const updateRobotColor = (value) => {
-    config.robots.color = `${value.hex}`;
-    setRobotColor(value);
-    reset();
-  };
-
-  const [robotFlashColor, setRobotFlashColor] = useState('yellow');
-  const updateRobotFlashColor = (value) => {
-    config.robots.flashColor = `${value.hex}`;
-    setRobotFlashColor(value);
-    reset();
-  };
   const rectx = 50;
   const recty = 25;
 
@@ -78,7 +49,7 @@ export default function Options({
   const randx = getRandomIntInclusive(50, 600);
   const randy = getRandomIntInclusive(50, 400);
 
-  const addRectObstacle = (value) => {
+  const addRectObstacle = () => {
     config.objects = [...config.objects, {
       type: 'rectangle',
       center: { x: (rectx + randx), y: (recty + randy) },
@@ -110,10 +81,9 @@ export default function Options({
     display: config.type === 'sorting' ? 'flex' : 'none'
   };
 
-  const firefliesStyle = {
-    display: config.type === 'fireflies' ? 'flex' : 'none'
-  };
   return (
+    <div>
+    <SpeedSlider speed={speed} setSpeed={setSpeed} />
     <div>
       <Button onClick={addCircleObstacle}>
         Add a circle obstacle
@@ -130,65 +100,26 @@ export default function Options({
       </Button> */}
     </div>
 
-      <div className="config-modifier">
-        <div className="config-input" style={{ display: 'flex' }}>
-          <span style={{ padding: 10 }}>Number of robots: </span>
-          <InputNumber min={0} max={50} defaultValue={5} onChange={updateNumRobots} />
-        </div>
-        <div className="config-input" style={redPuckStyle}>
-          <span style={{ padding: 10 }}>Number of group 1 pucks: </span>
-          <InputNumber min={0} max={50} defaultValue={20} onChange={updateNumRedPucks} />
-        </div>
-        <div className="config-input" style={bluePuckStyle}>
-          <span style={{ padding: 10 }}>Number of group 2 pucks: </span>
-          <InputNumber min={0} max={50} defaultValue={20} onChange={updateNumBluePucks} />
-        </div>
-        <div className="config-input" style={{ display: 'flex' }}>
-          <span style={{ padding: 10 }}>Change size of obstacle : </span>
-          <InputNumber min={0} max={10} defaultValue={1} />
-        </div>
-
+    <div className="config-modifier">
+      <div className="config-input" style={{ display: 'flex' }}>
+        <span style={{ padding: 10 }}>Number of robots: </span>
+        <InputNumber min={0} max={50} defaultValue={5} onChange={updateNumRobots} />
       </div>
-      <div className="config-modifier">
-      <div className="config">
-          <span>Robot color: </span>
-          <SketchPicker
-            className="color-picker"
-            color={robotColor}
-            onChangeComplete={updateRobotColor}
-          />
-        </div>
-        <div className="config" style={firefliesStyle}>
-          <span>Fireflies flash color: </span>
-          <SketchPicker
-            className="color-picker"
-            color={robotFlashColor}
-            onChangeComplete={updateRobotFlashColor}
-          />
-        </div>
-        <div className="config" style={redPuckStyle}>
-          <span>Puck Group 1 Color: </span>
-          <SketchPicker
-            className="color-picker"
-            color={puckOneColor}
-            onChangeComplete={updatePuckOneColor}
-          />
-        </div>
-        <div className="config" style={bluePuckStyle}>
-          <span>Puck Group 2 Color: </span>
-          <SketchPicker
-            className="color-picker"
-            color={puckTwoColor}
-            onChangeComplete={updatePuckTwoColor}
-          />
-        </div>
+      <div className="config-input" style={redPuckStyle}>
+        <span style={{ padding: 10 }}>Number of group 1 pucks: </span>
+        <InputNumber min={0} max={50} defaultValue={20} onChange={updateNumRedPucks} />
       </div>
-      <SpeedSlider speed={speed} setSpeed={setSpeed} />
-      <RenderingSettings
-        renderingElements={renderingElements}
-        setElementEnabled={setElementEnabled}
-      />
+      <div className="config-input" style={bluePuckStyle}>
+        <span style={{ padding: 10 }}>Number of group 2 pucks: </span>
+        <InputNumber min={0} max={50} defaultValue={20} onChange={updateNumBluePucks} />
+      </div>
+      <div className="config-input" style={{ display: 'flex' }}>
+        <span style={{ padding: 10 }}>Change size of obstacle : </span>
+        <InputNumber min={0} max={10} defaultValue={1} />
+      </div>
     </div>
+    </div>
+  </div>
   );
 }
 
@@ -199,7 +130,5 @@ Options.propTypes = {
   togglePause: propTypes.func.isRequired,
   setSpeed: propTypes.func.isRequired,
   reset: propTypes.func.isRequired,
-  renderingElements: propTypes.array.isRequired,
-  setElementEnabled: propTypes.func.isRequired,
   time: propTypes.number
 };

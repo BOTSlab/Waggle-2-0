@@ -2,7 +2,6 @@
 /* eslint-disable no-param-reassign */
 import * as d3 from 'd3';
 import { Engine, World, Body, Matter } from 'matter-js';
-import moment from 'moment';
 import { Delaunay } from 'd3-delaunay';
 
 import Robot from './robot/robot';
@@ -79,7 +78,6 @@ export default class Scene {
 
     this.puckMaps = [];
     this.mapArray = [];
-    console.log(this.isBlocklyWorkspace);
     // Generate Binary Scene Map
     if (pucksConfigs.useGlobalPuckMaps) {
       if (gMaps.mapArray) {
@@ -128,7 +126,7 @@ export default class Scene {
       .voronoi([0, 0, this.width, this.height]);
 
     // Simulation Speed
-    this.timeDelta = 16.666;
+    this.timeDelta = 1;
 
     this.paused = true;
 
@@ -156,6 +154,7 @@ export default class Scene {
       if (typeof scale !== 'number' || scale < 0) {
         return;
       }
+      this.timeDelta = (scale * 20);
       this.robots.forEach((r) => { r.updateVelocityScale(scale); });
     };
     this.togglePause.bind(this);
@@ -228,7 +227,7 @@ export default class Scene {
         envWidth,
         envHeight,
         this,
-        moment().subtract((2 * index), 'seconds')
+        Math.floor(Math.random() * (10000 - 1 + 1) + 1)
       ));
   }
 
@@ -249,7 +248,8 @@ export default class Scene {
             envHeight,
             this,
             puckGroup.color,
-            maps[puckGroup.id]
+            maps[puckGroup.id],
+            puckGroup.group
           ))
       );
 

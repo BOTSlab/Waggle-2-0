@@ -49,26 +49,48 @@ Blockly.Blocks.robot_deactivate_flash = {
 
 Blockly.JavaScript.robot_deactivate_flash = () => 'robot.deactivateFlash();\n';
 
+Blockly.Blocks.robot_set_timer = {
+  init() {
+    this.appendDummyInput()
+      .appendField('Set robot timer to')
+      .appendField(new Blockly.FieldNumber(0), 'milliseconds');
+    this.setPreviousStatement(true, null);
+    this.setNextStatement(true, null);
+    this.setColour(105);
+    this.setTooltip('Sets robots timer to given milliseconds');
+    this.setHelpUrl('');
+  }
+};
+
+Blockly.JavaScript.robot_set_timer = (block) => {
+  let milliseconds = block.getFieldValue('milliseconds');
+  if (milliseconds < 0) {
+    milliseconds *= -1;
+  }
+  const code = `robot.setTimerTo(${milliseconds});\n`;
+  return code;
+};
+
 Blockly.Blocks.robot_add_to_timer = {
   init() {
     this.appendDummyInput()
       .appendField('Add')
-      .appendField(new Blockly.FieldNumber(0), 'seconds')
-      .appendField('seconds to robots timer');
+      .appendField(new Blockly.FieldNumber(0), 'milliseconds')
+      .appendField('milliseconds to robots timer');
     this.setPreviousStatement(true, null);
     this.setNextStatement(true, null);
     this.setColour(105);
-    this.setTooltip('Adds given seconds to robots timer');
+    this.setTooltip('Adds given milliseconds to robots timer');
     this.setHelpUrl('');
   }
 };
 
 Blockly.JavaScript.robot_add_to_timer = (block) => {
-  let seconds = block.getFieldValue('seconds');
-  if (seconds < 0) {
-    seconds *= -1;
+  let milliseconds = block.getFieldValue('milliseconds');
+  if (milliseconds < 0) {
+    milliseconds *= -1;
   }
-  const code = `robot.addSecondsToTimer(${seconds});\n`;
+  const code = `robot.addSecondsToTimer(${milliseconds});\n`;
   return code;
 };
 
@@ -126,15 +148,31 @@ Blockly.JavaScript.robot_timer_incremented = (block) => {
 Blockly.Blocks.seconds_since_nearby_last_flash = {
   init() {
     this.appendDummyInput()
-      .appendField('Number of seconds since neighbors last flash');
+      .appendField('Number of milliseconds since neighbors last flash');
     this.setOutput(true, 'Number');
     this.setColour(300);
-    this.setTooltip('Returns the number of seconds since the nearest robots last flash.');
+    this.setTooltip('Returns the number of milliseconds since the nearest robots last flash.');
     this.setHelpUrl('');
   }
 };
 
 Blockly.JavaScript.seconds_since_nearby_last_flash = () => {
   const code = 'robot.getSecondsSinceNeighborLastFlash()';
+  return [code, Blockly.JavaScript.ORDER_NONE];
+};
+
+Blockly.Blocks.seconds_since_last_flash = {
+  init() {
+    this.appendDummyInput()
+      .appendField('Number of milliseconds since robots last flash');
+    this.setOutput(true, 'Number');
+    this.setColour(300);
+    this.setTooltip('Returns the number of milliseconds since the robots last flash.');
+    this.setHelpUrl('');
+  }
+};
+
+Blockly.JavaScript.seconds_since_last_flash = () => {
+  const code = 'robot.lastFlash';
   return [code, Blockly.JavaScript.ORDER_NONE];
 };

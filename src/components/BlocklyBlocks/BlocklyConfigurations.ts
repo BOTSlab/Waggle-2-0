@@ -29,10 +29,6 @@ export const clusteringConfig = {
         {
           kind: 'block',
           type: 'robot_closest_puck'
-        },
-        {
-          kind: 'block',
-          type: 'robot_within_goal_zone'
         }
       ]
     },
@@ -51,14 +47,6 @@ export const clusteringConfig = {
         },
         {
           kind: 'block',
-          type: 'robot_set_text'
-        },
-        {
-          kind: 'block',
-          type: 'robot_set_text_variable'
-        },
-        {
-          kind: 'block',
           type: 'robot_activate_gripper'
         },
         {
@@ -73,31 +61,12 @@ export const clusteringConfig = {
     },
     {
       kind: 'category',
-      name: 'Memory',
-      color: '#5C81A6',
-      contents: [
-        {
-          kind: 'block',
-          type: 'robot_get_variable'
-        },
-        {
-          kind: 'block',
-          type: 'robot_set_variable'
-        }
-      ]
-    },
-    {
-      kind: 'category',
       name: 'Logic',
       color: '#5C81A6',
       contents: [
         {
           kind: 'block',
           type: 'controls_if'
-        },
-        {
-          kind: 'block',
-          type: 'controls_whileUntil'
         },
         {
           kind: 'block',
@@ -133,10 +102,6 @@ export const clusteringConfig = {
         {
           kind: 'block',
           type: 'math_single'
-        },
-        {
-          kind: 'block',
-          type: 'math_number'
         },
         {
           kind: 'block',
@@ -206,10 +171,6 @@ export const sortingConfig = {
         {
           kind: 'block',
           type: 'robot_closest_puck_sorting'
-        },
-        {
-          kind: 'block',
-          type: 'robot_within_goal_zone_sorting'
         }
       ]
     },
@@ -228,14 +189,6 @@ export const sortingConfig = {
         },
         {
           kind: 'block',
-          type: 'robot_set_text'
-        },
-        {
-          kind: 'block',
-          type: 'robot_set_text_variable'
-        },
-        {
-          kind: 'block',
           type: 'robot_activate_gripper'
         },
         {
@@ -250,31 +203,12 @@ export const sortingConfig = {
     },
     {
       kind: 'category',
-      name: 'Memory',
-      color: '#5C81A6',
-      contents: [
-        {
-          kind: 'block',
-          type: 'robot_get_variable'
-        },
-        {
-          kind: 'block',
-          type: 'robot_set_variable'
-        }
-      ]
-    },
-    {
-      kind: 'category',
       name: 'Logic',
       color: '#5C81A6',
       contents: [
         {
           kind: 'block',
           type: 'controls_if'
-        },
-        {
-          kind: 'block',
-          type: 'controls_whileUntil'
         },
         {
           kind: 'block',
@@ -310,10 +244,6 @@ export const sortingConfig = {
         {
           kind: 'block',
           type: 'math_single'
-        },
-        {
-          kind: 'block',
-          type: 'math_number'
         },
         {
           kind: 'block',
@@ -413,6 +343,10 @@ export const firefliesConfig = {
         },
         {
           kind: 'block',
+          type: 'robot_set_timer'
+        },
+        {
+          kind: 'block',
           type: 'robot_add_to_timer'
         },
         {
@@ -445,6 +379,10 @@ export const firefliesConfig = {
         {
           kind: 'block',
           type: 'seconds_since_nearby_last_flash'
+        },
+        {
+          kind: 'block',
+          type: 'seconds_since_last_flash'
         }
       ]
     },
@@ -456,10 +394,6 @@ export const firefliesConfig = {
         {
           kind: 'block',
           type: 'controls_if'
-        },
-        {
-          kind: 'block',
-          type: 'controls_whileUntil'
         },
         {
           kind: 'block',
@@ -495,10 +429,6 @@ export const firefliesConfig = {
         {
           kind: 'block',
           type: 'math_single'
-        },
-        {
-          kind: 'block',
-          type: 'math_number'
         },
         {
           kind: 'block',
@@ -680,10 +610,6 @@ export const pheromonesConfig = {
         {
           kind: 'block',
           type: 'math_single'
-        },
-        {
-          kind: 'block',
-          type: 'math_number'
         },
         {
           kind: 'block',

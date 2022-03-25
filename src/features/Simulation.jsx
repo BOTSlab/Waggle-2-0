@@ -5,6 +5,7 @@ import QuickActions from '../components/QuickActions';
 import TabContainer from '../components/Containers/TabContainer';
 import Options from '../components/Options/index';
 import Benchmark from '../components/Benchmark';
+import Appearance from '../components/Appearance/Appearance';
 
 import {
   initializeSimulation,
@@ -28,7 +29,7 @@ import {
 const Simulation = ({ simConfig, benchSettings, blocklyCode, JSCode, isBlocklyWorkspace }) => {
   const [uiEnabled, setUiEnabled] = React.useState(false);
   const [time, setTime] = React.useState(0);
-  const [speed, setSpeed] = React.useState(0);
+  const [speed, setSpeed] = React.useState(1);
   const [paused, setPaused] = React.useState(true);
   const [benchmarkData, setBenchmarkData] = React.useState({});
   const svgRef = React.useRef(null);
@@ -52,7 +53,7 @@ const Simulation = ({ simConfig, benchSettings, blocklyCode, JSCode, isBlocklyWo
     if (!scene.paused) {
       setTime(newTime);
     }
-    renderScene(svgRef.current, scene);
+    renderScene(svgRef.current, scene, newTime);
     setBenchmarkData(benchData);
   };
 
@@ -94,10 +95,14 @@ const Simulation = ({ simConfig, benchSettings, blocklyCode, JSCode, isBlocklyWo
     />
   ) : <></>;
 
-  // TODO: Add a TreeView component to set Simulation and Benchmarking options
-  const configurationsElem = (
-    <p> TODO: Tree View UI for Changing Simulation and Benchmarking Configuration </p>
-  );
+  const appearanceElem = initialized ? (
+    <Appearance
+      config={config}
+      reset={reset}
+      renderingElements = {getRenderingElements(simConfig.type)}
+      setElementEnabled={setElementEnabled}
+    />
+  ) : <></>;
 
   const benchElem = initialized ? (
     <Benchmark simConfig={config} benchSettings={benchSettings} reset={reset} data={benchmarkData}/>
@@ -105,7 +110,7 @@ const Simulation = ({ simConfig, benchSettings, blocklyCode, JSCode, isBlocklyWo
 
   const tabContents = [
     { label: 'Options', content: optionsElem },
-    { label: 'Configurations', content: configurationsElem },
+    { label: 'Appearance', content: appearanceElem },
     { label: 'Benchmarking', content: benchElem }
   ];
 
@@ -123,7 +128,7 @@ const Simulation = ({ simConfig, benchSettings, blocklyCode, JSCode, isBlocklyWo
   ) : <></>;
 
   return (
-    <div style={{ width: '100%' }}>
+    <div style={{ width: 840 }}>
       <QuickActions
         simulationDescription={simulationDescription}
         toggleElementEnabled={toggleElementEnabled}
@@ -137,7 +142,7 @@ const Simulation = ({ simConfig, benchSettings, blocklyCode, JSCode, isBlocklyWo
         benchSettings={benchSettings}
         paused={paused}
         />
-      <div style={{ width: '100%', textAlign: 'center' }}>
+      <div style={{ width: 840, paddingLeft: 20 }}>
         <svg
           ref={svgRef}
           width={config.env.width}

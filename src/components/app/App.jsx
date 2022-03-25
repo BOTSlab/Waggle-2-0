@@ -28,8 +28,7 @@ export default function App() {
         <Route path="/" element={<About />} />
         <Route path="/tutorial" element={<Tutorial />} />
         <Route path="/simulations" element={<SimulationDescription />} />
-        <Route path="/signInSignout" element={<SignInOut/>} />
-        
+        <Route path="/signInSignUp" element={<SignInOut/>} />
         <Route path="/simulations/clustering" element={<Configuration simConfig={clusteringConfig} benchSettings={clusteringBenchmarkConfig} blocklyConfig={blocklyConfig.clusteringConfig} />} />
         <Route path="/simulations/sorting" element={<Configuration simConfig={simConfig} benchSettings={benchmarkConfig} blocklyConfig={blocklyConfig.sortingConfig} />} />
         <Route path="/simulations/fireflies" element={<Configuration simConfig={firefliesConfig} benchSettings={firefliesBenchmarkConfig} blocklyConfig={blocklyConfig.firefliesConfig} />} />

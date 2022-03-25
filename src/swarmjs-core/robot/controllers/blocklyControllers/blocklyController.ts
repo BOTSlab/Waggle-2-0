@@ -5,17 +5,14 @@ import React from 'react';
 import { notification } from 'antd';
 // TODO: When TypeScript fully integrated, identify robot, sensor and actuator types
 export default function blocklyController(robot: any) {
-  const moment = require('moment');
   notification.config({
     duration: 0,
     maxCount: 1
   });
-  const startTime = moment();
   return (sensors: any, actuators: any) => {
     if (robot.scene.isBlocklyWorkspace) {
       if (robot.scene.blocklyCode && robot.scene.blocklyCode.includes('execute')) {
         const curGoalArea = sensors.puckGoalAreaSensor;
-        const closestPuck = sensors.closestPuckToGrapper;
         const grappedPuck = actuators.grapper.getState();
         eval(robot.scene.blocklyCode.replace('execute', ''));
       } else {

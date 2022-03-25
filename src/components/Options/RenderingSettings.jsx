@@ -10,8 +10,8 @@ import {
 } from '@mui/material';
 
 const RenderingSettings = ({ renderingElements, setElementEnabled }) => (
-  <Box sx={{ width: '100%' }}>
-    <FormGroup row>
+  <Box>
+    <FormGroup sx={{ width: 1000 }} row>
       <Grid container spacing={2} item sm={12} lg={6} xl={4}>
         <Grid item xs={12}>
           <Typography variant="h5">
