@@ -3,6 +3,7 @@
         "es6": true,
         "browser": true
     },
+    "allowIndentationTabs": true,
     "extends": [
         "airbnb-base",
         "plugin:react/recommended"
