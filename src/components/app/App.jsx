@@ -1,7 +1,6 @@
 import React from 'react';
 import { Routes, Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 
-import './App.css';
 import 'antd/dist/antd.less';
 import '../../stylesheets/waggle.less'
 
@@ -13,6 +12,7 @@ import SimulationDescription from '../../features/SimulationDescription/Simulati
 import Configuration from '../../features/Configuration/Configuration';
 import { exampleConfigs } from '../../swarmjs-core';
 import Navigation from '../../features/Navigation/Navigation';
+import LandingPage from '../../features/LandingPage/LandingPage';
 
 import SignInOutWrapper from '../Login/SignInOutWrapper';
 import ProfilePageWrapper from '../Profile/ProfilePageWrapper'
@@ -26,7 +26,8 @@ export default function App() {
     <div>
       <Navigation />
       <Routes>
-        <Route path="/" element={<About />} />
+        <Route path="/" element={<LandingPage/>} />
+        <Route path="/about" element={<About/>} />
         <Route path="/tutorial" element={<Tutorial />} />
         <Route path="/simulations" element={<SimulationDescription />} />
         <Route path="/signInSignUp" element={<SignInOutWrapper/>} />

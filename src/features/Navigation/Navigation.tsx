@@ -48,7 +48,9 @@ export default function Navigation() {
     <nav className="nav-bar">
       <Grid container spacing={1}>
         <Grid item xs={1} sm={2} md={3}>
-          <img id="logo" src={Logo} alt='Waggle text logo'/>
+          <a id="logo" href="/">
+            <img src={Logo} alt='Waggle text logo'/>
+          </a>
         </Grid>
         <Grid item xs={10} sm={8} md={6}>
           <Menu onClick={handleClick} selectedKeys={currentPage} mode="horizontal">
@@ -70,7 +72,7 @@ export default function Navigation() {
                 <span>Pheromones</span>
               </Menu.Item>
             </SubMenu>
-            <Menu.Item key=''>
+            <Menu.Item key='about'>
               <InfoIcon/>
               <span>About</span>
             </Menu.Item>
