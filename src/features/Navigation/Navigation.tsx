@@ -91,7 +91,7 @@ export default function Navigation() {
         <h5>Warning</h5>
         <p>Leaving this page will delete your code! Do you wish to continue?</p>
       </Modal>
-
+      
     </nav>
   );
 }
