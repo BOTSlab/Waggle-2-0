@@ -12,7 +12,7 @@ import Tutorial from '../../features/Tutorial';
 import SimulationDescription from '../../features/SimulationDescription/SimulationDescription';
 import Configuration from '../../features/Configuration/Configuration';
 import { exampleConfigs } from '../../swarmjs-core';
-import Navigation from '../../features/Navigation';
+import Navigation from '../../features/Navigation/Navigation';
 
 import SignInOutWrapper from '../Login/SignInOutWrapper';
 import ProfilePageWrapper from '../Profile/ProfilePageWrapper'
@@ -24,9 +24,7 @@ export default function App() {
 
   return (
     <div>
-      <h2 className="title">Waggle: The Online Swarm Robotics Lab</h2>
       <Navigation />
-     
       <Routes>
         <Route path="/" element={<About />} />
         <Route path="/tutorial" element={<Tutorial />} />
