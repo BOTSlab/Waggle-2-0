@@ -6,6 +6,7 @@ import SchoolIcon from '@mui/icons-material/School';
 import InfoIcon from '@mui/icons-material/Info';
 import EmojiNatureIcon from '@mui/icons-material/EmojiNature';
 import SettingsIcon from '@mui/icons-material/Settings';
+import LoginIcon from '@mui/icons-material/Login';
 
 import Profile from '../../components/Profile/Profile';
 import Logo from '../../assets/images/waggle-text-logo.svg';
@@ -29,19 +30,17 @@ export default function Navigation() {
     if (pages.includes('simulations') && window.Blockly.code) {
       setShowErrorMessage(true);
       setTempPage(e.key);
-    } else if (e.key.includes('simulations')) {
-      window.location.href = `${window.location.href.split(`${pages[0]}`)[0]}${e.key}`;
-      setCurrentPage(e.key);
     } else {
-      window.location.href = window.location.href.split(`${pages[0]}`)[0] + e.key;
-      //window.location.href = `${window.location.href.split(`${pages[0]}`)}${e.key}`;
+      let baseEndPoint: string = (pages[0] == '' ? window.location.href : window.location.href.split(`${pages[0]}`)[0]);
+      window.location.href = baseEndPoint + e.key;
       setCurrentPage(e.key);
     }
   };
 
   const onOk = () => {
+    let baseEndPoint: string = window.location.href.split(`${pages[0]}`)[0]
     setCurrentPage(tempPage);
-    window.location.href = `${window.location.href.split('/').slice(0, 4).join('/')}/${tempPage}`;
+    window.location.href = `${baseEndPoint}${tempPage}`;
   };
 
 
@@ -53,12 +52,11 @@ export default function Navigation() {
         </Grid>
         <Grid item xs={10} sm={8} md={6}>
           <Menu onClick={handleClick} selectedKeys={currentPage} mode="horizontal">
-            <Menu.Item key='settings'>
-              <SettingsIcon/>
-              <span>Settings</span>
-            </Menu.Item>
-            <SubMenu key='simulations' title='Simulations'>
-              <SettingsIcon/>
+            <Menu.Item key='signInSignUp'>
+              <LoginIcon/>
+              <span>Sign In / Sign Up</span>
+            </Menu.Item>  
+            <SubMenu key='simulations' title='Simulations' icon={<EmojiNatureIcon/>}>
               <Menu.Item key='simulations/clustering'>
                 <span>Clustering</span>
               </Menu.Item>
@@ -72,11 +70,7 @@ export default function Navigation() {
                 <span>Pheromones</span>
               </Menu.Item>
             </SubMenu>
-            <Menu.Item key='simulations/fireflies'>
-              <EmojiNatureIcon/>
-              <span>Simulations</span>
-            </Menu.Item>
-            <Menu.Item key='about'>
+            <Menu.Item key=''>
               <InfoIcon/>
               <span>About</span>
             </Menu.Item>
@@ -93,10 +87,11 @@ export default function Navigation() {
         </Grid>
       </Grid>
 
-      <Modal visible={showErrorMessage} okText="Continue" onOk={onOk} onCancel={() => setShowErrorMessage(false)}>
+      <Modal className="warning" visible={showErrorMessage} okText="Continue" onOk={onOk} onCancel={() => setShowErrorMessage(false)}>
+        <h5>Warning</h5>
         <p>Leaving this page will delete your code! Do you wish to continue?</p>
       </Modal>
-
+      
     </nav>
   );
 }

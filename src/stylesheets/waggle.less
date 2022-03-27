@@ -2,9 +2,6 @@
 
 
 // The following override default AntD theming (see https://ant.design/docs/react/customize-theme for details)
-
-
-
 // -------- Colors -----------
 // >>> Primary
 @primary-color: #3362ff;
@@ -78,3 +75,11 @@
 @line-height-base: 18px * 1.5;
 
 @border-radius-base: 8px;
+
+// Color used by default to control hover and active backgrounds and for
+// alert info backgrounds.
+@primary-1: rgba(51, 98, 255, 0.9); // replace tint(@primary-color, 90%)
+@primary-2: rgba(51, 98, 255, 0.8); // replace tint(@primary-color, 80%)
+@primary-5: rgba(51, 98, 255, 0.2); // color used to control the text color in many active and hover states, replace tint(@primary-color, 20%)
+@primary-6: rgba(51, 98, 255, 1);
+@primary-7: rgba(51, 98, 255, 0.05); // replace shade(@primary-color, 5%)

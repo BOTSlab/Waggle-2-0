@@ -1,3 +1,5 @@
+@import "../../stylesheets/waggle";
+
 @line-height: 56px;
 @padding: 56px;
 
@@ -11,6 +13,21 @@
 
         svg {
             margin-right: 8px;
+        }
+    }
+
+    li.ant-menu-submenu div.ant-menu-submenu-title {
+        display: flex;
+        align-items: center;
+        width: max-content;
+
+        svg {
+            margin-right: 8px;
+            height: 24px;
+        }
+
+        span {
+            margin: 0;
         }
     }
 
@@ -60,34 +77,4 @@
             color: none
         }
     }
-    
 }
-
-
-.nav-bar .menu .page-link {
-    padding: 8px 16px;
-}
-
-.page-link a p {
-    margin: 0
-}
-
-.nav-bar .menu .page-link a {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    text-decoration: none;
-    color: #292929;
-}
-
-.nav-bar .menu .page-link a p {
-    margin: 0;
-    padding: 0;
-    line-height: 20px;
-}
-
-.nav-bar .menu .page-link a svg {
-    margin-right: 8px;
-}
-
-
