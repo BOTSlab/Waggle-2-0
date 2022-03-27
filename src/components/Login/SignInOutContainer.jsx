@@ -35,9 +35,6 @@ const SignInOutContainer = () => {
 	const handleChange = (event, newValue) => {
 		setValue(newValue);
 	};
-
-
-	
 		return (
 			<Paper elevation={20} style={paperStyleContainer}>
 			<Tabs
@@ -57,7 +54,6 @@ const SignInOutContainer = () => {
 		<Account/>
 		</TabPanel>
 		</Paper>
-		
 		)
 }
 
