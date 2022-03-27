@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Menu, Modal } from 'antd';
-import 'antd/dist/antd.css';
 import { Link } from 'react-router-dom';
 import Profile from '../components/Profile/Profile';
 
