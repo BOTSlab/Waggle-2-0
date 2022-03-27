@@ -235,6 +235,7 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
               <TabPane tab="Blockly" key="1">
                 <div className="simulation-buttons">
                   <Button className="load-button" onClick={clearBlockly}>Clear</Button>
+                  <Button>Load From Account</Button>
                   <Upload
                     accept=".xml"
                     showUploadList={false}
@@ -248,17 +249,18 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
                       return false;
                     }}
                   >
-                    <Button className="load-button">Load</Button>
+                    <Button className="load-button">Load From Local</Button>
                   </Upload>
                   <Button className="save-as-button" onClick={downloadXmlFile}>Save as</Button>
                   <Input className="file-name-input" defaultValue="blocks.xml" onChange={(e) => setXmlFileName(e.target.value)} />
-                  <Button className="javascript-button" onClick={transferToJavaScript}>Transfer to JavaScript</Button>
+                  <Button className="javascript-button" onClick={transferToJavaScript}>Transfer to JS</Button>
                 </div>
                 <div ref={blocklyRef} className="code" />
               </TabPane>
               <TabPane tab="JavaScript" key="2">
-                <div className="simulation-buttons">
+              <div className="simulation-buttons">
                 <Button className="load-button" onClick={clearJavaScript}>Clear</Button>
+                <Button>Load From Account</Button>
                 <Upload
                     accept=".js"
                     showUploadList={false}
