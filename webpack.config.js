@@ -17,8 +17,26 @@ module.exports = (env) => {
     module: {
       rules: [
         {
-          test: /\.css$/i,
-          use: ['style-loader', 'css-loader']
+          test: /\.(css|less)$/,
+          use: [
+            { loader: 'style-loader' },
+            { loader: 'css-loader' },
+            { 
+              loader: 'less-loader',
+              options: {
+                lessOptions: { // If you are using less-loader@5 please spread the lessOptions to options directly
+                  modifyVars: {
+                    hack: `true; @import "${path.resolve(
+                      __filename,
+                      "../",
+                      "./src/stylesheets/waggle.less"
+                    )}";`
+                  },
+                  javascriptEnabled: true,
+                },
+              }
+            }
+          ]
         },
         {
           test: /\.(png|jp(e*)g|svg|gif)$/,

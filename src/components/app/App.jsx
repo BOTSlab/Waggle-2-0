@@ -1,6 +1,10 @@
 import React from 'react';
 import { Routes, Route, BrowserRouter as Router, Switch } from 'react-router-dom';
+
 import './App.css';
+import 'antd/dist/antd.less';
+import '../../stylesheets/waggle.less'
+
 import * as blocklyConfig from '../BlocklyBlocks/index';
 
 import About from '../../features/About/About';
