@@ -18,8 +18,6 @@ import { GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "firebas
 
 const NewAccount = () => {
 	
-	console.log("hello",db)
-	
 	let usersRef = collection(db, 'users');
 
 
