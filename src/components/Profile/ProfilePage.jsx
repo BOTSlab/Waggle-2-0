@@ -102,7 +102,7 @@ const ProfilePage = () => {
 				<Button type='submit' color='primary'>Change Name</Button>
 			</form>
 			<div>
-				<Button onClick={() => handleLogout}> Log out </Button>
+				<Button onClick={ handleLogout}> Log out </Button>
 				<Button onClick={() => handleReset}> Send reset password link </Button>
 			</div>
 				<Button onClick={showCodeSubmissions}>
