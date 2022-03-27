@@ -14,7 +14,7 @@ import { paperStyleLogin, headerStyle, avatarStyleLogin, marginTop } from './log
 import { auth, db} from "../../firebase/firebase"
 import { doc, setDoc, collection } from "firebase/firestore"; 
 
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "firebase/auth";
 
 const NewAccount = () => {
 	
@@ -22,7 +22,7 @@ const NewAccount = () => {
 	
 	let usersRef = collection(db, 'users');
 
-	//const nameRef = useRef();
+
 	const emailRef = useRef();
 	const passwordRef = useRef();
 	const passwordConfirmRef = useRef();
@@ -35,8 +35,25 @@ const NewAccount = () => {
 	const provider = new GoogleAuthProvider();
 
 	const signInwithGoogle = () => {
-		signInWithPopup(auth, provider);
+		const { user }  = signInWithPopup(auth, provider);
+		console.log(user)
+		
+		history('/');
 	}
+	
+	onAuthStateChanged(auth, user => {
+		if(user != null)
+		{
+			setDoc(doc(db, "users", user.uid),
+			{
+				uid: user.uid,
+				name: user.displayName,
+				email: user.email
+			}, {merge:true});
+		}
+		
+	})
+	
 	
 	async function handleSubmit(event){
 		event.preventDefault();

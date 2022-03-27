@@ -33,8 +33,6 @@ const Login = ({ handleChange }) => {
 		}
 		setLoading(false);
 	}
-	
-	
 	return (
 		<Grid>
 			<Paper style={paperStyle} >
@@ -59,11 +57,6 @@ const Login = ({ handleChange }) => {
 				<Button disabled={loading} type='submit' color='primary' variant="contained" style={btnstyle} fullWidth>Sign in</Button>
 				
 				</form>
-				<Typography >
-					<Link href="#" >
-						Forgot password?
-				</Link>
-				</Typography>
 				<Typography > Do you have an account?
 					<Link href="#" onClick={()=>handleChange("event",1)} >
 						Sign Up 
