@@ -32,7 +32,7 @@ const ProfilePage = () => {
 	const handleReset = () => {
 		try {
 			setError('')
-			resetPassword(email);
+			auth.sendPasswordResetEmail(email);
 		}
 		catch(error) {
 			setError(error.message)
@@ -102,8 +102,8 @@ const ProfilePage = () => {
 				<Button type='submit' color='primary'>Change Name</Button>
 			</form>
 			<div>
-				<Button onClick={handleLogout}> Log out </Button>
-				<Button onClick={handleReset}> Send reset password link </Button>
+				<Button onClick={() => handleLogout}> Log out </Button>
+				<Button onClick={() => handleReset}> Send reset password link </Button>
 			</div>
 				<Button onClick={showCodeSubmissions}>
 					VIEW CODE SUBMISSIONS
