@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Blockly from 'blockly';
+import Grid from '@mui/material/Grid';
 import { useBlocklyWorkspace } from 'react-blockly';
 import { Tabs, Input, Upload, Button, Form } from 'antd';
 // eslint-disable-next-line import/no-extraneous-dependencies
@@ -14,7 +15,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 import { doc, addDoc, collection, serverTimestamp } from "firebase/firestore"; 
 
 import Simulation from '../Simulation';
-import './Configuration.css';
+import './Configuration.less';
 
 const { TabPane } = Tabs;
 const { TextArea } = Input;
@@ -216,89 +217,93 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
 
   return (
     <div className="simulation-area">
-      <div className="simulation">
-        <Simulation
-          simConfig={simConfig}
-          benchSettings={benchSettings}
-          blocklyCode={blocklyCode}
-          JSCode={JSCode}
-          isBlocklyWorkspace={blockly}
-        />
-      </div>
-      <div className="code-area">
-        <Tabs defaultActiveKey="1" onChange={updateWorkspaceType}>
-          <TabPane tab="Blockly" key="1">
-            <div className="simulation-buttons">
-              <Button className="load-button" onClick={clearBlockly}>Clear</Button>
-              <Button>Load From Account</Button>
-              <Upload
-                accept=".xml"
-                showUploadList={false}
-                beforeUpload={(file) => {
-                  const reader = new FileReader();
-                  reader.readAsText(file);
-                  reader.onloadend = () => {
-                    const newXml = Blockly.Xml.textToDom(reader.result);
-                    Blockly.Xml.domToWorkspace(newXml, workspace);
-                  };
-                  return false;
-                }}
-              >
-                <Button className="load-button">Load From Local</Button>
-              </Upload>
-              <Button className="save-as-button" onClick={downloadXmlFile}>Save as</Button>
-              <Input className="file-name-input" defaultValue="blocks.xml" onChange={(e) => setXmlFileName(e.target.value)} />
-              <Button className="javascript-button" onClick={transferToJavaScript}>Transfer to JS</Button>
-            </div>
-            <div ref={blocklyRef} className="code" />
-          </TabPane>
-          <TabPane tab="JavaScript" key="2">
-            <div className="simulation-buttons">
-            <Button className="load-button" onClick={clearJavaScript}>Clear</Button>
-            <Button>Load From Account</Button>
-            <Upload
-                accept=".js"
-                showUploadList={false}
-                beforeUpload={(file) => {
-                  const reader = new FileReader();
-                  reader.readAsText(file);
-                  reader.onloadend = () => {
-                    setInitialJSWorkspace([
-                      {
-                        name: ['javascript'],
-                        value: reader.result
-                      }
-                    ]);
-                    setJSCode(reader.result);
-                    form.resetFields();
-                  };
-                  return false;
-                }}
-              >
-                <Button className="load-button">Load</Button>
-              </Upload>
-              <Button>
-                <a className="save-as-button" href={jsFileName} onClick={downloadJavaScriptFile} download>Save as</a>
-              </Button>
-              <Input className="file-name-input" defaultValue="blocks.js" onChange={(e) => setJSFileName(e.target.value)} />
-              <Button className="execute-button" onClick={executeCode}>Execute</Button>
-            </div>
-            <div className="code">
-              <Form
-                name="javascript-text"
-                fields={initialJSWorkspace}
-                onFieldsChange={(_, allFields) => {
-                  setJSCode(allFields[0].value);
-                }}
-              >
-                <Form.Item name="javascript">
-                  <TextArea rows={20} spellCheck={false} />
-                </Form.Item>
-              </Form>
-            </div>
-          </TabPane>
-        </Tabs>
-      </div>
+      <Grid container>
+          <Grid item xs={12} xl={6}>
+          <div className="simulation">
+            <Simulation
+              simConfig={simConfig}
+              benchSettings={benchSettings}
+              blocklyCode={blocklyCode}
+              JSCode={JSCode}
+              isBlocklyWorkspace={blockly}
+            />
+          </div>
+          </Grid>
+          <Grid item xs={12} xl={6}>
+          <div className="code-area">
+            <Tabs defaultActiveKey="1" onChange={updateWorkspaceType}>
+              <TabPane tab="Blockly" key="1">
+                <div className="simulation-buttons">
+                  <Button className="load-button" onClick={clearBlockly}>Clear</Button>
+                  <Upload
+                    accept=".xml"
+                    showUploadList={false}
+                    beforeUpload={(file) => {
+                      const reader = new FileReader();
+                      reader.readAsText(file);
+                      reader.onloadend = () => {
+                        const newXml = Blockly.Xml.textToDom(reader.result);
+                        Blockly.Xml.domToWorkspace(newXml, workspace);
+                      };
+                      return false;
+                    }}
+                  >
+                    <Button className="load-button">Load</Button>
+                  </Upload>
+                  <Button className="save-as-button" onClick={downloadXmlFile}>Save as</Button>
+                  <Input className="file-name-input" defaultValue="blocks.xml" onChange={(e) => setXmlFileName(e.target.value)} />
+                  <Button className="javascript-button" onClick={transferToJavaScript}>Transfer to JavaScript</Button>
+                </div>
+                <div ref={blocklyRef} className="code" />
+              </TabPane>
+              <TabPane tab="JavaScript" key="2">
+                <div className="simulation-buttons">
+                <Button className="load-button" onClick={clearJavaScript}>Clear</Button>
+                <Upload
+                    accept=".js"
+                    showUploadList={false}
+                    beforeUpload={(file) => {
+                      const reader = new FileReader();
+                      reader.readAsText(file);
+                      reader.onloadend = () => {
+                        setInitialJSWorkspace([
+                          {
+                            name: ['javascript'],
+                            value: reader.result
+                          }
+                        ]);
+                        setJSCode(reader.result);
+                        form.resetFields();
+                      };
+                      return false;
+                    }}
+                  >
+                    <Button className="load-button">Load</Button>
+                  </Upload>
+                  <Button>
+                    <a className="save-as-button" href={jsFileName} onClick={downloadJavaScriptFile} download>Save as</a>
+                  </Button>
+                  <Input className="file-name-input" defaultValue="blocks.js" onChange={(e) => setJSFileName(e.target.value)} />
+                  <Button className="execute-button" onClick={executeCode}>Execute</Button>
+                </div>
+                <div className="code">
+                  <Form
+                    name="javascript-text"
+                    fields={initialJSWorkspace}
+                    onFieldsChange={(_, allFields) => {
+                      setJSCode(allFields[0].value);
+                    }}
+                  >
+                    <Form.Item name="javascript">
+                      <TextArea rows={20} spellCheck={false} />
+                    </Form.Item>
+                  </Form>
+                </div>
+              </TabPane>
+            </Tabs>
+          </div>
+        </Grid>
+      </Grid>
     </div>
   );
 }

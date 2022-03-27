@@ -1,0 +1,56 @@
+html {
+	scroll-behavior: smooth;
+}
+
+nav.table-of-contents * {
+    padding: 0;
+    margin: 0;
+}
+
+nav.table-of-contents {
+    display: none;
+    padding: 20px;
+    border: 2px solid #e2a938;
+    background-color: #fff7e2;
+    width: max-content;
+    border-radius: 8px;
+	position: sticky;
+	top: 2rem;
+	align-self: start;
+    line-height: 32px;
+    margin: 0 8px;
+}
+
+nav.table-of-contents h1 {
+    text-transform: uppercase;
+    font-size: 14px;
+    color: #585858;
+    letter-spacing: 1.5;
+}
+
+
+nav.table-of-contents ol li {
+    list-style: none;
+}
+
+nav.table-of-contents li a{
+    color: #585858;
+    font-size: 16px;
+}
+
+
+nav.table-of-contents .sub-header {
+    padding-left: 32px;
+
+}
+
+nav.table-of-contents li.in-scope a, nav.table-of-contents a:hover {
+    font-weight: 500;
+    color: #853b1d !important;
+}
+
+@media only screen and (min-width: 1200px) {
+    nav.table-of-contents {
+        display: block;
+    }
+}
