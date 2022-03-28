@@ -1,0 +1,22 @@
+.blockly-basics {
+  display: flex;
+}
+
+.tutorial-title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: 10px;
+}
+
+.tutorial-index-button {
+  padding: 10px;
+  width: 40px;
+}
+
+.tutorial-index-title {
+  display: flex;
+  width: 200px;
+  padding: 0 5px;
+  padding-top: 10px;
+}

@@ -117,8 +117,12 @@ const Simulation = ({ simConfig, benchSettings, blocklyCode, JSCode, isBlocklyWo
   const simulationDescription = () => {
     if (config.type === 'sorting') {
       return 'Make the robots sort each respective puck color into their goal!';
-    } if (config.type === 'clustering') {
+    }
+    if (config.type === 'clustering') {
       return 'Make the robots cluster the pucks into the goal!';
+    }
+    if (config.type === 'tutorial') {
+      return 'Learn how to use Blockly!';
     }
     return 'Syncronize the robots to flash at the same time!';
   };

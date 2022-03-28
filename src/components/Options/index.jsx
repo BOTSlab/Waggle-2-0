@@ -57,6 +57,7 @@ export default function Options({
       height: 225
     }
     ];
+    reset();
   };
 
   const addCircleObstacle = () => {
@@ -68,9 +69,11 @@ export default function Options({
         skipOrbit: true
       }
     ];
+    reset();
   };
   const removeObstacle = () => {
     config.objects.pop();
+    reset();
   };
 
   const redPuckStyle = {
