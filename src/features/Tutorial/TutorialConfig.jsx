@@ -8,7 +8,7 @@ import { saveAs } from 'file-saver';
 
 import Simulation from '../Simulation';
 import Modal from './Modal';
-import '../Configuration/Configuration.css';
+import '../Configuration/Configuration.less';
 
 const { TabPane } = Tabs;
 const { TextArea } = Input;

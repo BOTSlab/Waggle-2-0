@@ -19,7 +19,7 @@ import Configuration from '../../features/Configuration/Configuration';
 import { exampleConfigs } from '../../swarmjs-core';
 import SignInOutWrapper from '../Login/SignInOutWrapper';
 import ProfilePageWrapper from '../Profile/ProfilePageWrapper'
-import Navigation from '../../features/Navigation';
+import Navigation from '../../features/Navigation/Navigation';
 
 export default function App() {
   const { simConfig, benchmarkConfig } = exampleConfigs.simpleSorting;

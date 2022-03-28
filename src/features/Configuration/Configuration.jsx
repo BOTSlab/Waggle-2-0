@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Blockly from 'blockly';
 import Grid from '@mui/material/Grid';
 import { useBlocklyWorkspace } from 'react-blockly';
-import { Tabs, Input, Upload, Button, Form } from 'antd';
+import { Tabs, Input, Upload, Button, Form, Dropdown, Menu } from 'antd';
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { saveAs } from 'file-saver';
 
@@ -80,7 +80,6 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
       type: 'text/plain'
     });
     
-    console.log(simConfig)
     onAuthStateChanged(auth, user => {
       if (user)
       {
@@ -215,6 +214,72 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
     }
   }, [JSCode]);
 
+  const blocklyLoadMenu = (
+    <Menu>
+      <Upload
+        accept=".xml"
+        showUploadList={false}
+        beforeUpload={(file) => {
+          const reader = new FileReader();
+          reader.readAsText(file);
+          reader.onloadend = () => {
+            const newXml = Blockly.Xml.textToDom(reader.result);
+            Blockly.Xml.domToWorkspace(newXml, workspace);
+          };
+          return false;
+        }}
+      >
+        <Menu.Item key="1">Load from local</Menu.Item>
+      </Upload>
+      <Menu.Item key="2">Load from account</Menu.Item>
+    </Menu>
+  )
+
+  const blocklySaveMenu = (
+    <Menu>
+      <Menu.Item key="1">
+        <a href={jsFileName} onClick={downloadXmlFile} download>Save to local device</a>
+      </Menu.Item>
+      <Menu.Item key="2">Save to account</Menu.Item>
+    </Menu>
+  )
+
+  const jsLoadMenu = (
+    <Menu>
+      <Upload
+        accept=".js"
+        showUploadList={false}
+        beforeUpload={(file) => {
+          const reader = new FileReader();
+          reader.readAsText(file);
+          reader.onloadend = () => {
+            setInitialJSWorkspace([
+              {
+                name: ['javascript'],
+                value: reader.result
+              }
+            ]);
+            setJSCode(reader.result);
+            form.resetFields();
+          };
+          return false;
+        }}
+      >
+        <Menu.Item key="1">Load from local</Menu.Item>
+      </Upload>
+      <Menu.Item key="2">Load from account</Menu.Item>
+    </Menu>
+  )
+
+  const jsSaveMenu = (
+    <Menu>
+      <Menu.Item key="1">
+        <a href={jsFileName} onClick={downloadJavaScriptFile} download>Save to local device</a>
+      </Menu.Item>
+      <Menu.Item key="2">Save to account</Menu.Item>
+    </Menu>
+  )
+
   return (
     <div className="simulation-area">
       <Grid container>
@@ -235,23 +300,8 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
               <TabPane tab="Blockly" key="1">
                 <div className="simulation-buttons">
                   <Button className="load-button" onClick={clearBlockly}>Clear</Button>
-                  <Button>Load From Account</Button>
-                  <Upload
-                    accept=".xml"
-                    showUploadList={false}
-                    beforeUpload={(file) => {
-                      const reader = new FileReader();
-                      reader.readAsText(file);
-                      reader.onloadend = () => {
-                        const newXml = Blockly.Xml.textToDom(reader.result);
-                        Blockly.Xml.domToWorkspace(newXml, workspace);
-                      };
-                      return false;
-                    }}
-                  >
-                    <Button className="load-button">Load From Local</Button>
-                  </Upload>
-                  <Button className="save-as-button" onClick={downloadXmlFile}>Save as</Button>
+                  <Dropdown.Button className="load-button" overlay={blocklyLoadMenu}>Load</Dropdown.Button>
+                  <Dropdown.Button className="load-button" overlay={blocklySaveMenu}>Save as</Dropdown.Button>
                   <Input className="file-name-input" defaultValue="blocks.xml" onChange={(e) => setXmlFileName(e.target.value)} />
                   <Button className="javascript-button" onClick={transferToJavaScript}>Transfer to JS</Button>
                 </div>
@@ -260,34 +310,11 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
               <TabPane tab="JavaScript" key="2">
               <div className="simulation-buttons">
                 <Button className="load-button" onClick={clearJavaScript}>Clear</Button>
-                <Button>Load From Account</Button>
-                <Upload
-                    accept=".js"
-                    showUploadList={false}
-                    beforeUpload={(file) => {
-                      const reader = new FileReader();
-                      reader.readAsText(file);
-                      reader.onloadend = () => {
-                        setInitialJSWorkspace([
-                          {
-                            name: ['javascript'],
-                            value: reader.result
-                          }
-                        ]);
-                        setJSCode(reader.result);
-                        form.resetFields();
-                      };
-                      return false;
-                    }}
-                  >
-                    <Button className="load-button">Load</Button>
-                  </Upload>
-                  <Button>
-                    <a className="save-as-button" href={jsFileName} onClick={downloadJavaScriptFile} download>Save as</a>
-                  </Button>
-                  <Input className="file-name-input" defaultValue="blocks.js" onChange={(e) => setJSFileName(e.target.value)} />
-                  <Button className="execute-button" onClick={executeCode}>Execute</Button>
-                </div>
+                <Dropdown.Button className="load-button" overlay={jsLoadMenu}>Load</Dropdown.Button>
+                <Dropdown.Button className="load-button" overlay={jsSaveMenu}>Save as</Dropdown.Button>
+                <Input className="file-name-input" defaultValue="blocks.js" onChange={(e) => setJSFileName(e.target.value)} />
+                <Button className="execute-button" onClick={executeCode}>Execute</Button>
+              </div>
                 <div className="code">
                   <Form
                     name="javascript-text"
