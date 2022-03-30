@@ -19,6 +19,8 @@ const ProfilePage = () => {
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
 	const [codeSubmissions, setCodeSubmissions] = useState([]);
+	const [success, setSuccess] = useState('');
+	const [color, setColor] = useState('green');
 
 	const history = useNavigate();
 
@@ -33,9 +35,12 @@ const ProfilePage = () => {
 		try {
 			setError('')
 			auth.sendPasswordResetEmail(email);
+			setSuccess('email verification sent!')
+			setColor('green')
 		}
 		catch(error) {
 			setError(error.message)
+			setColor('red')
 		}
 	}
 	const handleLogout = () => {
@@ -56,7 +61,6 @@ const ProfilePage = () => {
 		listAll(listRef)
 		.then((res) => {
 			res.prefixes.forEach((folderRef) => {
-			//console.log(folderRef)
 			});
 			res.items.forEach((itemRef) => {
 			setCodeSubmissions(arr => [...arr, itemRef.name])
@@ -83,6 +87,7 @@ const ProfilePage = () => {
 				}
 				catch(error) {
 					setError(error.message)
+					setColor('red')
 				}
 			}
 		}
@@ -103,6 +108,9 @@ const ProfilePage = () => {
 			<div>
 				<Button onClick={ handleLogout}> Log out </Button>
 				<Button onClick={handleReset}> Send reset password link </Button>
+				<p style={{color: color}}>
+					{success}
+				</p>
 			</div>
 				<Button onClick={showCodeSubmissions}>
 					VIEW CODE SUBMISSIONS
