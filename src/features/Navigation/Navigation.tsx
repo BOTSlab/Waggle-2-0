@@ -81,7 +81,7 @@ export default function Navigation() {
           </Menu>
         </Grid>
         <Grid item xs={1} sm={2} md={3}>
-          <div id="user-info">
+          <div id="user-info" onClick={() => handleClick({key: 'profilepage'})}>
             <Profile/>
           </div>
         </Grid>

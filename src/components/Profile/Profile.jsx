@@ -16,11 +16,8 @@ const Profile = () => {
 	})
 	return (
 		<ul className='right'>
-			<Link to="/profilepage">
-				<Fab color="primary" aria-label="add"> {name}
-				</Fab>
-			</Link>
-				
+      <Fab color="primary" aria-label="add"> {name}
+      </Fab>	
 		</ul>
 	)
 }
