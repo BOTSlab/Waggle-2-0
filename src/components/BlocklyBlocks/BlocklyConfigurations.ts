@@ -1,3 +1,129 @@
+export const tutorialConfig = {
+  kind: 'categoryToolbox',
+  contents: [
+    {
+      kind: 'category',
+      name: 'Sensors',
+      color: '#5C81A6',
+      contents: [
+        {
+          kind: 'block',
+          type: 'robot_forward_obstacle'
+        },
+        {
+          kind: 'block',
+          type: 'robot_left_obstacle'
+        },
+        {
+          kind: 'block',
+          type: 'robot_right_obstacle'
+        },
+        {
+          kind: 'block',
+          type: 'robot_backward_obstacle'
+        }
+      ]
+    },
+    {
+      kind: 'category',
+      name: 'Actions',
+      color: '#5C81A6',
+      contents: [
+        {
+          kind: 'block',
+          type: 'robot_linear_speed'
+        },
+        {
+          kind: 'block',
+          type: 'robot_angular_speed'
+        },
+        {
+          kind: 'block',
+          type: 'robot_execute'
+        }
+      ]
+    },
+    {
+      kind: 'category',
+      name: 'Logic',
+      color: '#5C81A6',
+      contents: [
+        {
+          kind: 'block',
+          type: 'controls_if'
+        },
+        {
+          kind: 'block',
+          type: 'logic_compare'
+        },
+        {
+          kind: 'block',
+          type: 'logic_operation'
+        },
+        {
+          kind: 'block',
+          type: 'logic_negate'
+        },
+        {
+          kind: 'block',
+          type: 'logic_boolean'
+        },
+        {
+          kind: 'block',
+          type: 'logic_ternary'
+        }
+      ]
+    },
+    {
+      kind: 'category',
+      name: 'Math',
+      color: '#5C81A6',
+      contents: [
+        {
+          kind: 'block',
+          type: 'math_number'
+        },
+        {
+          kind: 'block',
+          type: 'math_single'
+        },
+        {
+          kind: 'block',
+          type: 'math_trig'
+        },
+        {
+          kind: 'block',
+          type: 'math_constant'
+        },
+        {
+          kind: 'block',
+          type: 'math_number_property'
+        },
+        {
+          kind: 'block',
+          type: 'math_arithmetic'
+        },
+        {
+          kind: 'block',
+          type: 'math_modulo'
+        },
+        {
+          kind: 'block',
+          type: 'math_constrain'
+        },
+        {
+          kind: 'block',
+          type: 'math_random_int'
+        },
+        {
+          kind: 'block',
+          type: 'math_random_float'
+        }
+      ]
+    }
+  ]
+};
+
 export const clusteringConfig = {
   kind: 'categoryToolbox',
   contents: [

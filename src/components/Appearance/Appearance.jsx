@@ -2,7 +2,6 @@
 import React, { useState } from 'react';
 import propTypes from 'prop-types';
 import { SketchPicker } from 'react-color';
-import RenderingSettings from '../Options/RenderingSettings';
 import '../Options/index.css';
 
 export default function Appearance({
@@ -86,10 +85,6 @@ export default function Appearance({
             onChangeComplete={updatePuckTwoColor}
           />
         </div>
-        <RenderingSettings
-          renderingElements={renderingElements}
-          setElementEnabled={setElementEnabled}
-        />
       </div>
     </div>
   );

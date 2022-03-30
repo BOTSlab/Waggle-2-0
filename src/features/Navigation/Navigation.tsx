@@ -74,7 +74,7 @@ export default function Navigation() {
               <InfoIcon/>
               <span>About</span>
             </Menu.Item>
-            <Menu.Item key='tutorial'>
+            <Menu.Item key='tutorial/simulationLayout'>
               <SchoolIcon/>
               <span>Tutorial</span>
             </Menu.Item>

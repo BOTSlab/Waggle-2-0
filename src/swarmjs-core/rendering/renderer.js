@@ -33,14 +33,19 @@ const uniqueRenderingElements = ['All', ...new Set(renderables
 ];
 
 const firefliesElements = ['All', 'Scene Obstacles', 'Robot Body'];
+const tutorialElements = ['All', 'Scene Obstacles', 'Robot Body', 'Robot Sensor'];
 let activeElements = [];
 
 const renderedElems = [];
 
 export const getRenderingElements = (configType) => {
-  if (configType === 'fireflies' || configType === 'tutorial') {
+  if (configType === 'fireflies') {
     activeElements = [...firefliesElements];
     return firefliesElements;
+  }
+  if (configType === 'tutorial') {
+    activeElements = [...tutorialElements];
+    return tutorialElements;
   }
   activeElements = [...uniqueRenderingElements];
   return [...uniqueRenderingElements];
