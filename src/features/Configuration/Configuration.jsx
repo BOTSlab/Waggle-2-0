@@ -137,7 +137,7 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
   };
   const uploadJavaScriptFileAccount = () => {
     // first we want to input a text
-    let fileName = prompt("Please enter your name:", "fileName.js");
+    let fileName = prompt("Please enter your file name:", "fileName.js");
     if (fileName == null || fileName == "") {
       text = "User cancelled the prompt.";
     } else {
@@ -183,7 +183,7 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
   
   const uploadXmlFileAccount = () => {
       // first we want to input a text
-      let fileName = prompt("Please enter your name:", "fileName.js");
+      let fileName = prompt("Please enter your file name:", "fileName.xml");
       if (fileName == null || fileName == "") {
         text = "User cancelled the prompt.";
       } else {
