@@ -38,7 +38,6 @@ const ProfilePage = () => {
 			setError(error.message)
 		}
 	}
-	
 	const handleLogout = () => {
 		logout();
 		history('/');
@@ -103,7 +102,7 @@ const ProfilePage = () => {
 			</form>
 			<div>
 				<Button onClick={ handleLogout}> Log out </Button>
-				<Button onClick={() => handleReset}> Send reset password link </Button>
+				<Button onClick={handleReset}> Send reset password link </Button>
 			</div>
 				<Button onClick={showCodeSubmissions}>
 					VIEW CODE SUBMISSIONS
