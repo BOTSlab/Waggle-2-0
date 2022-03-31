@@ -93,9 +93,6 @@ const ProfilePage = () => {
 		}
 	return (
 			<div>
-			<p>
-				PROFILE PICTURE
-			</p>
 				Currently logged in as: {email}
 			<p>
 				Name: {name}

@@ -42,6 +42,9 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
   const [blockly, setBlockly] = useState(true);
 
   const blocklyRef = useRef(null);
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
+  const [color, setColor] = useState('green');
 
   const workspaceDidChange = (w) => {
     const code = Blockly.JavaScript.workspaceToCode(w);
@@ -71,7 +74,7 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
     form.resetFields();
   };
 
-  const downloadXmlFile = () => {
+  const downloadXmlFileAccount = () => {
     const startIndex = xml.indexOf('<block type="robot_execute"');
     const endIndex = (xml.indexOf('</block>', startIndex)) + 8;
     const executeString = xml.slice(startIndex, endIndex);
@@ -83,7 +86,7 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
     onAuthStateChanged(auth, user => {
       if (user)
       {
-        console.log(xmlFileName.value, file.value)
+        console.log(xmlFileName, file)
         if (xmlFileName != "")
         {
           console.log('file name not null');
@@ -94,7 +97,7 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
             console.log("File contents not null");
             const contentsBlob = new Blob([file], {type: 'text/plain'});
             uploadBytes(storageRef, contentsBlob).then((snapshot) => {
-              console.log('Uploaded a blob or file!');
+              setSuccess('Submission Success!');
             })
             addDoc(submissionsRef, {
               uid: user.uid,
@@ -105,28 +108,124 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
               codeReference: referenceName,
               timeCreated: serverTimestamp()
             })
-            console.log("submission created")
+            setSuccess("submission created");
+            setColor('green');
           }
           else
           {
-            console.log('File content is null, please enter some file content');
+            setError('File content is null, please enter some file content');
+            setColor('red')
           }
         }
         else
         {
-          console.log('File name is null, please enter a name for your file');
+          setError('File name is null, please enter a name for your file');
+          setColor('red')
         }
       }
-      
     })
+  }
+  const downloadXmlFileLocal = () => {
+    const startIndex = xml.indexOf('<block type="robot_execute"');
+    const endIndex = (xml.indexOf('</block>', startIndex)) + 8;
+    const executeString = xml.slice(startIndex, endIndex);
+    const updatedXml = xml.replace(executeString, '');
+    const file = new Blob([updatedXml], {
+      type: 'text/plain'
+    });
     saveAs(file, xmlFileName);
   };
-
-  const downloadJavaScriptFile = () => {
+  const uploadJavaScriptFileAccount = () => {
+    // first we want to input a text
+    let fileName = prompt("Please enter your file name:", "fileName.js");
+    if (fileName == null || fileName == "") {
+      text = "User cancelled the prompt.";
+    } else {
+    onAuthStateChanged(auth, user => {
+      if (user)
+      {
+          if (fileName != "")
+          {
+            console.log('file name not null');
+            const referenceName = (user.email + '/' + fileName)
+            const storageRef = ref(storage, referenceName);
+            var reader = new FileReader();
+            getDownloadURL(storageRef).then((url) => {
+              const xhr = new XMLHttpRequest();
+              xhr.responseType = 'blob';
+              xhr.onload = (event) => {
+                const blob = xhr.response;
+                reader.readAsText(blob);
+                reader.onloadend = () => {
+                  setInitialJSWorkspace([
+                    {
+                      name: ['javascript'],
+                      value: reader.result
+                    }
+                  ]);
+                  setJSCode(reader.result);
+                  form.resetFields();
+                };
+              }
+              xhr.open('GET', url);
+              xhr.send();
+            })
+          }
+          else
+          {
+            setError('File name is null, please enter a name for your file');
+            setColor('red')
+          }
+        }
+      })
+    }
+  }
+  
+  const uploadXmlFileAccount = () => {
+      // first we want to input a text
+      let fileName = prompt("Please enter your file name:", "fileName.xml");
+      if (fileName == null || fileName == "") {
+        text = "User cancelled the prompt.";
+      } else {
+       
+      onAuthStateChanged(auth, user => {
+        if (user)
+        {
+          if (fileName != "")
+          {
+            console.log('file name not null');
+            const referenceName = (user.email + '/' + fileName)
+            const storageRef = ref(storage, referenceName);
+            var reader = new FileReader();
+            getDownloadURL(storageRef).then((url) => 
+            {
+              const xhr = new XMLHttpRequest();
+              xhr.responseType = 'blob';
+              xhr.onload = (event) => {
+                const blob = xhr.response;
+                reader.readAsText(blob);
+                reader.onloadend = () => {
+                  const newXml = Blockly.Xml.textToDom(reader.result);
+                  Blockly.Xml.domToWorkspace(newXml, workspace);
+                };
+              }
+              xhr.open('GET', url);
+              xhr.send();
+            })
+          }
+          else
+          {
+            setError('File name is null, please enter a name for your file');
+            setColor('red')
+          }
+        }
+      })
+    }
+  }
+  const downloadJavaScriptFileAccount = () => {
     const file = new Blob([JSCode.replace('execute', '')], {
       type: 'text/plain'
     });
-    
     onAuthStateChanged(auth, user => {
       if (user)
       {
@@ -140,7 +239,7 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
             console.log("File contents not null");
             const contentsBlob = new Blob([file], {type: 'text/plain'});
             uploadBytes(storageRef, contentsBlob).then((snapshot) => {
-              console.log('Uploaded a blob or file!');
+              setSuccess('Submission Success!');
             })
             addDoc(submissionsRef, {
               uid: user.uid,
@@ -151,20 +250,27 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
               codeReference: referenceName,
               timeCreated: serverTimestamp(),
             })
-            console.log("submission created")
+            setSuccess("submission created")
+            setColor('green')
           }
           else
           {
-            console.log('File content is null, please enter some file content');
+            setError('File content is null, please enter some file content');
+            setColor('red')
           }
         }
         else
         {
-          console.log('File name is null, please enter a name for your file');
+          setError('File name is null, please enter a name for your file');
+          setColor('red')
         }
       }
-      
     })
+  }
+  const downloadJavaScriptFileLocal = () => {
+    const file = new Blob([JSCode.replace('execute', '')], {
+      type: 'text/plain'
+    });
     saveAs(file, jsFileName);
   };
 
@@ -231,19 +337,21 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
       >
         <Menu.Item key="1">Load from local</Menu.Item>
       </Upload>
-      <Menu.Item key="2">Load from account</Menu.Item>
+        <Menu.Item key="2">
+          <a onClick={uploadXmlFileAccount}>Load from account</a>
+        </Menu.Item>
     </Menu>
   )
-
   const blocklySaveMenu = (
     <Menu>
       <Menu.Item key="1">
-        <a href={jsFileName} onClick={downloadXmlFile} download>Save to local device</a>
+        <a href={jsFileName} onClick={downloadXmlFileLocal} download>Save to local device</a>
       </Menu.Item>
-      <Menu.Item key="2">Save to account</Menu.Item>
+      <Menu.Item key="2">
+        <a onClick={downloadXmlFileAccount}>Save to account</a>
+      </Menu.Item>
     </Menu>
   )
-
   const jsLoadMenu = (
     <Menu>
       <Upload
@@ -267,19 +375,21 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
       >
         <Menu.Item key="1">Load from local</Menu.Item>
       </Upload>
-      <Menu.Item key="2">Load from account</Menu.Item>
+      <Menu.Item key="2">
+        <a onClick={uploadJavaScriptFileAccount}>Load from account</a>
+      </Menu.Item>
     </Menu>
   )
-
   const jsSaveMenu = (
     <Menu>
       <Menu.Item key="1">
-        <a href={jsFileName} onClick={downloadJavaScriptFile} download>Save to local device</a>
+        <a href={jsFileName} onClick={downloadJavaScriptFileLocal} download>Save to local device</a>
       </Menu.Item>
-      <Menu.Item key="2">Save to account</Menu.Item>
+      <Menu.Item key="2">
+        <a onClick={downloadJavaScriptFileAccount} >Save to account</a>
+      </Menu.Item>
     </Menu>
   )
-
   return (
     <div className="simulation-area">
       <Grid container>
@@ -298,6 +408,14 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
           <div className="code-area">
             <Tabs defaultActiveKey="1" onChange={updateWorkspaceType}>
               <TabPane tab="Blockly" key="1">
+                <div>
+                  <p>
+                    Note: naming a file by the same name will overwrite it in your account.
+                  </p>
+                  <p style={{color: color}}>
+                    {error || success}
+                  </p>
+                </div>
                 <div className="simulation-buttons">
                   <Button className="load-button" onClick={clearBlockly}>Clear</Button>
                   <Dropdown.Button className="load-button" overlay={blocklyLoadMenu}>Load</Dropdown.Button>
@@ -308,6 +426,14 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
                 <div ref={blocklyRef} className="code" />
               </TabPane>
               <TabPane tab="JavaScript" key="2">
+              <div>
+                  <p>
+                    Note: naming a file by the same name will overwrite it in your account.
+                  </p>
+                  <p style={{color: color}}>
+                    {error || success}
+                  </p>
+                </div>
               <div className="simulation-buttons">
                 <Button className="load-button" onClick={clearJavaScript}>Clear</Button>
                 <Dropdown.Button className="load-button" overlay={jsLoadMenu}>Load</Dropdown.Button>
