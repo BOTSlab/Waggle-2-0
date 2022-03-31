@@ -8,7 +8,8 @@ import { useNavigate } from 'react-router-dom';
 import { Alert } from '@mui/material'
 import { paperStyle, avatarStyle, btnstyle } from './loginStyles'
 
-import { GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "firebase/auth";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth } from "../../firebase/firebase"
 
 
 
