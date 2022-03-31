@@ -103,16 +103,16 @@ const NewAccount = () => {
 						control={<Checkbox name="checkedA" required />}
 						label="I accept the terms and conditions."
 					/>
-					<Button disabled={loading} type='submit' variant='contained' color='primary'>Sign Up</Button>
+					<Button disabled={loading} type='submit' color='primary' fullWidth>Sign Up</Button>
 					
 
 				</form>
-				<button onClick={signInwithGoogle}>
+				<Button onClick={signInwithGoogle}>
 						<img
 							src="https://img.icons8.com/ios-filled/50/000000/google-logo.png"
 							alt="google icon"
 						/>
-						Sign In with Google</button>
+						Sign In with Google</Button>
 			</Paper>
 			
 		</Grid>

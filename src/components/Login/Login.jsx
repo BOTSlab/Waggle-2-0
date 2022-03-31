@@ -8,6 +8,9 @@ import { useNavigate } from 'react-router-dom';
 import { Alert } from '@mui/material'
 import { paperStyle, avatarStyle, btnstyle } from './loginStyles'
 
+import { GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "firebase/auth";
+
+
 
 
 const Login = ({ handleChange }) => {
@@ -19,6 +22,15 @@ const Login = ({ handleChange }) => {
 	const [loading, setLoading] = useState(false);
 	
 	const history = useNavigate();
+	
+	const provider = new GoogleAuthProvider();
+	
+	const signInwithGoogle = () => {
+		const { user }  = signInWithPopup(auth, provider);
+		console.log(user)
+		
+		history('/');
+	}
 	
 	
 	async function handleSubmit(event){
@@ -54,7 +66,13 @@ const Login = ({ handleChange }) => {
 					}
 					label="Remember me"
 				/>
-				<Button disabled={loading} type='submit' color='primary' variant="contained" style={btnstyle} fullWidth>Sign in</Button>
+				<Button disabled={loading} type='submit' color='primary' fullWidth>Sign in</Button>
+				<Button onClick={signInwithGoogle}>
+						<img
+							src="https://img.icons8.com/ios-filled/50/000000/google-logo.png"
+							alt="google icon"
+						/>
+						Sign In with Google</Button>
 				
 				</form>
 				<Typography > Do you have an account?
