@@ -34,8 +34,6 @@ const NewAccount = () => {
 
 	const signInwithGoogle = () => {
 		const { user }  = signInWithPopup(auth, provider);
-		console.log(user)
-		
 		history('/');
 	}
 	
@@ -71,9 +69,7 @@ const NewAccount = () => {
 				name: nameRef.current.value,
 				email: user.email
 			}, {merge:true});
-			
-			
-			
+
 			history('/');
 		} catch(error) {
 			setError(error.message);
