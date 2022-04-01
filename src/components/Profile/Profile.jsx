@@ -5,13 +5,18 @@ import { useAuth } from '../Contexts/AuthContext';
 import { auth } from '../../firebase/firebase';
 import { onAuthStateChanged } from "firebase/auth";
 
+const getInitials = (name) => {
+  const firstInitial = name[0];
+  const strings = name.split(' ');
+  return firstInitial + strings[strings.length - 1][0];
+};
 
 const Profile = () => {
 	const [name, setName] = useState('');
 	onAuthStateChanged(auth, currentUser => {
 		if(currentUser)
 		{
-			setName(currentUser.displayName)
+			setName(getInitials(currentUser.displayName))
 		}
 	})
 	return (
