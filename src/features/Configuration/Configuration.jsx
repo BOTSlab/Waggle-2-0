@@ -10,9 +10,9 @@ import { saveAs } from 'file-saver';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db} from "../../firebase/firebase"
 
-import { getStorage, ref, uploadBytes, getDownloadURL } from 'firebase/storage';
+import { getStorage, ref, uploadBytes, getDownloadURL, listAll } from 'firebase/storage';
 
-import { doc, addDoc, collection, serverTimestamp } from "firebase/firestore"; 
+import { doc, addDoc, collection, serverTimestamp, onSnapshot, query, where, getDocs  } from "firebase/firestore"; 
 
 import Simulation from '../Simulation';
 import './Configuration.less';
@@ -45,7 +45,8 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [color, setColor] = useState('green');
-
+  
+  
   const workspaceDidChange = (w) => {
     const code = Blockly.JavaScript.workspaceToCode(w);
     setBlocklyCode(initialJSCode + code);
@@ -75,6 +76,7 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
   };
 
   const downloadXmlFileAccount = () => {
+    setError('');
     const startIndex = xml.indexOf('<block type="robot_execute"');
     const endIndex = (xml.indexOf('</block>', startIndex)) + 8;
     const executeString = xml.slice(startIndex, endIndex);
@@ -86,7 +88,6 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
     onAuthStateChanged(auth, user => {
       if (user)
       {
-        console.log(xmlFileName, file)
         if (xmlFileName != "")
         {
           console.log('file name not null');
@@ -136,10 +137,13 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
     saveAs(file, xmlFileName);
   };
   const uploadJavaScriptFileAccount = () => {
+    setError('');
     // first we want to input a text
     let fileName = prompt("Please enter your file name:", "fileName.js");
     if (fileName == null || fileName == "") {
-      text = "User cancelled the prompt.";
+      
+      setError('File name is null, please enter a name for your file');
+      setColor('red')
     } else {
     onAuthStateChanged(auth, user => {
       if (user)
@@ -173,9 +177,14 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
           }
           else
           {
-            setError('File name is null, please enter a name for your file');
+            setError('File content is null, please enter some file content');
             setColor('red')
           }
+        }
+        else
+        {
+          setError('File name is null, please enter a name for your file');
+          setColor('red')
         }
       })
     }
@@ -183,9 +192,11 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
   
   const uploadXmlFileAccount = () => {
       // first we want to input a text
+      setError('');
       let fileName = prompt("Please enter your file name:", "fileName.xml");
       if (fileName == null || fileName == "") {
-        text = "User cancelled the prompt.";
+        setError('File name is null, please enter a name for your file');
+        setColor('red')
       } else {
        
       onAuthStateChanged(auth, user => {
@@ -196,6 +207,7 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
             console.log('file name not null');
             const referenceName = (user.email + '/' + fileName)
             const storageRef = ref(storage, referenceName);
+            const listRef = ref(storage, user.email);
             var reader = new FileReader();
             getDownloadURL(storageRef).then((url) => 
             {
@@ -208,7 +220,14 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
                   const newXml = Blockly.Xml.textToDom(reader.result);
                   Blockly.Xml.domToWorkspace(newXml, workspace);
                 };
-              }
+                onSnapshot(query(submissionsRef, where("uid", "==", user.uid ), where("codeName", "==", fileName)), (querySnapshot) => {
+                  
+                  querySnapshot.forEach((doc) => {
+                    setSuccess('The config this file was saved from was :  ' + doc.data().level + "!")
+                    setColor('green')
+                  })
+              })
+          }
               xhr.open('GET', url);
               xhr.send();
             })
@@ -223,6 +242,7 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
     }
   }
   const downloadJavaScriptFileAccount = () => {
+    setError('');
     const file = new Blob([JSCode.replace('execute', '')], {
       type: 'text/plain'
     });
@@ -252,11 +272,6 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
             })
             setSuccess("submission created")
             setColor('green')
-          }
-          else
-          {
-            setError('File content is null, please enter some file content');
-            setColor('red')
           }
         }
         else

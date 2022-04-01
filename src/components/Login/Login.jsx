@@ -12,8 +12,6 @@ import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../firebase/firebase"
 
 
-
-
 const Login = ({ handleChange }) => {
 	const emailRef = useRef();
 	const passwordRef = useRef();
@@ -28,12 +26,8 @@ const Login = ({ handleChange }) => {
 	
 	const signInwithGoogle = () => {
 		const { user }  = signInWithPopup(auth, provider);
-		console.log(user)
-		
 		history('/');
 	}
-	
-	
 	async function handleSubmit(event){
 		event.preventDefault();
 			try {
@@ -74,7 +68,6 @@ const Login = ({ handleChange }) => {
 							alt="google icon"
 						/>
 						Sign In with Google</Button>
-				
 				</form>
 				<Typography > Do you have an account?
 					<Link href="#" onClick={()=>handleChange("event",1)} >
