@@ -4,12 +4,11 @@ import { Link } from 'react-router-dom';
 
 import { Menu, Button } from 'antd';
 import { MenuUnfoldOutlined, MenuFoldOutlined } from '@ant-design/icons';
-import * as blocklyConfig from '../../components/BlocklyBlocks/index';
 import TutorialConfig from './TutorialConfig';
 
 import './Tutorial.css';
 
-export default function Tutorial({ config, benchmarkConfig, modalText }) {
+export default function Tutorial({ config, benchmarkConfig, modalText, blocklyConfig }) {
   const { SubMenu } = Menu;
   const [showMenu, setShowMenu] = useState(true);
   const tutorialIndexStyle = {
@@ -61,16 +60,13 @@ export default function Tutorial({ config, benchmarkConfig, modalText }) {
                 </Link>
               </Menu.Item>
             </SubMenu>
-            <Menu.Item key="7">
-              Using your account
-            </Menu.Item>
           </Menu>
         </div>
       </div>
       <TutorialConfig
         simConfig={config}
         benchSettings={benchmarkConfig}
-        blocklyConfig={blocklyConfig.tutorialConfig}
+        blocklyConfig={blocklyConfig}
         modalText={modalText}
       />
     </div>
@@ -80,5 +76,6 @@ export default function Tutorial({ config, benchmarkConfig, modalText }) {
 Tutorial.propTypes = {
   config: propTypes.object.isRequired,
   benchmarkConfig: propTypes.object.isRequired,
-  modalText: propTypes.array.isRequired
+  modalText: propTypes.array.isRequired,
+  blocklyConfig: propTypes.object.isRequired
 };

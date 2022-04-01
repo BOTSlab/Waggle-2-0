@@ -434,7 +434,7 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
                 <div className="simulation-buttons">
                   <Button className="load-button" onClick={clearBlockly}>Clear</Button>
                   <Dropdown.Button className="load-button" overlay={blocklyLoadMenu}>Load</Dropdown.Button>
-                  <Dropdown.Button className="load-button" overlay={blocklySaveMenu}>Save as</Dropdown.Button>
+                  <Dropdown.Button className="save-as-button" overlay={blocklySaveMenu}>Save as</Dropdown.Button>
                   <Input className="file-name-input" defaultValue="blocks.xml" onChange={(e) => setXmlFileName(e.target.value)} />
                   <Button className="javascript-button" onClick={transferToJavaScript}>Transfer to JS</Button>
                 </div>
@@ -452,7 +452,7 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
               <div className="simulation-buttons">
                 <Button className="load-button" onClick={clearJavaScript}>Clear</Button>
                 <Dropdown.Button className="load-button" overlay={jsLoadMenu}>Load</Dropdown.Button>
-                <Dropdown.Button className="load-button" overlay={jsSaveMenu}>Save as</Dropdown.Button>
+                <Dropdown.Button className="save-as-button" overlay={jsSaveMenu}>Save as</Dropdown.Button>
                 <Input className="file-name-input" defaultValue="blocks.js" onChange={(e) => setJSFileName(e.target.value)} />
                 <Button className="execute-button" onClick={executeCode}>Execute</Button>
               </div>
