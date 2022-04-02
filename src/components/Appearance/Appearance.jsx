@@ -6,6 +6,7 @@ import '../Options/index.css';
 
 export default function Appearance({
   config,
+  update,
   reset,
   renderingElements,
   setElementEnabled
@@ -14,28 +15,28 @@ export default function Appearance({
   const updatePuckOneColor = (value) => {
     config.pucks.groups[0].color = `${value.hex}`;
     setPuckOneColor(value);
-    reset();
+    update();
   };
 
   const [puckTwoColor, setPuckTwoColor] = useState('blue');
   const updatePuckTwoColor = (value) => {
     config.pucks.groups[1].color = `${value.hex}`;
     setPuckTwoColor(value);
-    reset();
+    update();
   };
 
   const [robotColor, setRobotColor] = useState(config.robots.color);
   const updateRobotColor = (value) => {
     config.robots.color = `${value.hex}`;
     setRobotColor(value);
-    reset();
+    update();
   };
 
   const [robotFlashColor, setRobotFlashColor] = useState('yellow');
   const updateRobotFlashColor = (value) => {
     config.robots.flashColor = `${value.hex}`;
     setRobotFlashColor(value);
-    reset();
+    update();
   };
 
   const redPuckStyle = {
@@ -51,7 +52,6 @@ export default function Appearance({
   };
   return (
     <div>
-      <span className="warning-message">Note: Changing appearance will restart the simulation!</span>
       <div className="config-modifier">
         <div className="config">
           <span>Robot color: </span>
@@ -92,6 +92,7 @@ export default function Appearance({
 
 Appearance.propTypes = {
   config: propTypes.object.isRequired,
+  update: propTypes.func.isRequired,
   reset: propTypes.func.isRequired,
   renderingElements: propTypes.array.isRequired,
   setElementEnabled: propTypes.func.isRequired

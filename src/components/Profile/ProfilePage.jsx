@@ -19,6 +19,7 @@ const ProfilePage = () => {
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
 	const [codeSubmissions, setCodeSubmissions] = useState([]);
+  const [codeSubmissionsShowing, setCodeSubmissionsShowwing] = useState(false);
 	const [success, setSuccess] = useState('');
 	const [color, setColor] = useState('green');
 
@@ -70,6 +71,15 @@ const ProfilePage = () => {
 			// Uh-oh, an error occurred!
 		});
 	}
+
+  const toggleCodeSubmissions = () => {
+    if (codeSubmissionsShowing) {
+      setCodeSubmissions([]);
+    } else {
+      showCodeSubmissions();
+    }
+    setCodeSubmissionsShowwing(!codeSubmissionsShowing);
+  }
 		
 	const handleNameChange = (event) => {
 		event.preventDefault();
@@ -98,7 +108,7 @@ const ProfilePage = () => {
 				Name: {name}
 			</p>
 			<form onSubmit={handleNameChange}>
-				Add Name:
+				New name:
 				<TextField inputRef={nameRef}/>
 				<Button type='submit' color='primary'>Change Name</Button>
 			</form>
@@ -109,8 +119,8 @@ const ProfilePage = () => {
 					{success}
 				</p>
 			</div>
-				<Button onClick={showCodeSubmissions}>
-					VIEW CODE SUBMISSIONS
+				<Button onClick={toggleCodeSubmissions}>
+					{codeSubmissionsShowing ? 'CLOSE CODE SUBMISSIONS' : 'VIEW CODE SUBMISSIONS'}
 				</Button>
 			<div>
 				{codeSubmissions.map((val) => (

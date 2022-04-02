@@ -15,6 +15,9 @@ export default function blocklyController(robot: any) {
         const curGoalArea = sensors.puckGoalAreaSensor;
         const grappedPuck = actuators.grapper.getState();
         eval(robot.scene.blocklyCode.replace('execute', ''));
+        if (robot.angularVel === 0) {
+          robot.setAngularVelocity(0);
+        } 
       } else {
         robot.setAngularVelocity(0);
         robot.setLinearVelocity({ x: 0, y: 0 });

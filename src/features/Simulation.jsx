@@ -11,6 +11,7 @@ import {
   initializeSimulation,
   simulationIsInitialized,
   resetSimulation,
+  updateSimulation,
   togglePauseSimulation,
   setSimulationSpeed,
   updateCode,
@@ -47,6 +48,11 @@ const Simulation = ({ simConfig, benchSettings, blocklyCode, JSCode, isBlocklyWo
     onSpeedChange(1);
     setPaused(false);
     setTime(0);
+  };
+
+  const update = (newConfig = config) => {
+    resetRenderer();
+    updateSimulation(newConfig);
   };
 
   const onUpdate = (newTime, scene, benchData) => {
@@ -90,6 +96,7 @@ const Simulation = ({ simConfig, benchSettings, blocklyCode, JSCode, isBlocklyWo
       togglePause={onTogglePause}
       setSpeed={onSpeedChange}
       reset={reset}
+      update={update}
       renderingElements = {getRenderingElements(simConfig.type)}
       setElementEnabled={setElementEnabled}
     />
@@ -98,6 +105,7 @@ const Simulation = ({ simConfig, benchSettings, blocklyCode, JSCode, isBlocklyWo
   const appearanceElem = initialized ? (
     <Appearance
       config={config}
+      update={update}
       reset={reset}
       renderingElements = {getRenderingElements(simConfig.type)}
       setElementEnabled={setElementEnabled}
