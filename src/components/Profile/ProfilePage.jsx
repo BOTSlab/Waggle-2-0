@@ -7,9 +7,16 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth, db} from "../../firebase/firebase"
 import { useNavigate } from 'react-router-dom'
 
-import { doc, collection, serverTimestamp, onSnapshot, query, where } from "firebase/firestore"; 
+import {
+	doc,
+	collection,
+	serverTimestamp,
+	onSnapshot,
+	query,
+	where, Timestamp } from "firebase/firestore"; 
 import { getStorage, ref, listAll } from "firebase/storage";
 
+//import Timestamp = firestore.Timestamp;
 
 const ProfilePage = () => {
 	
@@ -19,9 +26,15 @@ const ProfilePage = () => {
 	const [name, setName] = useState('');
 	const [email, setEmail] = useState('');
 	const [codeSubmissions, setCodeSubmissions] = useState([]);
-  const [codeSubmissionsShowing, setCodeSubmissionsShowwing] = useState(false);
+	const [codeSubmissionsShowing, setCodeSubmissionsShowing] = useState(false);
 	const [success, setSuccess] = useState('');
 	const [color, setColor] = useState('green');
+	
+	const [level, setLevel] = useState([]);
+	const [levelShowing, setLevelShowing] = useState(false);
+	const [ levelKey, setLevelKey ] = useState([])
+	
+	
 
 	const history = useNavigate();
 
@@ -56,29 +69,37 @@ const ProfilePage = () => {
 		}
 	})
 	
+	
 	const showCodeSubmissions = () =>{
-		console.log(listRef)
-		// Find all the prefixes and items.
-		listAll(listRef)
-		.then((res) => {
-			res.prefixes.forEach((folderRef) => {
-			});
-			res.items.forEach((itemRef) => {
-			setCodeSubmissions(arr => [...arr, itemRef.name])
-			});
-		}).catch((error) => {
-			console.log(error.message)
-			// Uh-oh, an error occurred!
-		});
+		let i =''
+			onSnapshot(query(submissionsRef, where("uid", "==", currentUser.uid )), (querySnapshot) => {
+				querySnapshot.forEach((doc) => {
+				
+					if(i != doc.data().codeName){
+						console.log('HI')
+							setCodeSubmissions(arr => [...arr, 'File Name: ' + doc.data().codeName + '   Config Name: ' + doc.data().level + '    at: ' + doc.data().timeCreated.toDate()])
+							i = doc.data().codeName
+						}
+
+				})
+				
+			})
+		
+		
 	}
 
   const toggleCodeSubmissions = () => {
     if (codeSubmissionsShowing) {
       setCodeSubmissions([]);
+	 
     } else {
       showCodeSubmissions();
+	
+	  
     }
-    setCodeSubmissionsShowwing(!codeSubmissionsShowing);
+    setCodeSubmissionsShowing(!codeSubmissionsShowing);
+    setLevelShowing(!levelShowing);
+	
   }
 		
 	const handleNameChange = (event) => {
@@ -120,12 +141,15 @@ const ProfilePage = () => {
 				</p>
 			</div>
 				<Button onClick={toggleCodeSubmissions}>
-					{codeSubmissionsShowing ? 'CLOSE CODE SUBMISSIONS' : 'VIEW CODE SUBMISSIONS'}
+					{codeSubmissionsShowing && levelShowing ? 'CLOSE CODE SUBMISSIONS' : 'VIEW CODE SUBMISSIONS'}
+					
 				</Button>
-			<div>
-				{codeSubmissions.map((val) => (
-					<h3 key={val}>{val}</h3>
-				))}
+			<div className="flex-container">
+					<div className="flex-submission">
+						{codeSubmissions.map((val) => (
+							<h3 key={val[val]}>{ val}</h3>
+						))}
+					</div>
 			</div>
 		</div>
 	)

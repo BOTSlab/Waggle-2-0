@@ -70,3 +70,12 @@
     line-height: 15px;
     margin: 0px 10px 0px 10px;
 }
+
+.flex-container {
+    display: flex;
+}
+
+.flex-submission:first-child {
+   margin-left: 50px;
+   
+}

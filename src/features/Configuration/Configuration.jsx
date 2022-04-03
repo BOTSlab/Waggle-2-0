@@ -12,7 +12,14 @@ import { auth, db} from "../../firebase/firebase"
 
 import { getStorage, ref, uploadBytes, getDownloadURL, listAll } from 'firebase/storage';
 
-import { doc, addDoc, collection, serverTimestamp, onSnapshot, query, where, getDocs  } from "firebase/firestore"; 
+import {
+  doc,
+  addDoc,
+  collection,
+  serverTimestamp,
+  onSnapshot,
+  query,
+  where } from "firebase/firestore"; 
 
 import Simulation from '../Simulation';
 import './Configuration.less';
