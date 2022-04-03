@@ -40,7 +40,8 @@ export default class Robot {
     envWidth,
     envHeight,
     scene,
-    creationTime
+    creationTime,
+    body
   ) {
     // Configs
     this.DeadLockRecovery = {
@@ -54,6 +55,7 @@ export default class Robot {
     this.flashColor = flashColor;
     this.radius = radius;
     this.linearVel = { x: 0, y: 0 };
+    this.angularVel = 0;
     this.velocityScale = 1;
     this.goal = goal;
     this.waypoint = { x: position.x, y: position.y };
@@ -69,30 +71,36 @@ export default class Robot {
     this.lastFlash = creationTime;
     this.nearbyRobots = null;
 
-    // Create Matter.js body and attach it to world
-    const compoundBody = Body.create({
-      parts: [
-        Bodies.circle(position.x, position.y, this.radius)
-        // If you want to add more parts to the robot body, add them here.
-        // Make sure to also change renderabes to render all parts of the robot.
-        // Example of compound body:
-        // ,
-        // Bodies.polygon(
-        //   position.x + this.radius / 10 + this.radius / 2,
-        //   position.y - (2 * this.radius) / 5,
-        //   3,
-        //   this.radius * 1.2,
-        //   { angle: (1.6 * Math.PI) / 2 }
-        // )
-      ]
-    });
-    this.body = compoundBody;
-    this.body.friction = 0;
-    this.body.frictionAir = 0;
-    this.body.frictionStatic = 0;
-    this.body.restitution = 0;
+    if (!body) {
+      // Create Matter.js body and attach it to world
+      const compoundBody = Body.create({
+        parts: [
+          Bodies.circle(position.x, position.y, this.radius)
+          // If you want to add more parts to the robot body, add them here.
+          // Make sure to also change renderabes to render all parts of the robot.
+          // Example of compound body:
+          // ,
+          // Bodies.polygon(
+          //   position.x + this.radius / 10 + this.radius / 2,
+          //   position.y - (2 * this.radius) / 5,
+          //   3,
+          //   this.radius * 1.2,
+          //   { angle: (1.6 * Math.PI) / 2 }
+          // )
+        ]
+      });
+      this.body = compoundBody;
+      this.body.friction = 0;
+      this.body.frictionAir = 0;
+      this.body.frictionStatic = 0;
+      this.body.restitution = 0;
+      Body.setAngularVelocity(this.body, 0);
+    } else {
+      this.body = body;
+    }
+
+
     World.add(this.world, this.body);
-    Body.setAngularVelocity(this.body, 0);
     this.engine.velocityIterations = 10;
     this.engine.positionIterations = 10;
 
@@ -225,6 +233,7 @@ export default class Robot {
 
   setAngularVelocity(angularVel) {
     Body.setAngularVelocity(this.body, (angularVel / 100));
+    this.angularVel = (angularVel / 100);
   }
 
   reached(point) {

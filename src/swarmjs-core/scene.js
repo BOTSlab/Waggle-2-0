@@ -23,7 +23,11 @@ export default class Scene {
     gMaps,
     blocklyCode,
     JSCode,
-    isBlocklyWorkspace
+    isBlocklyWorkspace,
+    robots,
+    pucks,
+    paused,
+    engine
   ) {
     this.configType = configType;
     this.numOfRobots = robotsConfig.count;
@@ -33,18 +37,26 @@ export default class Scene {
     this.useVoronoi = robotsConfig.useVoronoiDiagram;
     this.pucksGroups = pucksConfigs.groups;
     this.numOfPucks = this.pucksGroups.reduce((total, puckGroup) => total + puckGroup.count, 0);
+    paused === undefined ? this.paused = true : this.paused = paused;
+
+    this.blocklyCode = blocklyCode;
+    this.JSCode = JSCode;
+    this.isBlocklyWorkspace = isBlocklyWorkspace;
 
     this.width = parseInt(envConfig.width, 10);
     this.height = parseInt(envConfig.height, 10);
 
     // Create Matter.js Physics Engine
-    this.engine = Engine.create();
+    if (!engine) {
+      this.engine = Engine.create();
+      this.engine.gravity.y = 0;
+      this.engine.gravity.x = 0;
+      this.engine.positionIterations = 10;
+      this.engine.velocityIterations = 10;
+    } else {
+      this.engine = engine;
+    }
     this.world = this.engine.world;
-    this.engine.gravity.y = 0;
-    this.engine.gravity.x = 0;
-    this.timeInstance = 0;
-    this.engine.positionIterations = 10;
-    this.engine.velocityIterations = 10;
 
     // Add Environment Boundries To World
     this.envBoundaryObjects = getEnvBoundaryObjects(this.width, this.height);
@@ -73,7 +85,8 @@ export default class Scene {
       robotsConfig.actuators,
       this.width,
       this.height,
-      algorithm
+      algorithm,
+      robots
     );
 
     this.puckMaps = [];
@@ -117,7 +130,8 @@ export default class Scene {
       this.pucksGroups,
       this.width,
       this.height,
-      this.puckMaps
+      this.puckMaps,
+      pucks
     );
 
     // Initialize Voronoi Diagram
@@ -127,8 +141,6 @@ export default class Scene {
 
     // Simulation Speed
     this.timeDelta = 1;
-
-    this.paused = true;
 
     this.togglePause = () => {
       this.paused = !this.paused;
@@ -210,15 +222,23 @@ export default class Scene {
   }
 
   initializeRobotsRange(
-    numOfRobots, radius, controllers, sensors, actuators, envWidth, envHeight, algorithm
+    numOfRobots, radius, controllers, sensors, actuators, envWidth, envHeight, algorithm, robots
   ) {
+    if (robots && numOfRobots < robots.length) {
+      let removeNum = robots.length - numOfRobots;
+      while (removeNum) {
+        robots.pop();
+        removeNum--;
+      }
+    }
+
     return d3.range(numOfRobots)
       .map((i, index) => new Robot(
         this.configType,
         this.robotColor,
         this.robotFlashColor,
         i,
-        this.getPos(),
+        (robots && robots[index]) ? robots[index].body.position : this.getPos(),
         this.getPos(),
         controllers,
         sensors,
@@ -227,20 +247,48 @@ export default class Scene {
         envWidth,
         envHeight,
         this,
-        Math.floor(Math.random() * (10000 - 1 + 1) + 1)
+        (robots && robots[index]) ? robots[index].creationTime : Math.floor(Math.random() * (10000 - 1 + 1) + 1),
+        (robots && robots[index]) ? robots[index].body : undefined
       ));
   }
 
-  initializePucksRange(pucksGroups, envWidth, envHeight, maps) {
+  initializePucksRange(pucksGroups, envWidth, envHeight, maps, puckArray) {
     const pucks = [];
     let id = 0;
 
-    pucksGroups.forEach((puckGroup) => {
+    let groupAPucks = [];
+    let groupBPucks = [];
+    if (puckArray) {
+      puckArray.forEach((puck) => {
+        if (puck.group === "A") {
+          groupAPucks.push(puck);
+        } else {
+          groupBPucks.push(puck);
+        }
+      });
+
+      let removeNumA = groupAPucks.length - pucksGroups[0].count;
+      let removeNumB = 0;
+      if (pucksGroups.length > 1) {
+        removeNumB = groupBPucks.length - pucksGroups[1].count;
+      }
+
+      while (removeNumA > 0) {
+        groupAPucks.pop();
+        removeNumA--;
+      }
+      while (removeNumB > 0) {
+        groupBPucks.pop();
+        removeNumB--;
+      }
+    }
+
+    pucksGroups.forEach((puckGroup, groupIndex) => {
       pucks.push(
         ...d3.range(puckGroup.count)
-          .map((i) => new Puck(
+          .map((i, puckIndex) => new Puck(
             i + id,
-            this.getPos(),
+            (groupIndex === 0 ? groupAPucks[puckIndex] : groupBPucks[puckIndex]) ? (groupIndex === 0 ? groupAPucks[puckIndex].body.position : groupBPucks[puckIndex].body.position) : this.getPos(),
             puckGroup.radius,
             puckGroup.goal,
             puckGroup.goalRadius,

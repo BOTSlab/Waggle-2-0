@@ -67,6 +67,34 @@ export const resetSimulation = (config) => {
   );
 };
 
+export const updateSimulation = (config) => {
+  const blocklyCode = scene.blocklyCode;
+  const JSCode = scene.JSCode;
+  const isBlocklyWorkspace = scene.isBlocklyWorkspace;
+  const robots = scene.robots;
+  const pucks = scene.pucks;
+  const paused = scene.paused;
+  const engine = scene.engine;
+
+  scene = new Scene(
+    config.type,
+    config.env,
+    config.robots,
+    config.pucks,
+    config.objects,
+    config.algorithm,
+    config.positionsGenerator,
+    gMaps,
+    blocklyCode,
+    JSCode,
+    isBlocklyWorkspace,
+    robots,
+    pucks,
+    paused,
+    engine
+  );
+}
+
 export const startBenchmark = (simConfig, benchConfig, resetSimCB) => {
   const resetSimFunc = resetSimCB && typeof resetSimCB === 'function' ? resetSimCB : resetSimulation;
   startBench(simConfig, benchConfig, resetSimFunc);

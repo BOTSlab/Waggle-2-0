@@ -14,23 +14,21 @@ export default function Options({
   togglePause,
   setSpeed,
   reset,
+  update,
   renderingElements,
   setElementEnabled,
   time
 }) {
   const updateNumRobots = (value) => {
     config.robots.count = value;
-    reset();
   };
 
   const updateNumRedPucks = (value) => {
     config.pucks.groups[0].count = value;
-    reset();
   };
 
-  const updateNumBluePucks = (value) => {
+  const updateNumBluePucks = (value) => {    
     config.pucks.groups[1].count = value;
-    reset();
   };
 
   const rectx = 50;
@@ -57,7 +55,7 @@ export default function Options({
       height: 225
     }
     ];
-    reset();
+    update();
   };
 
   const addCircleObstacle = () => {
@@ -69,11 +67,11 @@ export default function Options({
         skipOrbit: true
       }
     ];
-    reset();
+    update();
   };
   const removeObstacle = () => {
     config.objects.pop();
-    reset();
+    update();
   };
 
   const redPuckStyle = {
@@ -121,6 +119,7 @@ export default function Options({
         <InputNumber min={0} max={10} defaultValue={1} />
       </div>
     </div>
+    <Button onClick={() => update()}>Update!</Button>
     </div>
   </div>
   );
@@ -133,5 +132,6 @@ Options.propTypes = {
   togglePause: propTypes.func.isRequired,
   setSpeed: propTypes.func.isRequired,
   reset: propTypes.func.isRequired,
+  update: propTypes.func.isRequired,
   time: propTypes.number
 };

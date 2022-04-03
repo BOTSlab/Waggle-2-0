@@ -424,8 +424,8 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig 
             <Tabs defaultActiveKey="1" onChange={updateWorkspaceType}>
               <TabPane tab="Blockly" key="1">
                 <div>
-                  <p>
-                    Note: naming a file by the same name will overwrite it in your account.
+                  <p className="warning">
+                    Note: Naming a file by the same name will overwrite it in your account.
                   </p>
                   <p style={{color: color}}>
                     {error || success}
