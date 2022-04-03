@@ -5,7 +5,7 @@ import { useAuth } from '../Contexts/AuthContext';
 import { TextField } from '@material-ui/core';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, db} from "../../firebase/firebase"
-import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom';
 
 import {
 	doc,
@@ -76,8 +76,7 @@ const ProfilePage = () => {
 				querySnapshot.forEach((doc) => {
 				
 					if(i != doc.data().codeName){
-						console.log('HI')
-							setCodeSubmissions(arr => [...arr, 'File Name: ' + doc.data().codeName + '   Config Name: ' + doc.data().level + '    at: ' + doc.data().timeCreated.toDate()])
+							setCodeSubmissions(arr => [...arr, `${doc.data().codeName} created in ${doc.data().level} on ${doc.data().timeCreated.toDate().toDateString()}`])
 							i = doc.data().codeName
 						}
 
@@ -147,7 +146,7 @@ const ProfilePage = () => {
 			<div className="flex-container">
 					<div className="flex-submission">
 						{codeSubmissions.map((val) => (
-							<h3 key={val[val]}>{ val}</h3>
+							<p key={val[val]}>{val}</p>
 						))}
 					</div>
 			</div>
