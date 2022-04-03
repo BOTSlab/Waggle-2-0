@@ -92,6 +92,8 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig,
   };
 
   const downloadXmlFileAccount = () => {
+    setError('');
+    setSuccess('');
     const startIndex = xml.indexOf('<block type="robot_execute"');
     const endIndex = (xml.indexOf('</block>', startIndex)) + 8;
     const executeString = xml.slice(startIndex, endIndex);
@@ -155,6 +157,8 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig,
   };
   
   const uploadJavaScriptFileAccount = () => {
+    setError('');
+    setSuccess('');
     // first we want to input a text
     let fileName = prompt("Please enter your file name:", "fileName.js");
     if (fileName == null || fileName == "") {
@@ -202,6 +206,8 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig,
   
   const uploadXmlFileAccount = () => {
       // first we want to input a text
+      setError('');
+      setSuccess('');
       let fileName = prompt("Please enter your file name:", "fileName.xml");
       if (fileName == null || fileName == "") {
         text = "User cancelled the prompt.";
@@ -242,6 +248,8 @@ export default function Configuration({ simConfig, benchSettings, blocklyConfig,
     }
   }
   const downloadJavaScriptFileAccount = () => {
+    setError('');
+    setSuccess('');
     const file = new Blob([JSCode.replace('execute', '')], {
       type: 'text/plain'
     });
